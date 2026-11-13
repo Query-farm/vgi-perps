@@ -1,0 +1,8 @@
+#!/bin/sh
+# Launch the worker in replay mode: every venue request is answered from
+# tests/fixtures/venues and "now" is pinned to the recording time. Used by
+# vgi-worker.json (stock-DuckDB verification) and handy for offline demos.
+HERE="$(cd "$(dirname "$0")/.." && pwd)"
+export PERPS_FIXTURES_DIR="$HERE/tests/fixtures/venues"
+export PERPS_NOW="${PERPS_NOW:-2026-11-13T01:20:00Z}"
+exec "$HERE/.venv/bin/vgi-perps-worker" "$@"

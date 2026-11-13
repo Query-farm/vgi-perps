@@ -1,0 +1,7 @@
+{
+ "body": {
+  "funding_rates": []
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/funding_rates/historical?end_ts=1794466800&start_ts=1794463200&ticker=KXBTCPERP",
+ "status": 200
+}

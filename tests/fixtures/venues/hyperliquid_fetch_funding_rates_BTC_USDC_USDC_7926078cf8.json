@@ -1,0 +1,44 @@
+{
+ "body": {
+  "BTC/USDC:USDC": {
+   "datetime": null,
+   "estimatedSettlePrice": null,
+   "fundingDatetime": "2026-11-13T02:00:00.000Z",
+   "fundingRate": 1.25e-05,
+   "fundingTimestamp": 1794535200000,
+   "indexPrice": 70962.0,
+   "info": {
+    "dayBaseVlm": "50111.89784",
+    "dayNtlVlm": "3615884717.5017333031",
+    "funding": "0.0000125",
+    "impactPxs": [
+     "70938.0",
+     "70942.8"
+    ],
+    "marginTableId": 56,
+    "markPx": "70938.0",
+    "maxLeverage": 40,
+    "midPx": "70938.5",
+    "name": "BTC",
+    "openInterest": "39552.01788",
+    "oraclePx": "70962.0",
+    "premium": "-0.0002705673",
+    "prevDayPx": "73814.0",
+    "szDecimals": 5
+   },
+   "interestRate": null,
+   "interval": "1h",
+   "markPrice": 70938.0,
+   "nextFundingDatetime": null,
+   "nextFundingRate": null,
+   "nextFundingTimestamp": null,
+   "previousFundingDatetime": null,
+   "previousFundingRate": null,
+   "previousFundingTimestamp": null,
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_funding_rates [[[\"BTC/USDC:USDC\"]], {}]",
+ "status": 200
+}

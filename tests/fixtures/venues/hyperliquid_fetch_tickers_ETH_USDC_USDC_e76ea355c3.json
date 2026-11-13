@@ -1,0 +1,49 @@
+{
+ "body": {
+  "ETH/USDC:USDC": {
+   "ask": 2009.55,
+   "askVolume": null,
+   "average": null,
+   "baseVolume": null,
+   "bid": 2009.4,
+   "bidVolume": null,
+   "change": null,
+   "close": 2009.45,
+   "datetime": null,
+   "high": null,
+   "indexPrice": null,
+   "info": {
+    "baseId": 1,
+    "dayBaseVlm": "611866.2836999999",
+    "dayNtlVlm": "1234560277.0022001266",
+    "funding": "0.0000117951",
+    "impactPxs": [
+     "2009.4",
+     "2009.55"
+    ],
+    "marginTableId": 55,
+    "markPx": "2009.3",
+    "maxLeverage": 25,
+    "midPx": "2009.45",
+    "name": "ETH",
+    "openInterest": "734702.8393999999",
+    "oraclePx": "2010.2",
+    "premium": "-0.0003233509",
+    "prevDayPx": "2055.0",
+    "szDecimals": 4
+   },
+   "last": 2009.45,
+   "low": null,
+   "markPrice": null,
+   "open": null,
+   "percentage": null,
+   "previousClose": 2055.0,
+   "quoteVolume": 1234560277.0022001,
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": null,
+   "vwap": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_tickers [[[\"ETH/USDC:USDC\"]], {}]",
+ "status": 200
+}

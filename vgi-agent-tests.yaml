@@ -1,16 +1,64 @@
 # Private graders for the public vgi.agent_test_tasks in the worker's catalog metadata.
 # `vgi-lint lint --ai` runs an agent on each prompt and grades it with check_sql.
-# See https://github.com/Query-farm/vgi-lint-check (VGI920).
+# The worker serves live market data, so every task is graded with a check_sql
+# assertion of the specific ground truth, never a reference_sql result compare.
 tasks:
-  - name: formal_greeting
-    reference_sql: SELECT starter.main.greet('Grace', 'formal') AS greeting
-  - name: sum_of_squares
-    reference_sql: SELECT sum(squared) AS total FROM starter.main.sequence_table(10)
-  - name: stepped_sequence
-    reference_sql: SELECT n FROM starter.main.sequence_table(4, step := 5) ORDER BY n
-  # Reads the public demo API (https://vgi-starter-api.query-farm.services/v1).
-  - name: items_per_category
+  - name: us_venue_count
     check_sql: >-
-      SELECT count(*) = 3 AND sum(items) = 25
-      FROM (SELECT category, count(*) AS items
-            FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1') GROUP BY category)
+      SELECT count(*) = 3 FROM perps.main.venues(probe := false) WHERE venue_type = 'us_regulated'
+  - name: btc_contract_size_kalshi
+    check_sql: >-
+      SELECT contract_size = 0.0001 FROM perps.main.instruments(venue := 'kalshi', underlying := 'BTC')
+  - name: funding_sign_convention
+    check_sql: >-
+      SELECT sign_convention LIKE '%positive = longs pay shorts%' FROM perps.main.venues(probe := false)
+      WHERE venue = 'kalshi'
+  - name: kalshi_single_stock_perps
+    check_sql: >-
+      SELECT count(*) > 0 FROM perps.main.instruments(venue := 'kalshi') WHERE asset_class = 'equity'
+  - name: liquidation_refusal
+    check_sql: >-
+      SELECT support = 'unsupported' FROM perps.main.capabilities(venue := 'kalshi')
+      WHERE capability = 'maintenance_margin'
+  - name: btc_funding_history
+    check_sql: >-
+      SELECT count(*) BETWEEN 8 AND 10 FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC',
+      start_date := now() - INTERVAL 3 DAY)
+  - name: eth_marks
+    check_sql: >-
+      SELECT count(*) = 1 AND bool_and(mark_price > 100) FROM perps.main.marks(venue := 'coinbase', underlying := 'ETH')
+  - name: kalshi_book_levels
+    check_sql: >-
+      SELECT count(*) = 5 FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 5) WHERE side = 'bid'
+  - name: coinbase_recent_trades
+    check_sql: >-
+      SELECT count(*) >= 0 FROM perps.main.trades('coinbase', 'BIP-20DEC30-CDE', start_date := now() - INTERVAL 10 MINUTE)
+  - name: kalshi_daily_bars
+    check_sql: >-
+      SELECT count(*) BETWEEN 6 AND 8 FROM perps.main.candles('kalshi', 'KXETHPERP', bar := '1d',
+      start_date := now() - INTERVAL 7 DAY)
+  - name: btc_premium
+    check_sql: >-
+      SELECT count(*) >= 3 FROM perps.main.premium(underlying := 'BTC') WHERE premium_bps IS NOT NULL
+  - name: btc_carry_spread
+    check_sql: >-
+      SELECT count(*) > 0 FROM perps.main.funding_spread('BTC')
+  - name: kalshi_fill_cost
+    check_sql: >-
+      SELECT buy_cost_bps >= 0 FROM perps.main.depth_metrics('kalshi', 'KXBTCPERP', notional_usd := 50000)
+  - name: hyperliquid_liquidation_bands
+    check_sql: >-
+      SELECT liquidation_price < entry_price FROM perps.main.liquidation_estimate('hyperliquid', 'ETH')
+      WHERE side = 'long' AND leverage = 10
+  - name: kalshi_premium_index
+    check_sql: >-
+      SELECT count(*) > 0 FROM perps.main.raw_kalshi_premium_index('KXBTCPERP', start_date := now() - INTERVAL 5 MINUTE)
+  - name: kalshi_funding_deadband
+    check_sql: >-
+      SELECT funding_deadband > 0 FROM perps.main.raw_kalshi_markets(symbol := 'KXGOLDPERP')
+  - name: coinbase_overnight_margin
+    check_sql: >-
+      SELECT overnight_long_margin_rate > 0 FROM perps.main.raw_coinbase_products(symbol := 'BIP-20DEC30-CDE')
+  - name: bitnomial_margin_rate
+    check_sql: >-
+      SELECT product_group_margin_rate > 0 FROM perps.main.raw_bitnomial_products(symbol := 'PBTCUCZ50')

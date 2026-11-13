@@ -1,0 +1,552 @@
+# name: test/sql/perps.test
+# description: SQL-level tests for the perps worker, replaying recorded venue responses
+# group: [perps]
+#
+# ci/run-integration.sh exports PERPS_FIXTURES_DIR (tests/fixtures/venues) and
+# PERPS_NOW, so every request is answered from a recording and default windows
+# resolve deterministically. Expected values were checked by hand against the
+# raw recorded payloads (see tests/test_golden_fixtures.py for the arithmetic).
+
+require vgi
+
+require-env PERPS_WORKER
+
+require-env PERPS_FIXTURES_DIR
+
+statement ok
+ATTACH 'perps' (TYPE vgi, LOCATION '{PERPS_WORKER}');
+
+# ------------------------------------------------------------------ venues
+
+# Binance and Bybit geo-block the recording host (HTTP 451 / 403); the probe
+# reports the failure as a row instead of failing the query.
+query TTI
+SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
+----
+binance	error	NULL
+bitnomial	ok	6
+bybit	error	NULL
+coinbase	ok	8
+hyperliquid	ok	6
+kalshi	ok	14
+
+query TTT
+SELECT venue, venue_type, sign_convention FROM perps.main.venues(probe := false) ORDER BY venue;
+----
+binance	offshore	ccxt unified: positive = longs pay shorts (no flip)
+bitnomial	us_regulated	native: positive = longs pay shorts (no flip)
+bybit	offshore	ccxt unified: positive = longs pay shorts (no flip)
+coinbase	us_regulated	native: positive = longs pay shorts (CFTC filing 2025-32 App. B; no flip)
+hyperliquid	offshore	ccxt unified: positive = longs pay shorts (no flip)
+kalshi	us_regulated	native: positive = longs pay shorts (no flip)
+
+query TT
+SELECT venue, left(last_error, 40) FROM perps.main.venues() WHERE status = 'error' ORDER BY venue;
+----
+binance	VenueError: binance (ccxt binanceusdm) f
+bybit	VenueError: bybit (ccxt bybit) fetch_mar
+
+# ------------------------------------------------------------ capabilities
+
+query TTTT
+SELECT venue, capability, support, auth_required FROM perps.main.capabilities() WHERE support <> 'supported' ORDER BY venue, capability;
+----
+binance	maintenance_margin	unsupported	true
+binance	open_interest	partial	false
+binance	premium_index	unsupported	false
+binance	trades	partial	false
+bitnomial	candles	partial	false
+bitnomial	maintenance_margin	unsupported	false
+bitnomial	marks	partial	false
+bitnomial	order_book	unsupported	false
+bitnomial	premium_index	unsupported	false
+bitnomial	trades	unsupported	false
+bybit	maintenance_margin	unsupported	false
+bybit	open_interest	partial	false
+bybit	premium_index	unsupported	false
+bybit	trades	partial	false
+coinbase	funding_estimate	unsupported	false
+coinbase	funding_history	partial	true
+coinbase	maintenance_margin	unsupported	false
+coinbase	marks	partial	false
+coinbase	premium_index	unsupported	false
+hyperliquid	open_interest	partial	false
+hyperliquid	premium_index	unsupported	false
+hyperliquid	trades	unsupported	false
+kalshi	maintenance_margin	unsupported	true
+
+# ------------------------------------------------------------- instruments
+
+# Contract size in BTC per contract, tick in USD per BTC, regardless of quoting:
+# Kalshi quotes per contract, Bitnomial in ticks, Coinbase per BTC.
+query TTTTTTTT
+SELECT venue, symbol, contract_size, tick_size, funding_interval_hours, funding_cap, round(max_leverage, 4), maintenance_margin_rate FROM perps.main.instruments(underlying := 'BTC') ORDER BY venue, symbol;
+----
+bitnomial	PBTCUCZ50	0.01	5.0	8.0	0.0005	NULL	NULL
+bitnomial	PBTCURZ50	0.0001	5.0	8.0	0.0005	NULL	NULL
+coinbase	BIP-20DEC30-CDE	0.01	5.0	1.0	NULL	9.9921	NULL
+hyperliquid	BTC	1.0	1.0	1.0	0.005	40.0	0.0125
+kalshi	KXBTCPERP	0.0001	1.0	8.0	0.02	6.3858	NULL
+
+# 1000x units: Kalshi kSHIB (1000 kSHIB x 1000 SHIB), Coinbase 1000SHIB (10000 x 1000), Hyperliquid kSHIB.
+query TTTT
+SELECT venue, symbol, contract_size, tick_size FROM perps.main.instruments(underlying := 'SHIB') ORDER BY venue, symbol;
+----
+bitnomial	PSHBUKZ50	1000.0	2e-06
+coinbase	SHP-20DEC30-CDE	10000000.0	1e-08
+hyperliquid	kSHIB	1000.0	1e-09
+kalshi	KXKSHIBPERP	1000000.0	1e-10
+
+query TTI
+SELECT asset_class, instrument_type, count(*) FROM perps.main.instruments(venue := 'kalshi', include_inactive := true) GROUP BY ALL ORDER BY ALL;
+----
+commodity	perp_style_future	2
+commodity	perpetual	2
+crypto	perpetual	5
+equity	perpetual	3
+index	perpetual	2
+
+# Dated Coinbase futures (BIT-27NOV26-CDE) are not perps and are filtered out.
+query T
+SELECT symbol FROM perps.main.instruments(venue := 'coinbase') ORDER BY symbol;
+----
+BIP-20DEC30-CDE
+ETP-20DEC30-CDE
+PAU-20DEC30-CDE
+PEP-20DEC30-CDE
+SHP-20DEC30-CDE
+SLP-20DEC30-CDE
+US5-19DEC30-CDE
+XPP-20DEC30-CDE
+
+query TTT
+SELECT symbol, underlying, canonical_id FROM perps.main.instruments(venue := 'kalshi') WHERE asset_class <> 'crypto' ORDER BY symbol;
+----
+KXAAPLPERP	AAPL	AAPL-USD-PERP
+KXGOLDPERP	XAU	XAU-USD-PERP
+KXNVDAPERP	NVDA	NVDA-USD-PERP
+KXSILVERPERP	XAG	XAG-USD-PERP
+KXTSLAPERP	TSLA	TSLA-USD-PERP
+KXUS500PERP	US500	US500-USD-PERP
+KXWTIFUTURE	WTI	WTI-USD-PERP
+
+# ----------------------------------------------------------------- funding
+
+# Kalshi BTC: 8h funding, native sign kept, mark rescaled from per-contract (x 1/0.0001).
+query TTTTTT
+SELECT strftime(funding_time, '%Y-%m-%dT%H:%M:%SZ'), round(rate_per_interval, 10), interval_hours, round(rate_annualized, 8), mark_price, is_final FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') ORDER BY funding_time;
+----
+2026-11-10T05:00:00Z	0.0001520963	8.0	0.16654541	74711.0	true
+2026-11-10T13:00:00Z	0.0001669038	8.0	0.18275965	74308.0	true
+2026-11-10T21:00:00Z	0.0001325884	8.0	0.14518432	73703.0	true
+2026-11-11T05:00:00Z	0.0002422985	8.0	0.26531685	73639.0	true
+2026-11-11T13:00:00Z	0.0	8.0	0.0	73822.0	true
+2026-11-11T21:00:00Z	0.0	8.0	0.0	74587.0	true
+2026-11-12T05:00:00Z	0.0001997953	8.0	0.21877585	73647.0	true
+2026-11-12T13:00:00Z	0.000170408	8.0	0.18659679	72805.0	true
+2026-11-12T21:00:00Z	0.0001450796	8.0	0.15886221	71395.0	true
+
+# Every US venue at once (offshore venues need an underlying, so they are not scanned).
+query TITT
+SELECT venue, count(*), round(min(rate_per_interval), 10), round(max(rate_per_interval), 10) FROM perps.main.funding(start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') GROUP BY venue ORDER BY venue;
+----
+bitnomial	54	0.0001	0.0001
+kalshi	66	-0.0006446722	0.0006275553
+
+# Cross-venue BTC with estimates: Binance and Bybit fail and are skipped with a warning.
+query TTIIT
+SELECT venue, symbol, count(*) FILTER (WHERE is_final), count(*) FILTER (WHERE NOT is_final), round(avg(rate_annualized) FILTER (WHERE is_final), 8) FROM perps.main.funding(underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00', include_estimates := true) GROUP BY ALL ORDER BY ALL;
+----
+bitnomial	PBTCUCZ50	9	1	0.1095
+bitnomial	PBTCURZ50	9	1	0.1095
+hyperliquid	BTC	72	1	0.08642934
+kalshi	KXBTCPERP	9	1	0.14711568
+
+# Bitnomial publishes mark and index (in ticks) with every settlement.
+query TTTTT
+SELECT strftime(funding_time, '%Y-%m-%dT%H:%M:%SZ'), rate_per_interval, mark_price, index_price, round(premium_bps, 6) FROM perps.main.funding(venue := 'bitnomial', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE symbol = 'PBTCUCZ50' ORDER BY funding_time;
+----
+2026-11-12T01:00:00Z	0.0001	74625.0	73930.0	94.007845
+2026-11-12T09:00:00Z	0.0001	74220.0	73570.0	88.35123
+2026-11-12T17:00:00Z	0.0001	72250.0	71630.0	86.555912
+
+# Empty window: no settlement between two funding times.
+query I
+SELECT count(*) FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-12 06:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 07:00:00+00');
+----
+0
+
+# ------------------------------------------------------------------- marks
+
+query TTTTTTTTTT
+SELECT venue, symbol, mark_price, mark_source, index_price, round(premium_bps, 6), round(funding_rate, 10), round(funding_rate_annualized, 8), open_interest_contracts, funding_rate_is_estimate FROM perps.main.marks(underlying := 'BTC') ORDER BY venue, symbol;
+----
+bitnomial	PBTCUCZ50	72250.0	last_funding_mark	71630.0	86.555912	0.0001	0.1095	225.0	true
+bitnomial	PBTCURZ50	71630.0	last_funding_mark	71630.0	0.0	0.0001	0.1095	315761.0	true
+coinbase	BIP-20DEC30-CDE	70817.5	mid	70742.374782	10.61955	5e-06	0.0438	201879.0	false
+hyperliquid	BTC	70938.0	venue_mark	70962.0	-3.382092	1.25e-05	0.1095	39552.01788	true
+kalshi	KXBTCPERP	70793.0	venue_mark	70825.0	-4.518179	0.0001233609	0.13508019	2628608.0	true
+
+query TI
+SELECT venue, count(*) FROM perps.main.marks() GROUP BY venue ORDER BY venue;
+----
+bitnomial	6
+coinbase	8
+kalshi	12
+
+# ----------------------------------------------------------------- premium
+
+query TTTTT
+SELECT venue, symbol, reference_source, reference_price, round(premium_bps, 6) FROM perps.main.premium(underlying := 'ETH', reference := 'hyperliquid') ORDER BY venue, symbol;
+----
+bitnomial	PETHUIZ50	hyperliquid index	2010.2	-30.842702
+bitnomial	PETHULZ50	hyperliquid index	2010.2	-18.903592
+coinbase	ETP-20DEC30-CDE	hyperliquid index	2010.2	-15.918814
+hyperliquid	ETH	hyperliquid index	2010.2	-4.477166
+kalshi	KXETHPERP	hyperliquid index	2010.2	-19.401055
+
+# ---------------------------------------------------------- funding_spread
+
+query TTTTTTTIIT
+SELECT venue_a, symbol_a, venue_b, symbol_b, round(annualized_a, 8), round(annualized_b, 8), round(spread_bps, 4), observations_a, observations_b, carry_trade FROM perps.main.funding_spread('BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') ORDER BY ALL;
+----
+bitnomial	PBTCUCZ50	hyperliquid	BTC	0.1095	0.08642934	230.7066	9	72	short bitnomial / long hyperliquid
+bitnomial	PBTCUCZ50	kalshi	KXBTCPERP	0.1095	0.14711568	-376.1568	9	9	long bitnomial / short kalshi
+bitnomial	PBTCURZ50	hyperliquid	BTC	0.1095	0.08642934	230.7066	9	72	short bitnomial / long hyperliquid
+bitnomial	PBTCURZ50	kalshi	KXBTCPERP	0.1095	0.14711568	-376.1568	9	9	long bitnomial / short kalshi
+hyperliquid	BTC	kalshi	KXBTCPERP	0.08642934	0.14711568	-606.8634	72	9	long hyperliquid / short kalshi
+
+# --------------------------------------------------------------- order book
+
+query TITTTT
+SELECT side, level, price, size_contracts, size_base, round(cum_usd, 4) FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 5) ORDER BY side, level;
+----
+ask	1	70884.0	150.0	0.015000000000000001	1063.26
+ask	2	70885.0	432.0	0.0432	4125.492
+ask	3	70898.0	16.0	0.0016	4238.9288
+ask	4	70900.0	12124.0	1.2124000000000001	90198.0888
+ask	5	70902.0	141.0	0.014100000000000001	91197.807
+bid	1	70882.0	21.0	0.0021000000000000003	148.8522
+bid	2	70880.0	349.0	0.0349	2622.5642
+bid	3	70879.0	1018.0	0.1018	9838.0464
+bid	4	70877.0	20.0	0.002	9979.8004
+bid	5	70868.0	7141.0	0.7141000000000001	60586.6392
+
+query TITTT
+SELECT side, level, price, size_contracts, round(size_usd, 4) FROM perps.main.order_book('coinbase', 'BIP-20DEC30-CDE', depth := 5) ORDER BY side, level;
+----
+ask	1	70885.0	3.0	2126.55
+ask	2	70890.0	491.0	348069.9
+ask	3	70895.0	501.0	355183.95
+ask	4	70900.0	542.0	384278.0
+ask	5	70905.0	678.0	480735.9
+bid	1	70875.0	1.0	708.75
+bid	2	70870.0	346.0	245210.2
+bid	3	70865.0	522.0	369915.3
+bid	4	70860.0	586.0	415239.6
+bid	5	70855.0	679.0	481105.45
+
+query TI
+SELECT side, count(*) FROM perps.main.order_book('hyperliquid', 'BTC', depth := 5) GROUP BY side ORDER BY side;
+----
+ask	5
+bid	5
+
+# ------------------------------------------------------------ depth_metrics
+
+query TTTTTTTTI
+SELECT best_bid, best_ask, round(spread_bps, 6), round(buy_cost_bps, 6), round(sell_cost_bps, 6), round(imbalance, 6), fully_filled, notional_usd, bid_levels FROM perps.main.depth_metrics('kalshi', 'KXBTCPERP');
+----
+70878.0	70885.0	0.987564	2.580939	1.966132	0.142487	true	100000.0	103
+
+# ------------------------------------------------------------------- trades
+
+query IITTT
+SELECT count(*), count(DISTINCT trade_id), round(sum(size_usd), 4), min(taker_side), max(taker_side) FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-13 01:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 01:01:00+00');
+----
+139	139	184237.2543	buy	sell
+
+query IIT
+SELECT count(*), count(DISTINCT trade_id), round(sum(size_contracts), 4) FROM perps.main.trades('coinbase', 'BIP-20DEC30-CDE', start_date := TIMESTAMPTZ '2026-11-13 01:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 01:05:00+00');
+----
+282	282	3888.0
+
+# max_trades caps the result exactly.
+query I
+SELECT count(*) FROM perps.main.trades('coinbase', 'BIP-20DEC30-CDE', start_date := TIMESTAMPTZ '2026-11-13 01:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 01:05:00+00', max_trades := 100);
+----
+100
+
+# ------------------------------------------------------------------ candles
+
+query TTTTTTTT
+SELECT strftime(ts, '%Y-%m-%dT%H:%M:%SZ'), open, high, low, close, volume_contracts, volume_usd, open_interest_contracts FROM perps.main.candles('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-12 18:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 00:00:00+00') ORDER BY ts;
+----
+2026-11-12T18:00:00Z	71836.0	72005.0	71499.0	71688.0	2271362.0	16308379.16	2484780.0
+2026-11-12T19:00:00Z	71688.0	71705.0	71358.0	71612.0	1337799.0	9571550.5053	2500142.0
+2026-11-12T20:00:00Z	71604.0	71620.0	71329.0	71359.0	1938660.0	13850950.236	2627829.0
+2026-11-12T21:00:00Z	71375.0	71570.0	71299.0	71478.0	1730573.0	12366847.7153	2692803.0
+2026-11-12T22:00:00Z	71477.0	71481.0	71226.0	71333.0	1149717.0	8206105.0875	2827901.0
+2026-11-12T23:00:00Z	71332.0	71466.0	71020.0	71381.0	2612620.0	18619881.478	2724651.0
+
+query TTT
+SELECT strftime(ts, '%Y-%m-%dT%H:%M:%SZ'), close, volume_contracts FROM perps.main.candles('coinbase', 'BIP-20DEC30-CDE', start_date := TIMESTAMPTZ '2026-11-12 18:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 00:00:00+00') ORDER BY ts;
+----
+2026-11-12T18:00:00Z	71650.0	10283.0
+2026-11-12T19:00:00Z	71620.0	14839.0
+2026-11-12T20:00:00Z	71355.0	35291.0
+2026-11-12T21:00:00Z	71475.0	22071.0
+2026-11-12T22:00:00Z	71335.0	3164.0
+2026-11-12T23:00:00Z	71375.0	36984.0
+2026-11-13T00:00:00Z	71055.0	35967.0
+
+query TIT
+SELECT bar, count(*), max(close) FROM perps.main.candles('bitnomial', 'PBTCURZ50', bar := '1d', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 00:00:00+00') GROUP BY bar;
+----
+1d	9	80090.0
+
+# ----------------------------------------------------- liquidation_estimate
+
+query TTTTTTTTT
+SELECT side, leverage, weight, round(liquidation_price, 4), round(distance_pct, 6), round(cum_notional_usd, 2), feasible, maintenance_margin_rate, estimate_method FROM perps.main.liquidation_estimate('hyperliquid', 'BTC') ORDER BY side, leverage;
+----
+long	2.0	0.3	35917.9747	-49.367089	2805741044.37	true	0.0125	isolated_linear_entry_at_mark_v1
+long	3.0	0.25	47890.6329	-32.489451	1964018731.06	true	0.0125	isolated_linear_entry_at_mark_v1
+long	5.0	0.2	57468.7595	-18.987342	1262583469.97	true	0.0125	isolated_linear_entry_at_mark_v1
+long	10.0	0.15	64652.3544	-8.860759	701435261.09	true	0.0125	isolated_linear_entry_at_mark_v1
+long	20.0	0.1	68244.1519	-3.797468	280574104.44	true	0.0125	isolated_linear_entry_at_mark_v1
+short	2.0	0.3	105093.3333	48.148148	2805741044.37	true	0.0125	isolated_linear_entry_at_mark_v1
+short	3.0	0.25	93416.2963	31.687243	1964018731.06	true	0.0125	isolated_linear_entry_at_mark_v1
+short	5.0	0.2	84074.6667	18.518519	1262583469.97	true	0.0125	isolated_linear_entry_at_mark_v1
+short	10.0	0.15	77068.4444	8.641975	701435261.09	true	0.0125	isolated_linear_entry_at_mark_v1
+short	20.0	0.1	73565.3333	3.703704	280574104.44	true	0.0125	isolated_linear_entry_at_mark_v1
+
+# With an assumed maintenance rate a venue without a published schedule can be estimated.
+query TTTT
+SELECT side, leverage, round(liquidation_price, 4), mm_source FROM perps.main.liquidation_estimate('kalshi', 'KXBTCPERP', mm_rate := 0.05, leverages := '5,10,25', weights := '1,1,1') ORDER BY side, leverage;
+----
+long	5.0	59615.1579	mm_rate argument (user assumption)
+long	10.0	67067.0526	mm_rate argument (user assumption)
+long	25.0	NULL	mm_rate argument (user assumption)
+short	5.0	80906.2857	mm_rate argument (user assumption)
+short	10.0	74164.0952	mm_rate argument (user assumption)
+short	25.0	NULL	mm_rate argument (user assumption)
+
+# ------------------------------------------------------------- raw tables
+
+query TTTT
+SELECT symbol, contract_size_native, underlying_multiplier, funding_limit_unit FROM perps.main.raw_kalshi_markets() WHERE symbol IN ('KXBTCPERP', 'KXKSHIBPERP', 'KXWTIFUTURE') ORDER BY symbol;
+----
+KXBTCPERP	0.0001	1.0	percentage
+KXKSHIBPERP	1000.0	1000.0	percentage
+KXWTIFUTURE	0.01	1.0	dollar
+
+query ITT
+SELECT count(*), round(min(premium_bps), 6), round(max(premium_bps), 6) FROM perps.main.raw_kalshi_premium_index('KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-13 01:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 01:01:00+00');
+----
+60	-1.982243	2.319574
+
+query TTTT
+SELECT symbol, contract_size_native, intraday_long_margin_rate, overnight_short_margin_rate FROM perps.main.raw_coinbase_products() ORDER BY symbol;
+----
+BIP-20DEC30-CDE	0.01	0.100079	0.256625
+ETP-20DEC30-CDE	0.1	0.099974	0.303625
+PAU-20DEC30-CDE	1.0	0.0499798	0.081625
+PEP-20DEC30-CDE	100000.0	0.249985	1.143375
+SHP-20DEC30-CDE	10000.0	0.2500521	0.953875
+SLP-20DEC30-CDE	5.0	0.1999824	0.55975
+US5-19DEC30-CDE	1.0	0.0500175	0.0685
+XPP-20DEC30-CDE	500.0	0.200129	0.566
+
+query TTTTT
+SELECT symbol, contract_size, price_increment, settlement_price, product_group_margin_rate FROM perps.main.raw_bitnomial_products() ORDER BY symbol;
+----
+PBTCUCZ50	0.01	5.0	72030.0	0.15
+PBTCURZ50	0.0001	5.0	71585.0	0.15
+PETHUIZ50	0.5	0.2	2012.2	0.15
+PETHULZ50	0.001	0.2	2015.0	0.15
+PSHBUKZ50	1000.0	2e-06	0.004332	0.15
+PSOLUSZ50	5.0	0.01	81.23	0.15
+
+# ------------------------------------------------------------- error paths
+# Error text below is this worker's own; SDK-worded bind errors use <REGEX>.
+
+# A single-venue query surfaces the venue failure instead of skipping it.
+statement error
+SELECT * FROM perps.main.funding(venue := 'binance', underlying := 'BTC');
+----
+<REGEX>:.*binance.*451.*
+
+# Offshore venues list hundreds of contracts: per-contract calls need an underlying.
+statement error
+SELECT * FROM perps.main.funding(venue := 'hyperliquid');
+----
+<REGEX>:.*pass underlying.*
+
+statement error
+SELECT * FROM perps.main.order_book('bitnomial', 'PBTCUCZ50');
+----
+<REGEX>:.*bitnomial does not support order_book.*WebSocket.*
+
+statement error
+SELECT * FROM perps.main.trades('hyperliquid', 'BTC');
+----
+<REGEX>:.*hyperliquid does not support trades.*
+
+statement error
+SELECT * FROM perps.main.candles('bitnomial', 'PBTCUCZ50', bar := '1h');
+----
+<REGEX>:.*bitnomial does not support candles.*
+
+# No published maintenance schedule: refuse rather than guess.
+statement error
+SELECT * FROM perps.main.liquidation_estimate('kalshi', 'KXBTCPERP');
+----
+<REGEX>:.*liquidation_estimate refuses kalshi.*mm_rate.*
+
+statement error
+SELECT * FROM perps.main.liquidation_estimate('hyperliquid', 'BTC', leverages := '2,0.5', weights := '1,1');
+----
+<REGEX>:.*leverage must be > 1.*
+
+statement error
+SELECT * FROM perps.main.liquidation_estimate('hyperliquid', 'BTC', leverages := '2,3');
+----
+<REGEX>:.*2 leverages and 5 weights.*
+
+statement error
+SELECT * FROM perps.main.order_book('kalshi', 'NOT-A-TICKER');
+----
+<REGEX>:.*unknown symbol.*
+
+statement error
+SELECT * FROM perps.main.funding(venue := 'kalshi', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-11 00:00:00+00');
+----
+<REGEX>:.*is after end_date.*
+
+statement error
+SELECT * FROM perps.main.instruments(venue := 'ftx');
+----
+<REGEX>:.*
+
+statement error
+SELECT * FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 0);
+----
+<REGEX>:.*
+
+statement error
+SELECT * FROM perps.main.candles('kalshi', 'KXBTCPERP', bar := '5m');
+----
+<REGEX>:.*
+
+# ------------------------------------------------- pagination (synthetic)
+# tests/fixtures/venues/synthetic: three cursor pages, the last one empty but
+# still carrying a cursor. Every page must arrive exactly once, on every
+# transport (over HTTP each page is a separate continuation), and the scan must
+# stop at the empty page. 7.0000/contract / 0.0001 BTC = 70000 USD/BTC; 10
+# contracts = 0.001 BTC = 70 USD.
+query ITTTTT
+SELECT count(*), min(trade_id), max(trade_id), round(sum(size_contracts), 2), round(sum(size_usd), 4), count(*) FILTER (WHERE is_block_trade) FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-01 00:10:00+00');
+----
+5	synthetic-1	synthetic-5	118.0	826.308	1
+
+query TTTTT
+SELECT trade_id, price, size_contracts, round(size_usd, 4), taker_side FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-01 00:10:00+00') ORDER BY ts;
+----
+synthetic-5	70030.0	100.0	700.3	buy
+synthetic-4	70020.0	2.0	14.004	sell
+synthetic-3	69990.0	1.0	6.999	buy
+synthetic-2	70010.0	5.0	35.005	sell
+synthetic-1	70000.0	10.0	70.0	buy
+
+# max_trades stops mid-scan, across a page boundary.
+query I
+SELECT count(*) FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-01 00:10:00+00', max_trades := 4);
+----
+4
+
+# ----------------------------------------------------- exact golden checks
+# The sqllogictest runner compares numbers with ~1% tolerance (a 0.4% error
+# passes), which is too loose for unit and sign conventions. These assert
+# hand-computed values to a relative 1e-9 and return a single 'true'.
+
+statement ok
+CREATE MACRO near(a, b) AS abs(a - b) <= 1e-9 * greatest(abs(b), 1e-300);
+
+# Contract sizes and ticks per underlying unit, from each venue's native quoting.
+query T
+SELECT bool_and(CASE symbol
+    WHEN 'KXBTCPERP' THEN near(contract_size, 0.0001) AND near(tick_size, 1.0)          -- 0.0001 BTC; 0.0001 $/contract / 0.0001
+    WHEN 'KXKSHIBPERP' THEN near(contract_size, 1e6) AND near(tick_size, 1e-10)         -- 1000 kSHIB x 1000; 0.0001 / 1e6
+    WHEN 'SHP-20DEC30-CDE' THEN near(contract_size, 1e7) AND near(tick_size, 1e-8)      -- 10000 x 1000SHIB; 0.00001 / 1000
+    WHEN 'PBTCURZ50' THEN near(contract_size, 0.0001) AND near(tick_size, 5.0)          -- myrio BTC; tick = price_increment
+    WHEN 'kSHIB' THEN near(contract_size, 1000.0)                                       -- Hyperliquid kSHIB = 1000 SHIB
+    ELSE true END) AND count(*) = 9
+FROM perps.main.instruments() WHERE underlying IN ('BTC', 'SHIB');
+----
+true
+
+# Kalshi 2026-11-12T21:00Z: rate 0.0001450796460962 (native sign), 8h -> x1095,
+# mark "7.1395" per contract / 0.0001 BTC = 71395 USD/BTC.
+query T
+SELECT near(rate_per_interval, 0.0001450796460962) AND near(rate_annualized, 0.0001450796460962 * 1095) AND near(mark_price, 71395.0) AND near(rate_bps, 1.450796460962)
+FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE funding_time = TIMESTAMPTZ '2026-11-12 21:00:00+00';
+----
+true
+
+# Bitnomial 2026-11-12T17:00Z: mark 14450 ticks x 5 = 72250, index 14326 x 5 = 71630.
+query T
+SELECT near(mark_price, 72250.0) AND near(index_price, 71630.0) AND near(premium_bps, (72250.0 / 71630.0 - 1) * 10000) AND near(rate_annualized, 0.0001 * 1095)
+FROM perps.main.funding(venue := 'bitnomial', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE symbol = 'PBTCUCZ50' AND funding_time = TIMESTAMPTZ '2026-11-12 17:00:00+00';
+----
+true
+
+# Annualization invariant across every venue and interval (1h, 8h).
+query T
+SELECT bool_and(near(rate_annualized, rate_per_interval * 8760 / interval_hours)) AND count(DISTINCT interval_hours) = 2
+FROM perps.main.funding(underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00', include_estimates := true) WHERE rate_per_interval <> 0;
+----
+true
+
+# Marks: Kalshi settlement mark "7.0793" / 0.0001; Coinbase mid "70817.5" per BTC;
+# premium_bps = (mark / index - 1) * 1e4 everywhere.
+query T
+SELECT bool_and(CASE symbol WHEN 'KXBTCPERP' THEN near(mark_price, 70793.0) WHEN 'BIP-20DEC30-CDE' THEN near(mark_price, 70817.5) ELSE true END)
+   AND bool_and(premium_bps IS NULL OR near(premium_bps, (mark_price / index_price - 1) * 10000))
+   AND bool_and(open_interest_usd IS NULL OR open_interest_usd > 0)
+FROM perps.main.marks(underlying := 'BTC');
+----
+true
+
+# Book: Kalshi best ask "7.0884" / 0.0001 = 70884; size_usd = contracts x contract_size x price.
+query T
+SELECT bool_and(near(size_usd, size_contracts * 0.0001 * price)) AND bool_or(side = 'ask' AND level = 1 AND near(price, 70884.0) AND near(size_base, 0.015))
+FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 5);
+----
+true
+
+# Synthetic trades: sum of contracts x 0.0001 x price = 826.308.
+query T
+SELECT near(sum(size_usd), 826.308) FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-01 00:10:00+00');
+----
+true
+
+# Hyperliquid BTC, mark 70938, mm = 0.5 / 40 = 0.0125:
+# long 20x  = 70938 * (1 - 1/20) / (1 - 0.0125); short 20x = 70938 * (1 + 1/20) / (1 + 0.0125).
+query T
+SELECT bool_and(CASE side WHEN 'long' THEN near(liquidation_price, 70938 * 0.95 / 0.9875) ELSE near(liquidation_price, 70938 * 1.05 / 1.0125) END)
+FROM perps.main.liquidation_estimate('hyperliquid', 'BTC') WHERE leverage = 20;
+----
+true
+
+# ------------------------------------------------------- raw symbol filter
+
+query TT
+SELECT symbol, funding_limit_unit FROM perps.main.raw_kalshi_markets(symbol := 'kxwtifuture');
+----
+KXWTIFUTURE	dollar
+
+query I
+SELECT count(*) FROM perps.main.raw_bitnomial_products(symbol := 'NOPE');
+----
+0

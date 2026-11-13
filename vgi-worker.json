@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "catalog": "perps",
+  "worker": [
+    "scripts/fixture-worker"
+  ],
+  "checks": [
+    {
+      "name": "venue health, geo-blocked offshore venues reported as rows",
+      "sql": "SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue",
+      "columns": [
+        "venue",
+        "status",
+        "instrument_count"
+      ],
+      "rows": [
+        [
+          "binance",
+          "error",
+          null
+        ],
+        [
+          "bitnomial",
+          "ok",
+          6
+        ],
+        [
+          "bybit",
+          "error",
+          null
+        ],
+        [
+          "coinbase",
+          "ok",
+          8
+        ],
+        [
+          "hyperliquid",
+          "ok",
+          6
+        ],
+        [
+          "kalshi",
+          "ok",
+          14
+        ]
+      ]
+    },
+    {
+      "name": "BTC contract sizes and ticks normalized per BTC",
+      "sql": "SELECT venue, symbol, contract_size, tick_size, funding_interval_hours FROM perps.main.instruments(underlying := 'BTC') ORDER BY venue, symbol",
+      "rows": [
+        [
+          "bitnomial",
+          "PBTCUCZ50",
+          0.01,
+          5.0,
+          8.0
+        ],
+        [
+          "bitnomial",
+          "PBTCURZ50",
+          0.0001,
+          5.0,
+          8.0
+        ],
+        [
+          "coinbase",
+          "BIP-20DEC30-CDE",
+          0.01,
+          5.0,
+          1.0
+        ],
+        [
+          "hyperliquid",
+          "BTC",
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          "kalshi",
+          "KXBTCPERP",
+          0.0001,
+          1.0,
+          8.0
+        ]
+      ]
+    },
+    {
+      "name": "Kalshi funding: native sign, x1095 annualization, per-contract mark rescaled (t = epoch seconds UTC)",
+      "sql": "SELECT epoch(funding_time)::BIGINT AS t, round(rate_per_interval, 10) AS rate, round(rate_annualized, 8) AS apr, mark_price FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE funding_time >= TIMESTAMPTZ '2026-11-12 00:00:00+00' ORDER BY funding_time",
+      "rows": [
+        [
+          1794459600,
+          0.0001997953,
+          0.21877585,
+          73647.0
+        ],
+        [
+          1794488400,
+          0.000170408,
+          0.18659679,
+          72805.0
+        ],
+        [
+          1794517200,
+          0.0001450796,
+          0.15886221,
+          71395.0
+        ]
+      ]
+    },
+    {
+      "name": "Bitnomial ticks to USD and premium",
+      "sql": "SELECT mark_price, index_price, round(premium_bps, 6) AS bps FROM perps.main.funding(venue := 'bitnomial', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE symbol = 'PBTCUCZ50' ORDER BY funding_time DESC LIMIT 1",
+      "rows": [
+        [
+          72250.0,
+          71630.0,
+          86.555912
+        ]
+      ]
+    },
+    {
+      "name": "cross-venue marks skip failing venues",
+      "sql": "SELECT venue, symbol, mark_price, mark_source FROM perps.main.marks(underlying := 'BTC') ORDER BY venue, symbol",
+      "rows": [
+        [
+          "bitnomial",
+          "PBTCUCZ50",
+          72250.0,
+          "last_funding_mark"
+        ],
+        [
+          "bitnomial",
+          "PBTCURZ50",
+          71630.0,
+          "last_funding_mark"
+        ],
+        [
+          "coinbase",
+          "BIP-20DEC30-CDE",
+          70817.5,
+          "mid"
+        ],
+        [
+          "hyperliquid",
+          "BTC",
+          70938.0,
+          "venue_mark"
+        ],
+        [
+          "kalshi",
+          "KXBTCPERP",
+          70793.0,
+          "venue_mark"
+        ]
+      ]
+    },
+    {
+      "name": "funding carry spread pairs",
+      "sql": "SELECT venue_a, symbol_a, venue_b, round(spread_bps, 4) AS bps, carry_trade FROM perps.main.funding_spread('BTC', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') WHERE symbol_a = 'PBTCUCZ50' ORDER BY venue_b",
+      "rows": [
+        [
+          "bitnomial",
+          "PBTCUCZ50",
+          "hyperliquid",
+          230.7066,
+          "short bitnomial / long hyperliquid"
+        ],
+        [
+          "bitnomial",
+          "PBTCUCZ50",
+          "kalshi",
+          -376.1568,
+          "long bitnomial / short kalshi"
+        ]
+      ]
+    },
+    {
+      "name": "order book normalized and cumulated",
+      "sql": "SELECT side, level, price, size_contracts, round(cum_usd, 4) AS cum FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 5) WHERE level <= 2 ORDER BY side, level",
+      "rows": [
+        [
+          "ask",
+          1,
+          70884.0,
+          150.0,
+          1063.26
+        ],
+        [
+          "ask",
+          2,
+          70885.0,
+          432.0,
+          4125.492
+        ],
+        [
+          "bid",
+          1,
+          70882.0,
+          21.0,
+          148.8522
+        ],
+        [
+          "bid",
+          2,
+          70880.0,
+          349.0,
+          2622.5642
+        ]
+      ]
+    },
+    {
+      "name": "cursor pagination: three pages, terminates on an empty page",
+      "sql": "SELECT count(*) AS n, round(sum(size_usd), 4) AS usd FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-01 00:10:00+00')",
+      "rows": [
+        [
+          5,
+          826.308
+        ]
+      ]
+    },
+    {
+      "name": "liquidation estimate (Hyperliquid documented maintenance margin)",
+      "sql": "SELECT side, round(liquidation_price, 4) AS liq, maintenance_margin_rate, estimate_method FROM perps.main.liquidation_estimate('hyperliquid', 'BTC') WHERE leverage = 20 ORDER BY side",
+      "rows": [
+        [
+          "long",
+          68244.1519,
+          0.0125,
+          "isolated_linear_entry_at_mark_v1"
+        ],
+        [
+          "short",
+          73565.3333,
+          0.0125,
+          "isolated_linear_entry_at_mark_v1"
+        ]
+      ]
+    },
+    {
+      "name": "static capability matrix",
+      "sql": "SELECT venue FROM perps.main.capabilities() WHERE capability = 'order_book' AND support = 'supported' ORDER BY venue",
+      "rows": [
+        [
+          "binance"
+        ],
+        [
+          "bybit"
+        ],
+        [
+          "coinbase"
+        ],
+        [
+          "hyperliquid"
+        ],
+        [
+          "kalshi"
+        ]
+      ]
+    }
+  ]
+}

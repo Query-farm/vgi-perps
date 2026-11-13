@@ -34,8 +34,24 @@ ROOT = Path(__file__).resolve().parent.parent
 PROVENANCE = ROOT / ".vgi-starter.json"
 SELF = Path(__file__).resolve()
 
-SKIP_DIRS = {".git", ".venv", ".tools", "node_modules", "target", "build", "dist", "bin", "obj", ".gradle",
-             "__pycache__", ".mypy_cache", ".ruff_cache", ".pytest_cache", ".idea", ".vscode"}
+SKIP_DIRS = {
+    ".git",
+    ".venv",
+    ".tools",
+    "node_modules",
+    "target",
+    "build",
+    "dist",
+    "bin",
+    "obj",
+    ".gradle",
+    "__pycache__",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".idea",
+    ".vscode",
+}
 # Lockfiles the rename leaves alone; post_init regenerates them without upgrading
 # anything. NuGet's packages.lock.json is renamed like any other file instead: it
 # names the worker project only by its assembly name, so after the rename
@@ -56,8 +72,23 @@ PROTECTED = [
     "vgi-starters",
 ]
 
-RESERVED = {"main", "system", "temp", "memory", "information_schema", "pg_catalog", "default",
-            "select", "from", "where", "table", "order", "group", "end", "interval"}
+RESERVED = {
+    "main",
+    "system",
+    "temp",
+    "memory",
+    "information_schema",
+    "pg_catalog",
+    "default",
+    "select",
+    "from",
+    "where",
+    "table",
+    "order",
+    "group",
+    "end",
+    "interval",
+}
 
 
 def _names(snake: str) -> dict[str, str]:
@@ -121,8 +152,13 @@ def _iter_files() -> list[Path]:
     """
     files: list[Path] | None = None
     try:
-        out = subprocess.run(["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
-                             cwd=ROOT, capture_output=True, text=True, check=True).stdout
+        out = subprocess.run(
+            ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
         files = [ROOT / f for f in out.split("\0") if f and (ROOT / f).is_file()]
     except (OSError, subprocess.CalledProcessError):
         pass
@@ -141,8 +177,9 @@ def _iter_files() -> list[Path]:
 
 def _git_remote_slug() -> str | None:
     try:
-        url = subprocess.run(["git", "remote", "get-url", "origin"], cwd=ROOT, capture_output=True,
-                             text=True, check=True).stdout.strip()
+        url = subprocess.run(
+            ["git", "remote", "get-url", "origin"], cwd=ROOT, capture_output=True, text=True, check=True
+        ).stdout.strip()
     except (OSError, subprocess.CalledProcessError):
         return None
     m = re.search(r"[:/]([^/:]+/[^/]+?)(?:\.git)?$", url)
@@ -158,8 +195,10 @@ def cmd_init(args: argparse.Namespace) -> int:
         return 1
     snake = args.name.strip().lower().replace("-", "_")
     if not re.fullmatch(r"[a-z][a-z0-9_]{1,40}", snake) or snake in RESERVED or snake == "starter":
-        print(f"invalid name {args.name!r}: use snake_case letters/digits (e.g. weather, crm_sync), "
-              "not a SQL keyword", file=sys.stderr)
+        print(
+            f"invalid name {args.name!r}: use snake_case letters/digits (e.g. weather, crm_sync), not a SQL keyword",
+            file=sys.stderr,
+        )
         return 2
     lang = prov["lang"]
     n = _names(snake)

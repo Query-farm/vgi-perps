@@ -16,9 +16,12 @@
 #   PYTHON            command for the mock API, may contain spaces (default: python3)
 #   MIN_EXECUTED      fail if fewer test cases ran (default: 1)
 #   EXPECTED_SKIP_REASONS  newline-separated skip reasons that are allowed,
-#                     e.g. "require-env STARTER_LIVE". Any other skip fails.
-#   RECIPES_WORKER    command that runs a recipe by name (`$RECIPES_WORKER <recipe>`);
-#                     when set, examples/test/*.test run too (stdio/launch only)
+#                     e.g. "require-env PERPS_LIVE". Any other skip fails.
+#   PERPS_FIXTURES_DIR  recorded venue responses the worker replays instead of
+#                     the network (default: tests/fixtures/venues). The SQL tests
+#                     are hermetic: a request with no fixture fails loudly.
+#   PERPS_NOW         pinned "now" for default date ranges (default: the
+#                     recording time of the fixtures)
 #   KEEP_STAGE=1      keep the staged test tree for debugging
 #
 # Transports:
@@ -71,22 +74,19 @@ start_server() {
   echo "::error::'$*' never printed PORT:<n>"; cat "$log"; return 1
 }
 
-# The mock APIs fetch_items is tested against. The plain one rate-limits every
-# page once (429 + Retry-After) so the retry path is always exercised.
-unset STARTER_API_TOKEN
-MOCK_API_FLAKY=1 start_server "$STAGE/mock.log" $PYTHON "$REPO/test/mock_api/server.py"
-export STARTER_MOCK_API="http://127.0.0.1:$PORT"
-MOCK_API_TOKEN=test-token start_server "$STAGE/mock-auth.log" $PYTHON "$REPO/test/mock_api/server.py"
-export STARTER_MOCK_API_AUTH="http://127.0.0.1:$PORT"
+# Replay recorded venue responses: the SQL tests never touch the network. The
+# worker inherits these, including the HTTP-transport worker started below.
+export PERPS_FIXTURES_DIR="${PERPS_FIXTURES_DIR:-$REPO/tests/fixtures/venues}"
+export PERPS_NOW="${PERPS_NOW:-2026-11-13T01:20:00Z}"
 
 HTTP=0
 case "$TRANSPORT" in
-  stdio)  export STARTER_WORKER="$WORKER" ;;
-  launch) export STARTER_WORKER="launch:$WORKER" ;;
+  stdio)  export PERPS_WORKER="$WORKER" ;;
+  launch) export PERPS_WORKER="launch:$WORKER" ;;
   http)
     HTTP=1
     start_server "$STAGE/worker.log" "$WORKER" --http --port 0
-    export STARTER_WORKER="http://127.0.0.1:$PORT"
+    export PERPS_WORKER="http://127.0.0.1:$PORT"
     ;;
   *) echo "::error::unknown TRANSPORT=$TRANSPORT (expected stdio|launch|http)"; exit 1 ;;
 esac
@@ -95,9 +95,6 @@ esac
 # standalone runner links no extensions) and loading httpfs for HTTP workers.
 mkdir -p "$STAGE/test/sql"
 TEST_FILES=("$REPO"/test/sql/*.test)
-if [ -n "${RECIPES_WORKER:-}" ] && [ "$HTTP" = "0" ]; then
-  TEST_FILES+=("$REPO"/examples/test/*.test)
-fi
 for f in "${TEST_FILES[@]}"; do
   awk -v http="$HTTP" '
     /^require[ \t]+vgi[ \t]*$/ {
@@ -124,10 +121,10 @@ EOF
 rm -f "$STAGE/test/_warm.test"
 
 cat > "$STAGE/no_error_skip.json" <<'EOF'
-{"skip_error_messages": ["__vgi_starter_never_matches__"]}
+{"skip_error_messages": ["__vgi_perps_never_matches__"]}
 EOF
 
-echo "Running test/sql over $TRANSPORT (worker: $STARTER_WORKER)"
+echo "Running test/sql over $TRANSPORT (worker: $PERPS_WORKER)"
 LOG="$STAGE/unittest.log"
 rc=0
 ( cd "$STAGE" && "$HAYBARN_UNITTEST" --keep-home --test-dir "$STAGE" \
@@ -154,7 +151,7 @@ echo "executed $executed of $total test files over $TRANSPORT ($skipped skipped)
 if [ "$executed" -lt "$MIN_EXECUTED" ]; then
   echo "::error::only $executed test files ran (MIN_EXECUTED=$MIN_EXECUTED)"; rc=1
 fi
-if [ "$HTTP" = "1" ] && ! kill -0 "${PIDS[2]}" 2>/dev/null; then
+if [ "$HTTP" = "1" ] && ! kill -0 "${PIDS[0]}" 2>/dev/null; then
   echo "::error::the HTTP worker died during the run:"; cat "$STAGE/worker.log"; rc=1
 fi
 exit "$rc"

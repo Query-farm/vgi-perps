@@ -1,0 +1,894 @@
+{
+ "body": [
+  {
+   "datetime": "2026-11-10T00:00:00.061Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003338525",
+    "time": 1794268800061
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794268800061
+  },
+  {
+   "datetime": "2026-11-10T01:00:00.043Z",
+   "fundingRate": 1.2487e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.000012487",
+    "premium": "-0.0004001043",
+    "time": 1794272400043
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794272400043
+  },
+  {
+   "datetime": "2026-11-10T02:00:00.052Z",
+   "fundingRate": 1.1484e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.000011484",
+    "premium": "-0.0004081283",
+    "time": 1794276000052
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794276000052
+  },
+  {
+   "datetime": "2026-11-10T03:00:00.001Z",
+   "fundingRate": 1.00581e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000100581",
+    "premium": "-0.0004195353",
+    "time": 1794279600001
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794279600001
+  },
+  {
+   "datetime": "2026-11-10T04:00:00.017Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003521611",
+    "time": 1794283200017
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794283200017
+  },
+  {
+   "datetime": "2026-11-10T05:00:00.067Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003134516",
+    "time": 1794286800067
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794286800067
+  },
+  {
+   "datetime": "2026-11-10T06:00:00.051Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002807827",
+    "time": 1794290400051
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794290400051
+  },
+  {
+   "datetime": "2026-11-10T07:00:00.035Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002622342",
+    "time": 1794294000035
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794294000035
+  },
+  {
+   "datetime": "2026-11-10T08:00:00.041Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002675682",
+    "time": 1794297600041
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794297600041
+  },
+  {
+   "datetime": "2026-11-10T09:00:00.122Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002872325",
+    "time": 1794301200122
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794301200122
+  },
+  {
+   "datetime": "2026-11-10T10:00:00.080Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.000300457",
+    "time": 1794304800080
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794304800080
+  },
+  {
+   "datetime": "2026-11-10T11:00:00.060Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002838286",
+    "time": 1794308400060
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794308400060
+  },
+  {
+   "datetime": "2026-11-10T12:00:00.001Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002937001",
+    "time": 1794312000001
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794312000001
+  },
+  {
+   "datetime": "2026-11-10T13:00:00.052Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003680783",
+    "time": 1794315600052
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794315600052
+  },
+  {
+   "datetime": "2026-11-10T14:00:00.056Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.000351014",
+    "time": 1794319200056
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794319200056
+  },
+  {
+   "datetime": "2026-11-10T15:00:00.020Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002969617",
+    "time": 1794322800020
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794322800020
+  },
+  {
+   "datetime": "2026-11-10T16:00:00.005Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003254383",
+    "time": 1794326400005
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794326400005
+  },
+  {
+   "datetime": "2026-11-10T17:00:00.051Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003825172",
+    "time": 1794330000051
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794330000051
+  },
+  {
+   "datetime": "2026-11-10T18:00:00.027Z",
+   "fundingRate": 8.0543e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000080543",
+    "premium": "-0.0004355652",
+    "time": 1794333600027
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794333600027
+  },
+  {
+   "datetime": "2026-11-10T19:00:00.096Z",
+   "fundingRate": 1.10687e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000110687",
+    "premium": "-0.0004114507",
+    "time": 1794337200096
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794337200096
+  },
+  {
+   "datetime": "2026-11-10T20:00:00.047Z",
+   "fundingRate": 9.6903e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000096903",
+    "premium": "-0.000422478",
+    "time": 1794340800047
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794340800047
+  },
+  {
+   "datetime": "2026-11-10T21:00:00.040Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002942682",
+    "time": 1794344400040
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794344400040
+  },
+  {
+   "datetime": "2026-11-10T22:00:00.067Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002545369",
+    "time": 1794348000067
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794348000067
+  },
+  {
+   "datetime": "2026-11-10T23:00:00.008Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002738334",
+    "time": 1794351600008
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794351600008
+  },
+  {
+   "datetime": "2026-11-11T00:00:00.029Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002846183",
+    "time": 1794355200029
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794355200029
+  },
+  {
+   "datetime": "2026-11-11T01:00:00.030Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003236044",
+    "time": 1794358800030
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794358800030
+  },
+  {
+   "datetime": "2026-11-11T02:00:00.047Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003727647",
+    "time": 1794362400047
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794362400047
+  },
+  {
+   "datetime": "2026-11-11T03:00:00.062Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.000384047",
+    "time": 1794366000062
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794366000062
+  },
+  {
+   "datetime": "2026-11-11T04:00:00.041Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002789331",
+    "time": 1794369600041
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794369600041
+  },
+  {
+   "datetime": "2026-11-11T05:00:00.012Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002858516",
+    "time": 1794373200012
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794373200012
+  },
+  {
+   "datetime": "2026-11-11T06:00:00.031Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002265717",
+    "time": 1794376800031
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794376800031
+  },
+  {
+   "datetime": "2026-11-11T07:00:00.027Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002745157",
+    "time": 1794380400027
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794380400027
+  },
+  {
+   "datetime": "2026-11-11T08:00:00.021Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002722544",
+    "time": 1794384000021
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794384000021
+  },
+  {
+   "datetime": "2026-11-11T09:00:00.005Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003436838",
+    "time": 1794387600005
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794387600005
+  },
+  {
+   "datetime": "2026-11-11T10:00:00.056Z",
+   "fundingRate": 1.13779e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000113779",
+    "premium": "-0.0004089766",
+    "time": 1794391200056
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794391200056
+  },
+  {
+   "datetime": "2026-11-11T11:00:00.086Z",
+   "fundingRate": 9.199e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.000009199",
+    "premium": "-0.0004264084",
+    "time": 1794394800086
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794394800086
+  },
+  {
+   "datetime": "2026-11-11T12:00:00.057Z",
+   "fundingRate": 8.3865e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000083865",
+    "premium": "-0.0004329077",
+    "time": 1794398400057
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794398400057
+  },
+  {
+   "datetime": "2026-11-11T13:00:00.008Z",
+   "fundingRate": 9.458e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.000009458",
+    "premium": "-0.0004243359",
+    "time": 1794402000008
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794402000008
+  },
+  {
+   "datetime": "2026-11-11T14:00:00.043Z",
+   "fundingRate": 3.3524e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000033524",
+    "premium": "-0.0004731808",
+    "time": 1794405600043
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794405600043
+  },
+  {
+   "datetime": "2026-11-11T15:00:00.023Z",
+   "fundingRate": 8.5226e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000085226",
+    "premium": "-0.0004318193",
+    "time": 1794409200023
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794409200023
+  },
+  {
+   "datetime": "2026-11-11T16:00:00.007Z",
+   "fundingRate": 1.11593e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000111593",
+    "premium": "-0.0004107256",
+    "time": 1794412800007
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794412800007
+  },
+  {
+   "datetime": "2026-11-11T17:00:00.044Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003827563",
+    "time": 1794416400044
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794416400044
+  },
+  {
+   "datetime": "2026-11-11T18:00:00.016Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003899205",
+    "time": 1794420000016
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794420000016
+  },
+  {
+   "datetime": "2026-11-11T19:00:00.026Z",
+   "fundingRate": 8.0116e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000080116",
+    "premium": "-0.0004359076",
+    "time": 1794423600026
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794423600026
+  },
+  {
+   "datetime": "2026-11-11T20:00:00.038Z",
+   "fundingRate": 8.4201e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000084201",
+    "premium": "-0.0004326388",
+    "time": 1794427200038
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794427200038
+  },
+  {
+   "datetime": "2026-11-11T21:00:00.006Z",
+   "fundingRate": 8.9006e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000089006",
+    "premium": "-0.0004287949",
+    "time": 1794430800006
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794430800006
+  },
+  {
+   "datetime": "2026-11-11T22:00:00.027Z",
+   "fundingRate": 3.0294e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000030294",
+    "premium": "-0.0004757648",
+    "time": 1794434400027
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794434400027
+  },
+  {
+   "datetime": "2026-11-11T23:00:00.021Z",
+   "fundingRate": -4.1342e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "-0.0000041342",
+    "premium": "-0.0005330736",
+    "time": 1794438000021
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794438000021
+  },
+  {
+   "datetime": "2026-11-12T00:00:00.060Z",
+   "fundingRate": 9.564e-07,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000009564",
+    "premium": "-0.0004923491",
+    "time": 1794441600060
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794441600060
+  },
+  {
+   "datetime": "2026-11-12T01:00:00.008Z",
+   "fundingRate": 1.2623e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000012623",
+    "premium": "-0.0004899018",
+    "time": 1794445200008
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794445200008
+  },
+  {
+   "datetime": "2026-11-12T02:00:00.019Z",
+   "fundingRate": 6.8214e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000068214",
+    "premium": "-0.0004454287",
+    "time": 1794448800019
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794448800019
+  },
+  {
+   "datetime": "2026-11-12T03:00:00.039Z",
+   "fundingRate": 8.8831e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000088831",
+    "premium": "-0.0004289351",
+    "time": 1794452400039
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794452400039
+  },
+  {
+   "datetime": "2026-11-12T04:00:00.012Z",
+   "fundingRate": 6.6162e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000066162",
+    "premium": "-0.0004470701",
+    "time": 1794456000012
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794456000012
+  },
+  {
+   "datetime": "2026-11-12T05:00:00.010Z",
+   "fundingRate": 5.6702e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000056702",
+    "premium": "-0.0004546388",
+    "time": 1794459600010
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794459600010
+  },
+  {
+   "datetime": "2026-11-12T06:00:00.013Z",
+   "fundingRate": 5.1293e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000051293",
+    "premium": "-0.0004589657",
+    "time": 1794463200013
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794463200013
+  },
+  {
+   "datetime": "2026-11-12T07:00:00.018Z",
+   "fundingRate": 1.04026e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000104026",
+    "premium": "-0.0004167795",
+    "time": 1794466800018
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794466800018
+  },
+  {
+   "datetime": "2026-11-12T08:00:00.033Z",
+   "fundingRate": 7.8577e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000078577",
+    "premium": "-0.0004371387",
+    "time": 1794470400033
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794470400033
+  },
+  {
+   "datetime": "2026-11-12T09:00:00.048Z",
+   "fundingRate": 9.8466e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000098466",
+    "premium": "-0.0004212269",
+    "time": 1794474000048
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794474000048
+  },
+  {
+   "datetime": "2026-11-12T10:00:00.004Z",
+   "fundingRate": 5.7471e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000057471",
+    "premium": "-0.0004540235",
+    "time": 1794477600004
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794477600004
+  },
+  {
+   "datetime": "2026-11-12T11:00:00.019Z",
+   "fundingRate": 6.1947e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000061947",
+    "premium": "-0.0004504423",
+    "time": 1794481200019
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794481200019
+  },
+  {
+   "datetime": "2026-11-12T12:00:00.033Z",
+   "fundingRate": 5.592e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.000005592",
+    "premium": "-0.0004552639",
+    "time": 1794484800033
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794484800033
+  },
+  {
+   "datetime": "2026-11-12T13:00:00.053Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003882769",
+    "time": 1794488400053
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794488400053
+  },
+  {
+   "datetime": "2026-11-12T14:00:00.061Z",
+   "fundingRate": -5.3596e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "-0.0000053596",
+    "premium": "-0.0005428772",
+    "time": 1794492000061
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794492000061
+  },
+  {
+   "datetime": "2026-11-12T15:00:00.045Z",
+   "fundingRate": -1.2675e-06,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "-0.0000012675",
+    "premium": "-0.0005101403",
+    "time": 1794495600045
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794495600045
+  },
+  {
+   "datetime": "2026-11-12T16:00:00.018Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003751011",
+    "time": 1794499200018
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794499200018
+  },
+  {
+   "datetime": "2026-11-12T17:00:00.022Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002967414",
+    "time": 1794502800022
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794502800022
+  },
+  {
+   "datetime": "2026-11-12T18:00:00.037Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002159194",
+    "time": 1794506400037
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794506400037
+  },
+  {
+   "datetime": "2026-11-12T19:00:00.035Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002154165",
+    "time": 1794510000035
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794510000035
+  },
+  {
+   "datetime": "2026-11-12T20:00:00.012Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.000315693",
+    "time": 1794513600012
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794513600012
+  },
+  {
+   "datetime": "2026-11-12T21:00:00.021Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002933744",
+    "time": 1794517200021
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794517200021
+  },
+  {
+   "datetime": "2026-11-12T22:00:00.008Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0001948229",
+    "time": 1794520800008
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794520800008
+  },
+  {
+   "datetime": "2026-11-12T23:00:00.006Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0001568658",
+    "time": 1794524400006
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794524400006
+  },
+  {
+   "datetime": "2026-11-13T00:00:00.015Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0001783987",
+    "time": 1794528000015
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794528000015
+  },
+  {
+   "datetime": "2026-11-13T01:00:00.030Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "BTC",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002717225",
+    "time": 1794531600030
+   },
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": 1794531600030
+  }
+ ],
+ "key": "CCXT hyperliquid.fetch_funding_rate_history [[\"BTC/USDC:USDC\", 1794268800000, 500], {}]",
+ "status": 200
+}

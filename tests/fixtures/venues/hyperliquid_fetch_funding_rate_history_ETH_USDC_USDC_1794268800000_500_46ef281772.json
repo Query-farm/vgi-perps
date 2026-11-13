@@ -1,0 +1,894 @@
+{
+ "body": [
+  {
+   "datetime": "2026-11-10T00:00:00.061Z",
+   "fundingRate": 1.4934e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000014934",
+    "premium": "-0.0004880531",
+    "time": 1794268800061
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794268800061
+  },
+  {
+   "datetime": "2026-11-10T01:00:00.043Z",
+   "fundingRate": -5.0239e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000050239",
+    "premium": "-0.0005401915",
+    "time": 1794272400043
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794272400043
+  },
+  {
+   "datetime": "2026-11-10T02:00:00.052Z",
+   "fundingRate": -1.4947e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000014947",
+    "premium": "-0.0005119574",
+    "time": 1794276000052
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794276000052
+  },
+  {
+   "datetime": "2026-11-10T03:00:00.001Z",
+   "fundingRate": 1.012e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.000001012",
+    "premium": "-0.0004919038",
+    "time": 1794279600001
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794279600001
+  },
+  {
+   "datetime": "2026-11-10T04:00:00.017Z",
+   "fundingRate": -1.1688e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000011688",
+    "premium": "-0.0005093505",
+    "time": 1794283200017
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794283200017
+  },
+  {
+   "datetime": "2026-11-10T05:00:00.067Z",
+   "fundingRate": 7.1949e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000071949",
+    "premium": "-0.0004424408",
+    "time": 1794286800067
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794286800067
+  },
+  {
+   "datetime": "2026-11-10T06:00:00.051Z",
+   "fundingRate": 5.7731e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000057731",
+    "premium": "-0.0004538148",
+    "time": 1794290400051
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794290400051
+  },
+  {
+   "datetime": "2026-11-10T07:00:00.035Z",
+   "fundingRate": 9.0142e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000090142",
+    "premium": "-0.0004278862",
+    "time": 1794294000035
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794294000035
+  },
+  {
+   "datetime": "2026-11-10T08:00:00.041Z",
+   "fundingRate": 5.3554e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000053554",
+    "premium": "-0.0004571566",
+    "time": 1794297600041
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794297600041
+  },
+  {
+   "datetime": "2026-11-10T09:00:00.122Z",
+   "fundingRate": 1.09976e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000109976",
+    "premium": "-0.0004120194",
+    "time": 1794301200122
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794301200122
+  },
+  {
+   "datetime": "2026-11-10T10:00:00.080Z",
+   "fundingRate": 5.0006e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000050006",
+    "premium": "-0.0004599949",
+    "time": 1794304800080
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794304800080
+  },
+  {
+   "datetime": "2026-11-10T11:00:00.060Z",
+   "fundingRate": 1.0444e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000010444",
+    "premium": "-0.0004916445",
+    "time": 1794308400060
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794308400060
+  },
+  {
+   "datetime": "2026-11-10T12:00:00.001Z",
+   "fundingRate": -1.769e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.000001769",
+    "premium": "-0.0005141523",
+    "time": 1794312000001
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794312000001
+  },
+  {
+   "datetime": "2026-11-10T13:00:00.052Z",
+   "fundingRate": 1.05142e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000105142",
+    "premium": "-0.0004158867",
+    "time": 1794315600052
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794315600052
+  },
+  {
+   "datetime": "2026-11-10T14:00:00.056Z",
+   "fundingRate": 8.0462e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000080462",
+    "premium": "-0.0004356301",
+    "time": 1794319200056
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794319200056
+  },
+  {
+   "datetime": "2026-11-10T15:00:00.020Z",
+   "fundingRate": 8.2255e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000082255",
+    "premium": "-0.0004341957",
+    "time": 1794322800020
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794322800020
+  },
+  {
+   "datetime": "2026-11-10T16:00:00.005Z",
+   "fundingRate": -3.9761e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000039761",
+    "premium": "-0.0005318088",
+    "time": 1794326400005
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794326400005
+  },
+  {
+   "datetime": "2026-11-10T17:00:00.051Z",
+   "fundingRate": 6.5353e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000065353",
+    "premium": "-0.000447718",
+    "time": 1794330000051
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794330000051
+  },
+  {
+   "datetime": "2026-11-10T18:00:00.027Z",
+   "fundingRate": 1.0074e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.000010074",
+    "premium": "-0.0004194076",
+    "time": 1794333600027
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794333600027
+  },
+  {
+   "datetime": "2026-11-10T19:00:00.096Z",
+   "fundingRate": 1.24258e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000124258",
+    "premium": "-0.0004005936",
+    "time": 1794337200096
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794337200096
+  },
+  {
+   "datetime": "2026-11-10T20:00:00.047Z",
+   "fundingRate": 6.4407e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000064407",
+    "premium": "-0.0004484747",
+    "time": 1794340800047
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794340800047
+  },
+  {
+   "datetime": "2026-11-10T21:00:00.040Z",
+   "fundingRate": 7.8734e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000078734",
+    "premium": "-0.0004370128",
+    "time": 1794344400040
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794344400040
+  },
+  {
+   "datetime": "2026-11-10T22:00:00.067Z",
+   "fundingRate": 7.5045e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000075045",
+    "premium": "-0.0004399643",
+    "time": 1794348000067
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794348000067
+  },
+  {
+   "datetime": "2026-11-10T23:00:00.008Z",
+   "fundingRate": 3.8936e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000038936",
+    "premium": "-0.0004688511",
+    "time": 1794351600008
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794351600008
+  },
+  {
+   "datetime": "2026-11-11T00:00:00.029Z",
+   "fundingRate": 1.10498e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000110498",
+    "premium": "-0.0004116013",
+    "time": 1794355200029
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794355200029
+  },
+  {
+   "datetime": "2026-11-11T01:00:00.030Z",
+   "fundingRate": 4.7219e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000047219",
+    "premium": "-0.0004622251",
+    "time": 1794358800030
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794358800030
+  },
+  {
+   "datetime": "2026-11-11T02:00:00.047Z",
+   "fundingRate": 1.01295e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000101295",
+    "premium": "-0.0004189638",
+    "time": 1794362400047
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794362400047
+  },
+  {
+   "datetime": "2026-11-11T03:00:00.062Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003843596",
+    "time": 1794366000062
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794366000062
+  },
+  {
+   "datetime": "2026-11-11T04:00:00.041Z",
+   "fundingRate": 7.3969e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000073969",
+    "premium": "-0.0004408246",
+    "time": 1794369600041
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794369600041
+  },
+  {
+   "datetime": "2026-11-11T05:00:00.012Z",
+   "fundingRate": 9.6139e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000096139",
+    "premium": "-0.0004230886",
+    "time": 1794373200012
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794373200012
+  },
+  {
+   "datetime": "2026-11-11T06:00:00.031Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003456178",
+    "time": 1794376800031
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794376800031
+  },
+  {
+   "datetime": "2026-11-11T07:00:00.027Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002989741",
+    "time": 1794380400027
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794380400027
+  },
+  {
+   "datetime": "2026-11-11T08:00:00.021Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003332162",
+    "time": 1794384000021
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794384000021
+  },
+  {
+   "datetime": "2026-11-11T09:00:00.005Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.000320618",
+    "time": 1794387600005
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794387600005
+  },
+  {
+   "datetime": "2026-11-11T10:00:00.056Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003490735",
+    "time": 1794391200056
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794391200056
+  },
+  {
+   "datetime": "2026-11-11T11:00:00.086Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003223908",
+    "time": 1794394800086
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794394800086
+  },
+  {
+   "datetime": "2026-11-11T12:00:00.057Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003130685",
+    "time": 1794398400057
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794398400057
+  },
+  {
+   "datetime": "2026-11-11T13:00:00.008Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002648443",
+    "time": 1794402000008
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794402000008
+  },
+  {
+   "datetime": "2026-11-11T14:00:00.043Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003864437",
+    "time": 1794405600043
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794405600043
+  },
+  {
+   "datetime": "2026-11-11T15:00:00.023Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003926659",
+    "time": 1794409200023
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794409200023
+  },
+  {
+   "datetime": "2026-11-11T16:00:00.007Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003633943",
+    "time": 1794412800007
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794412800007
+  },
+  {
+   "datetime": "2026-11-11T17:00:00.044Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003988897",
+    "time": 1794416400044
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794416400044
+  },
+  {
+   "datetime": "2026-11-11T18:00:00.016Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003089691",
+    "time": 1794420000016
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794420000016
+  },
+  {
+   "datetime": "2026-11-11T19:00:00.026Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003439154",
+    "time": 1794423600026
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794423600026
+  },
+  {
+   "datetime": "2026-11-11T20:00:00.038Z",
+   "fundingRate": 9.3666e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000093666",
+    "premium": "-0.000425067",
+    "time": 1794427200038
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794427200038
+  },
+  {
+   "datetime": "2026-11-11T21:00:00.006Z",
+   "fundingRate": 7.6158e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000076158",
+    "premium": "-0.0004390735",
+    "time": 1794430800006
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794430800006
+  },
+  {
+   "datetime": "2026-11-11T22:00:00.027Z",
+   "fundingRate": 7.5895e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000075895",
+    "premium": "-0.000439284",
+    "time": 1794434400027
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794434400027
+  },
+  {
+   "datetime": "2026-11-11T23:00:00.021Z",
+   "fundingRate": -2.3436e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000023436",
+    "premium": "-0.0005187484",
+    "time": 1794438000021
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794438000021
+  },
+  {
+   "datetime": "2026-11-12T00:00:00.060Z",
+   "fundingRate": 1.4705e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000014705",
+    "premium": "-0.0004882357",
+    "time": 1794441600060
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794441600060
+  },
+  {
+   "datetime": "2026-11-12T01:00:00.008Z",
+   "fundingRate": 6.0322e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000060322",
+    "premium": "-0.0004517421",
+    "time": 1794445200008
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794445200008
+  },
+  {
+   "datetime": "2026-11-12T02:00:00.019Z",
+   "fundingRate": 9.6308e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000096308",
+    "premium": "-0.0004229537",
+    "time": 1794448800019
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794448800019
+  },
+  {
+   "datetime": "2026-11-12T03:00:00.039Z",
+   "fundingRate": 1.04771e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000104771",
+    "premium": "-0.0004161835",
+    "time": 1794452400039
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794452400039
+  },
+  {
+   "datetime": "2026-11-12T04:00:00.012Z",
+   "fundingRate": 1.5079e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000015079",
+    "premium": "-0.0004879372",
+    "time": 1794456000012
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794456000012
+  },
+  {
+   "datetime": "2026-11-12T05:00:00.010Z",
+   "fundingRate": 6.5548e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000065548",
+    "premium": "-0.0004475614",
+    "time": 1794459600010
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794459600010
+  },
+  {
+   "datetime": "2026-11-12T06:00:00.013Z",
+   "fundingRate": -2.365e-07,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000002365",
+    "premium": "-0.0005018921",
+    "time": 1794463200013
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794463200013
+  },
+  {
+   "datetime": "2026-11-12T07:00:00.018Z",
+   "fundingRate": 2.5522e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000025522",
+    "premium": "-0.0004795821",
+    "time": 1794466800018
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794466800018
+  },
+  {
+   "datetime": "2026-11-12T08:00:00.033Z",
+   "fundingRate": 1.4053e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000014053",
+    "premium": "-0.0004887575",
+    "time": 1794470400033
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794470400033
+  },
+  {
+   "datetime": "2026-11-12T09:00:00.048Z",
+   "fundingRate": -8.896e-07,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000008896",
+    "premium": "-0.0005071171",
+    "time": 1794474000048
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794474000048
+  },
+  {
+   "datetime": "2026-11-12T10:00:00.004Z",
+   "fundingRate": 4.6375e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000046375",
+    "premium": "-0.0004629003",
+    "time": 1794477600004
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794477600004
+  },
+  {
+   "datetime": "2026-11-12T11:00:00.019Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003412212",
+    "time": 1794481200019
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794481200019
+  },
+  {
+   "datetime": "2026-11-12T12:00:00.033Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003989112",
+    "time": 1794484800033
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794484800033
+  },
+  {
+   "datetime": "2026-11-12T13:00:00.053Z",
+   "fundingRate": 4.983e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.000004983",
+    "premium": "-0.0004601362",
+    "time": 1794488400053
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794488400053
+  },
+  {
+   "datetime": "2026-11-12T14:00:00.061Z",
+   "fundingRate": -7.0513e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "-0.0000070513",
+    "premium": "-0.0005564107",
+    "time": 1794492000061
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794492000061
+  },
+  {
+   "datetime": "2026-11-12T15:00:00.045Z",
+   "fundingRate": 3.3961e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000033961",
+    "premium": "-0.000472831",
+    "time": 1794495600045
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794495600045
+  },
+  {
+   "datetime": "2026-11-12T16:00:00.018Z",
+   "fundingRate": 1.04402e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000104402",
+    "premium": "-0.0004164786",
+    "time": 1794499200018
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794499200018
+  },
+  {
+   "datetime": "2026-11-12T17:00:00.022Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003609851",
+    "time": 1794502800022
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794502800022
+  },
+  {
+   "datetime": "2026-11-12T18:00:00.037Z",
+   "fundingRate": 1.22963e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000122963",
+    "premium": "-0.0004016292",
+    "time": 1794506400037
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794506400037
+  },
+  {
+   "datetime": "2026-11-12T19:00:00.035Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0002839267",
+    "time": 1794510000035
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794510000035
+  },
+  {
+   "datetime": "2026-11-12T20:00:00.012Z",
+   "fundingRate": 4.1657e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000041657",
+    "premium": "-0.0004666747",
+    "time": 1794513600012
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794513600012
+  },
+  {
+   "datetime": "2026-11-12T21:00:00.021Z",
+   "fundingRate": 4.5557e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000045557",
+    "premium": "-0.0004635547",
+    "time": 1794517200021
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794517200021
+  },
+  {
+   "datetime": "2026-11-12T22:00:00.008Z",
+   "fundingRate": 1.2477e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.000012477",
+    "premium": "-0.0004001843",
+    "time": 1794520800008
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794520800008
+  },
+  {
+   "datetime": "2026-11-12T23:00:00.006Z",
+   "fundingRate": 7.4e-06,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000074",
+    "premium": "-0.0004407996",
+    "time": 1794524400006
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794524400006
+  },
+  {
+   "datetime": "2026-11-13T00:00:00.015Z",
+   "fundingRate": 1.25e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000125",
+    "premium": "-0.0003923882",
+    "time": 1794528000015
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794528000015
+  },
+  {
+   "datetime": "2026-11-13T01:00:00.030Z",
+   "fundingRate": 1.12094e-05,
+   "info": {
+    "coin": "ETH",
+    "fundingRate": "0.0000112094",
+    "premium": "-0.0004103247",
+    "time": 1794531600030
+   },
+   "symbol": "ETH/USDC:USDC",
+   "timestamp": 1794531600030
+  }
+ ],
+ "key": "CCXT hyperliquid.fetch_funding_rate_history [[\"ETH/USDC:USDC\", 1794268800000, 500], {}]",
+ "status": 200
+}

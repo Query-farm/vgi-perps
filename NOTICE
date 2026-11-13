@@ -1,0 +1,32 @@
+vgi-perps
+Copyright 2026 Query Farm LLC - https://query.farm
+
+This product is licensed under the MIT License. See LICENSE.
+
+------------------------------------------------------------------------------
+
+Venue market data
+
+This software reads public market-data APIs. The market data it returns
+belongs to each venue (or its licensors), is not covered by the MIT License
+above, and is subject to that venue's terms:
+
+  Kalshi (KalshiEX LLC)          https://kalshi.com/developer-agreement
+                                 https://kalshi.com/terms
+  Coinbase Derivatives, LLC      https://www.coinbase.com/legal/market_data
+  Bitnomial                      https://bitnomial.com/terms
+  Hyperliquid                    https://hyperliquid.xyz
+  Binance                        https://www.binance.com/en/terms
+  Bybit                          https://www.bybit.com/en/help-center/article/API-Terms
+
+Several of these terms restrict storing, aggregating or redistributing the
+data; see docs/VENUES.md before building anything that does.
+
+Tests replay small, trimmed recordings of these venues' public responses
+(tests/fixtures/venues), kept for testing this software only.
+
+The offshore adapter uses ccxt (MIT License, https://github.com/ccxt/ccxt).
+
+Neither this software nor Query Farm LLC is affiliated with, endorsed by, or
+sponsored by any venue named above. Venue names are trademarks of their
+respective owners and are used only to describe what this software connects to.

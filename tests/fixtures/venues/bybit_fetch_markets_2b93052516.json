@@ -1,0 +1,5 @@
+{
+ "body": "RateLimitExceeded: bybit GET https://api.bybit.com/v5/market/instruments-info?category=linear&limit=1000 403 Forbidden {\n    error:The Amazon CloudFront distribution is configured to block access from your country\n}",
+ "key": "CCXT bybit.fetch_markets [[], {}]",
+ "status": 599
+}

@@ -12,5 +12,8 @@
   "optional_files": [
     ".github/workflows/nightly.yml",
     ".github/dependabot.yml"
-  ]
+  ],
+  "name": "perps",
+  "repo": "Query-farm/vgi-perps",
+  "initialized": "2026-11-12"
 }

@@ -1,0 +1,92 @@
+{
+ "body": {
+  "data": [
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-10T01:00:00Z",
+    "interval_start": "2026-11-09T17:00:00Z",
+    "mark_price": 8660,
+    "price_index": 8662,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-10T09:00:00Z",
+    "interval_start": "2026-11-10T01:00:00Z",
+    "mark_price": 8594,
+    "price_index": 8598,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-10T17:00:00Z",
+    "interval_start": "2026-11-10T09:00:00Z",
+    "mark_price": 8220,
+    "price_index": 8221,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-11T01:00:00Z",
+    "interval_start": "2026-11-10T17:00:00Z",
+    "mark_price": 8321,
+    "price_index": 8324,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-11T09:00:00Z",
+    "interval_start": "2026-11-11T01:00:00Z",
+    "mark_price": 8324,
+    "price_index": 8326,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-11T17:00:00Z",
+    "interval_start": "2026-11-11T09:00:00Z",
+    "mark_price": 8476,
+    "price_index": 8476,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-12T01:00:00Z",
+    "interval_start": "2026-11-11T17:00:00Z",
+    "mark_price": 8318,
+    "price_index": 8318,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-12T09:00:00Z",
+    "interval_start": "2026-11-12T01:00:00Z",
+    "mark_price": 8288,
+    "price_index": 8291,
+    "product_id": 5609
+   },
+   {
+    "funding_rate": 0.0001,
+    "interest_rate": 0.0001,
+    "interval_end": "2026-11-12T17:00:00Z",
+    "interval_start": "2026-11-12T09:00:00Z",
+    "mark_price": 8159,
+    "price_index": 8161,
+    "product_id": 5609
+   }
+  ],
+  "pagination": {
+   "cursor": "AAAAAAAAOMYAAO%2BsANltE2RBAAA%3D"
+  }
+ },
+ "key": "GET https://bitnomial.com/exchange/api/v1/funding-rates/?begin_time=2026-11-10T00%3A00%3A00Z&end_time=2026-11-12T23%3A59%3A59Z&limit=500&order=asc&product_id=5609",
+ "status": 200
+}

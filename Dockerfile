@@ -6,12 +6,12 @@ FROM python:3.13-slim
 
 ARG VERSION=0.0.0
 ARG GIT_COMMIT=unknown
-LABEL org.opencontainers.image.title="vgi-starter-worker" \
-      org.opencontainers.image.description="A VGI worker for DuckDB" \
-      org.opencontainers.image.source="https://github.com/Query-farm/vgi-starter-python" \
+LABEL org.opencontainers.image.title="vgi-perps-worker" \
+      org.opencontainers.image.description="Cross-venue perpetual futures market data for DuckDB (VGI worker)" \
+      org.opencontainers.image.source="https://github.com/Query-farm/vgi-perps" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.revision="${GIT_COMMIT}" \
-      org.opencontainers.image.licenses="0BSD"
+      org.opencontainers.image.licenses="MIT"
 
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1 PORT=8000
 WORKDIR /app
