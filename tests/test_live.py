@@ -130,3 +130,11 @@ def test_og_settlements_fall_on_the_8h_funding_times() -> None:
     assert len(pts) >= 5 and all(p.funding_time.hour % 8 == 0 for p in pts)
     nxt = og.funding_estimates([inst])
     assert nxt and not nxt[0].is_final and nxt[0].funding_time > end
+
+
+def test_hyperliquid_hip3_markets_load_and_fund() -> None:
+    h = ADAPTERS["hyperliquid"]
+    hip3 = [i for i in h.instruments() if i.extra.get("dex")]
+    assert len(hip3) > 50 and all(":" in i.symbol and ":" not in i.underlying for i in hip3)
+    nvda = [i for i in hip3 if i.symbol == "xyz:NVDA"]
+    assert nvda and h.funding(nvda, datetime.now(UTC) - timedelta(days=1), datetime.now(UTC))

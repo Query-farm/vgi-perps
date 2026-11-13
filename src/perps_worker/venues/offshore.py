@@ -20,6 +20,14 @@ Normalization (see docs/VENUES.md):
   leverage, so ``maintenance_margin_rate = 0.5 / max_leverage`` (first tier).
 * Because these venues list hundreds of contracts, the per-symbol calls
   (funding history, estimates, marks) require an ``underlying`` filter.
+* Hyperliquid HIP-3 (builder-deployed) markets are included: ccxt names them
+  ``xyz:GOLD`` and that stays the ``symbol``; the ``underlying`` is the name with
+  the dex prefix stripped (``GOLD``), so tickers shared with other venues join
+  (``NVDA``). No further mapping: ``GOLD`` does not become ``XAU``. Builders do
+  not publish an asset class (``unknown``), a funding cap, or a maintenance
+  schedule (their margin tables are deployer-set), so those stay NULL. The same
+  stripped name can mean different things on different dexes (main-dex ``STX``
+  is Stacks; ``para:STX`` is Seagate): the ``dex`` column tells them apart.
 """
 
 from __future__ import annotations
@@ -54,25 +62,28 @@ def instrument_from_market(venue: str, market: dict[str, Any]) -> Instrument | N
     """Normalize one ccxt unified market; ``None`` for anything not a live linear perp."""
     if not market.get("swap") or not market.get("linear") or market.get("active") is False:
         return None
-    base = str(market.get("baseName") or market.get("base") or "")
-    underlying, multiplier = split_unit_prefix(base)
-    if not underlying or "-" in underlying or ":" in str(market.get("id", "")):
-        return None
     info = market.get("info") or {}
+    dex = str(info.get("dex") or "") if venue == "hyperliquid" and info.get("hip3") else ""
+    base = str(market.get("baseName") or market.get("base") or "")
+    if dex:
+        base = base.split(":", 1)[1] if ":" in base else base
+    underlying, multiplier = split_unit_prefix(base)
+    if not underlying or "-" in underlying or ":" in underlying or ":" in str(market.get("id", "")):
+        return None
     contract = (to_float(market.get("contractSize")) or 1.0) * multiplier
     factor = 1.0 / multiplier
     tick = to_float((market.get("precision") or {}).get("price"))
     max_leverage = to_float(((market.get("limits") or {}).get("leverage") or {}).get("max"))
     if venue == "hyperliquid":
         max_leverage = to_float(info.get("maxLeverage")) or max_leverage
-    mm = 0.5 / max_leverage if venue == "hyperliquid" and max_leverage else None
+    mm = 0.5 / max_leverage if venue == "hyperliquid" and max_leverage and not dex else None
     quote = str(market.get("settle") or market.get("quote") or "")
     return Instrument(
         venue=venue,
         # Hyperliquid's ccxt id is an asset index ("0"); its coin name ("BTC", "kPEPE") is the symbol.
         symbol=str(info.get("name") or market["id"]) if venue == "hyperliquid" else str(market["id"]),
         underlying=underlying.upper(),
-        asset_class="crypto",
+        asset_class="unknown" if dex else "crypto",
         quote_ccy=quote,
         instrument_type="perpetual",
         status="active",
@@ -81,16 +92,20 @@ def instrument_from_market(venue: str, market: dict[str, Any]) -> Instrument | N
         native_price_unit=f"{quote} per {base}" if multiplier == 1.0 else f"{quote} per {base} ({multiplier:g} units)",
         tick_size=None if tick is None else tick * factor,
         funding_interval_hours=_funding_interval(venue, market),
-        funding_cap=0.005 if venue == "hyperliquid" else None,
+        funding_cap=0.005 if venue == "hyperliquid" and not dex else None,
         max_leverage=max_leverage,
         initial_margin_rate=None if not max_leverage else 1.0 / max_leverage,
         maintenance_margin_rate=mm,
         margin_source=(
             "hyperliquid docs: maintenance = half of initial margin at max leverage (first margin tier)"
             if mm
-            else ("ccxt limits.leverage.max (initial only)" if max_leverage else None)
+            else (
+                "hyperliquid HIP-3 maxLeverage (initial only; the builder's margin table is not published)"
+                if dex and max_leverage
+                else ("ccxt limits.leverage.max (initial only)" if max_leverage else None)
+            )
         ),
-        extra={"ccxt_symbol": str(market["symbol"])},
+        extra={"ccxt_symbol": str(market["symbol"]), **({"dex": dex} if dex else {})},
     )
 
 
@@ -159,10 +174,22 @@ class OffshoreAdapter(Adapter):
             out += [FundingPoint(inst, when, rate, hours, True) for when, rate in rows.items()]
         return out
 
+    def _groups(self, instruments: list[Instrument]) -> list[list[str]]:
+        """Split ccxt symbols into the groups one ccxt call can serve (one group, except Hyperliquid)."""
+        return [[i.extra["ccxt_symbol"] for i in instruments]] if instruments else []
+
     def _funding_rates(self, instruments: list[Instrument]) -> dict[str, dict[str, Any]]:
-        symbols = self._narrow(instruments, "funding estimates")
-        result = self._call("fetch_funding_rates", symbols)
-        return {str(k): v for k, v in (result or {}).items()}
+        self._narrow(instruments, "funding estimates")
+        out: dict[str, dict[str, Any]] = {}
+        for group in self._groups(instruments):
+            out.update({str(k): v for k, v in (self._call("fetch_funding_rates", group) or {}).items()})
+        return out
+
+    def _tickers(self, instruments: list[Instrument]) -> dict[str, dict[str, Any]]:
+        out: dict[str, dict[str, Any]] = {}
+        for group in self._groups(instruments):
+            out.update({str(k): v for k, v in (self._call("fetch_tickers", group) or {}).items()})
+        return out
 
     def funding_estimates(self, instruments: list[Instrument]) -> list[FundingPoint]:
         """Return the venue's current (provisional) rate for the in-progress interval."""
@@ -191,7 +218,7 @@ class OffshoreAdapter(Adapter):
     def marks(self, instruments: list[Instrument]) -> list[Mark]:
         """Mark/index/funding from ``fetch_funding_rates``, bid/ask/last from ``fetch_tickers``."""
         rates = self._funding_rates(instruments)
-        tickers = self._call("fetch_tickers", [i.extra["ccxt_symbol"] for i in instruments]) or {}
+        tickers = self._tickers(instruments)
         as_of = replay.now()
         out = []
         for inst in instruments:
@@ -316,10 +343,12 @@ def _capabilities(note: str, margin: Capability) -> dict[str, Capability]:
 
 
 class HyperliquidAdapter(OffshoreAdapter):
-    """Hyperliquid perps (main dex)."""
+    """Hyperliquid perps: the main dex plus HIP-3 builder-deployed dexes (xyz, para, io, ...)."""
 
     name = "hyperliquid"
     display_name = "Hyperliquid (offshore benchmark)"
+    #: Loading markets costs one request per HIP-3 dex plus two; cache them longer.
+    instrument_ttl = 600.0
     regulator = "none (decentralized; not available to US persons per its terms)"
     capabilities = {
         **_capabilities(
@@ -330,6 +359,13 @@ class HyperliquidAdapter(OffshoreAdapter):
             "unsupported", False, "n/a", "no public REST trade history (ccxt fetchTrades needs a wallet address)"
         ),
     }
+
+    def _groups(self, instruments: list[Instrument]) -> list[list[str]]:
+        """One group per dex: ccxt infers a single dex for funding rates and tickers from the symbol list."""
+        by_dex: dict[str, list[str]] = {}
+        for inst in instruments:
+            by_dex.setdefault(inst.extra.get("dex", ""), []).append(inst.extra["ccxt_symbol"])
+        return [by_dex[dex] for dex in sorted(by_dex)]
 
     def trades(self, inst: Instrument, start: datetime, end: datetime, cursor: str) -> tuple[list[Trade], str | None]:
         """Hyperliquid publishes public trades on WebSocket only."""

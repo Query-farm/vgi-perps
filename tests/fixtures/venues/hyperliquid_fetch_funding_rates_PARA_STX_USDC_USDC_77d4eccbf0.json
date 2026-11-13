@@ -1,0 +1,49 @@
+{
+ "body": {
+  "PARA-STX/USDC:USDC": {
+   "datetime": null,
+   "estimatedSettlePrice": null,
+   "fundingDatetime": "2026-11-13T18:00:00.000Z",
+   "fundingRate": 7.5e-06,
+   "fundingTimestamp": 1794592800000,
+   "indexPrice": 520.61,
+   "info": {
+    "dayBaseVlm": "34.018",
+    "dayNtlVlm": "18306.69697",
+    "deployerFeeScale": "1.0",
+    "funding": "0.0000075",
+    "growthMode": "enabled",
+    "impactPxs": [
+     "519.676",
+     "521.15"
+    ],
+    "lastFeeScaleChangeTime": "2026-07-23T11:04:24.867897798",
+    "marginMode": "noCross",
+    "marginTableId": 10,
+    "markPx": "520.61",
+    "maxLeverage": 10,
+    "midPx": "520.415",
+    "name": "para:STX",
+    "onlyIsolated": true,
+    "openInterest": "680.01",
+    "oraclePx": "520.61",
+    "premium": "-0.0003784023",
+    "prevDayPx": "542.89",
+    "szDecimals": 3
+   },
+   "interestRate": null,
+   "interval": "1h",
+   "markPrice": 520.61,
+   "nextFundingDatetime": null,
+   "nextFundingRate": null,
+   "nextFundingTimestamp": null,
+   "previousFundingDatetime": null,
+   "previousFundingRate": null,
+   "previousFundingTimestamp": null,
+   "symbol": "PARA-STX/USDC:USDC",
+   "timestamp": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_funding_rates [[[\"PARA-STX/USDC:USDC\"]], {}]",
+ "status": 200
+}

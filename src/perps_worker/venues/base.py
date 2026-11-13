@@ -59,6 +59,8 @@ class Adapter:
     adapter_version: ClassVar[str] = "0.1.0"
     sign_convention: ClassVar[str]
     capabilities: ClassVar[dict[str, Capability]]
+    #: How long the instrument list is cached per process.
+    instrument_ttl: ClassVar[float] = INSTRUMENT_TTL_SECONDS
 
     def __init__(self) -> None:
         """Set up the per-process instrument cache."""
@@ -67,9 +69,9 @@ class Adapter:
 
     # ---------------------------------------------------------------- instruments
     def instruments(self) -> list[Instrument]:
-        """All instruments, cached for :data:`INSTRUMENT_TTL_SECONDS`."""
+        """All instruments, cached for :attr:`instrument_ttl` seconds."""
         with self._lock:
-            if self._cached and time.monotonic() - self._cached[0] < INSTRUMENT_TTL_SECONDS:
+            if self._cached and time.monotonic() - self._cached[0] < self.instrument_ttl:
                 return self._cached[1]
         fresh = self.load_instruments()
         with self._lock:

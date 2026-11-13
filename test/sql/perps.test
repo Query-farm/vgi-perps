@@ -27,7 +27,7 @@ binance	error	NULL
 bitnomial	ok	6
 bybit	error	NULL
 coinbase	ok	8
-hyperliquid	ok	6
+hyperliquid	ok	11
 kalshi	ok	14
 og	ok	3
 
@@ -654,3 +654,66 @@ query ITTT
 SELECT count(*), min(open), max(high), round(sum(volume_contracts), 4) FROM perps.main.candles('og', 'BTC-USD-PERP', bar := '1h', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:00:00+00');
 ----
 24	71350.4	74136.2	9.4653
+
+# ------------------------------------------------------- hyperliquid HIP-3
+# Builder-deployed dexes: symbol keeps the prefix, underlying drops it, dex names it.
+# km:US500 is inactive and filtered out; para:STX (Seagate) shares a name with main-dex STX (Stacks).
+query TTTTTT
+SELECT symbol, underlying, dex, asset_class, quote_ccy, funding_interval_hours FROM perps.main.instruments(venue := 'hyperliquid') WHERE dex IS NOT NULL OR underlying = 'STX' ORDER BY symbol;
+----
+STX	STX	NULL	crypto	USDC	1.0
+io:NVDA	NVDA	io	unknown	USDC	1.0
+para:STX	STX	para	unknown	USDC	1.0
+xyz:GOLD	GOLD	xyz	unknown	USDC	1.0
+xyz:NVDA	NVDA	xyz	unknown	USDC	1.0
+
+query I
+SELECT count(*) FROM perps.main.instruments(venue := 'hyperliquid', include_inactive := true) WHERE symbol = 'km:US500';
+----
+0
+
+# HIP-3 margin: max leverage only; no maintenance schedule or funding cap is published.
+query TTTT
+SELECT symbol, max_leverage, maintenance_margin_rate, funding_cap FROM perps.main.instruments(venue := 'hyperliquid', underlying := 'GOLD');
+----
+xyz:GOLD	25.0	NULL	NULL
+
+# The same ticker on two builder dexes: both are listed, told apart by symbol.
+query TTTT
+SELECT venue, symbol, count(*), round(avg(rate_annualized), 6) FROM perps.main.funding(venue := 'hyperliquid', underlying := 'NVDA', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') GROUP BY ALL ORDER BY ALL;
+----
+hyperliquid	io:NVDA	24	0.561187
+hyperliquid	xyz:NVDA	24	0.34809
+
+# Stripping the prefix lines HIP-3 stock perps up with Kalshi's on the same ticker.
+query TTTTTTTIIT
+SELECT venue_a, symbol_a, venue_b, symbol_b, round(annualized_a, 6), round(annualized_b, 6), round(spread_bps, 2), observations_a, observations_b, carry_trade FROM perps.main.funding_spread('NVDA', start_date := TIMESTAMPTZ '2026-11-10 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') ORDER BY ALL;
+----
+hyperliquid	io:NVDA	kalshi	KXNVDAPERP	0.513038	0.047559	4654.79	72	3	short hyperliquid / long kalshi
+hyperliquid	xyz:NVDA	kalshi	KXNVDAPERP	0.272673	0.047559	2251.14	72	3	short hyperliquid / long kalshi
+
+# No further mapping: Hyperliquid's GOLD does not join Kalshi's XAU.
+query TTTTT
+SELECT venue, symbol, mark_price, index_price, round(funding_rate_annualized, 6) FROM perps.main.marks(underlying := 'GOLD') ORDER BY ALL;
+----
+hyperliquid	xyz:GOLD	3879.4	3877.8	0.05475
+
+query TITT
+SELECT side, level, price, size_contracts FROM perps.main.order_book('hyperliquid', 'xyz:GOLD', depth := 2) ORDER BY side, level;
+----
+ask	1	3879.7	32.7491
+ask	2	3879.9	6.5357
+bid	1	3879.6	7.6553
+bid	2	3879.5	9.5151
+
+query ITT
+SELECT count(*), min(low), max(high) FROM perps.main.candles('hyperliquid', 'xyz:NVDA', bar := '1h', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:00:00+00');
+----
+24	148.86	168.52
+
+# Mixed dexes in one call: ccxt's fetch_funding_rates accepts one dex at a time, so calls are grouped per dex.
+query TTTTT
+SELECT symbol, mark_price IS NOT NULL, bid IS NOT NULL, funding_rate IS NOT NULL, mark_source FROM perps.main.marks(venue := 'hyperliquid', underlying := 'STX') ORDER BY symbol;
+----
+STX	true	true	true	venue_mark
+para:STX	true	true	true	venue_mark

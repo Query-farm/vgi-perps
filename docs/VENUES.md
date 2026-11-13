@@ -226,6 +226,25 @@ them as `status = 'error'` and cross-venue queries skip them with a warning.
   `mm = 0.5 / maxLeverage` (first margin tier; tiers above `lowerBound` notional are not
   modelled). Quote/settle USDC. `kPEPE`/`kSHIB` = 1000 coins. Public trades need a wallet
   address in ccxt → unsupported.
+- **Hyperliquid HIP-3 (builder-deployed dexes):** loaded with ccxt's `hip3` market type
+  ([HIP-3](https://hyperliquid.gitbook.io/hyperliquid-docs/hyperliquid-improvement-proposals-hips/hip-3-builder-deployed-perpetuals)).
+  *Probed* 13 Nov: 328 markets, 171 active: `xyz` 122 (US stocks, ETFs, `GOLD`, `SILVER`,
+  `CL`, FX, `XYZ100`, `SP500`), `para` 33 (stocks, rates `2Y`/`10Y`/`30Y`, crypto indices),
+  `io` 15, `mkts` 1; the rest (`km`, `hyna`, `flx`, `vntl`, `cash`, ...) inactive. All settle
+  in USDC (`collateralToken` 0) and fund hourly; ccxt's funding history, rates, tickers,
+  books and OHLCV all work on them. Normalization: `symbol` is the ccxt name with its
+  prefix (`xyz:NVDA`); `underlying` strips the prefix (`NVDA`) so a ticker shared with
+  Kalshi joins in `funding_spread` and `premium`; `dex` names the builder dex. There is no
+  further mapping, so `GOLD` and `SP500` do not join Kalshi's `XAU` and `US500`. At most two
+  active markets share a stripped name, but they need not be the same asset: main-dex
+  `STX` is Stacks and `para:STX` is Seagate. Builders publish no asset class
+  (`asset_class = 'unknown'`), funding cap or maintenance schedule (deployer-set margin
+  tables), so only `max_leverage` is reported and `liquidation_estimate` needs `mm_rate`.
+  Loading costs one `POST /info` per dex plus two, so the worker loads `xyz`, `para` and
+  `io` by default (`PERPS_HYPERLIQUID_DEXES=xyz,km` to choose, `none` for the main dex
+  only), caches the list for 10 minutes and retries HTTP 429. ccxt's `fetch_funding_rates`
+  "only supports symbols from one DEX at a time for HIP3 markets" (*probed*), so funding-rate
+  and ticker calls are made once per dex.
 - **Binance USD-M / Bybit linear:** ccxt unified `fundingRate`, positive = longs pay.
   Binance intervals vary per symbol and are inferred from history spacing; Bybit's
   `fundingInterval` (minutes) comes from instrument info. Maintenance brackets are

@@ -17,7 +17,8 @@ table functions:
 - **Bitnomial** perpetual futures.
 - **OG.com** crypto perpetuals (North American Derivatives Exchange, a Crypto.com
   affiliate; live since 2026-10-27), through Crypto.com's public FCM market-data API.
-- An **offshore benchmark**: Hyperliquid, Binance USD-M and Bybit, through ccxt.
+- An **offshore benchmark**: Hyperliquid (including its HIP-3 builder dexes: stock, ETF,
+  gold and FX perps such as `xyz:NVDA`), Binance USD-M and Bybit, through ccxt.
 
 The cross-venue comparison is the point, so every unit and sign is normalized in code:
 

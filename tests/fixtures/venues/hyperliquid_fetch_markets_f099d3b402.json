@@ -15,22 +15,22 @@
    "index": null,
    "info": {
     "baseId": 0,
-    "dayBaseVlm": "50089.85008",
-    "dayNtlVlm": "3614321707.6998105049",
+    "dayBaseVlm": "75409.3765999998",
+    "dayNtlVlm": "5255606919.7788333893",
     "funding": "0.0000125",
     "impactPxs": [
-     "70882.0",
-     "70886.0"
+     "68610.0",
+     "68611.0"
     ],
     "marginTableId": 56,
-    "markPx": "70892.0",
+    "markPx": "68611.0",
     "maxLeverage": 40,
-    "midPx": "70885.5",
+    "midPx": "68610.5",
     "name": "BTC",
-    "openInterest": "39540.00368",
-    "oraclePx": "70918.0",
-    "premium": "-0.0004512254",
-    "prevDayPx": "73814.0",
+    "openInterest": "39865.23636",
+    "oraclePx": "68628.7",
+    "premium": "-0.0002579096",
+    "prevDayPx": "71743.0",
     "szDecimals": 5
    },
    "inverse": false,
@@ -93,22 +93,22 @@
    "index": null,
    "info": {
     "baseId": 1,
-    "dayBaseVlm": "611502.5042000002",
-    "dayNtlVlm": "1233829553.1205501556",
-    "funding": "0.0000118607",
+    "dayBaseVlm": "742740.5151999985",
+    "dayNtlVlm": "1459095519.1584091187",
+    "funding": "0.0000060403",
     "impactPxs": [
-     "2008.5",
-     "2008.6"
+     "1924.1",
+     "1924.2"
     ],
     "marginTableId": 55,
-    "markPx": "2009.01",
+    "markPx": "1924.2",
     "maxLeverage": 25,
-    "midPx": "2008.55",
+    "midPx": "1924.15",
     "name": "ETH",
-    "openInterest": "734695.8442000001",
-    "oraclePx": "2009.93",
-    "premium": "-0.0006617146",
-    "prevDayPx": "2055.0",
+    "openInterest": "724912.5046000008",
+    "oraclePx": "1925.13",
+    "premium": "-0.0004830843",
+    "prevDayPx": "2006.6",
     "szDecimals": 4
    },
    "inverse": false,
@@ -171,22 +171,22 @@
    "index": null,
    "info": {
     "baseId": 5,
-    "dayBaseVlm": "2220319.6099999994",
-    "dayNtlVlm": "181538682.5974300802",
-    "funding": "0.0000115944",
+    "dayBaseVlm": "3655029.4699999969",
+    "dayNtlVlm": "292796089.0774698853",
+    "funding": "0.0000069717",
     "impactPxs": [
-     "81.4138",
-     "81.415"
+     "79.466",
+     "79.467"
     ],
     "marginTableId": 54,
-    "markPx": "81.4204",
+    "markPx": "79.466",
     "maxLeverage": 20,
-    "midPx": "81.4145",
+    "midPx": "79.4665",
     "name": "SOL",
-    "openInterest": "4106027.48",
-    "oraclePx": "81.455",
-    "premium": "-0.0004910687",
-    "prevDayPx": "83.229",
+    "openInterest": "4004899.0399999996",
+    "oraclePx": "79.5026",
+    "premium": "-0.0004477841",
+    "prevDayPx": "81.377",
     "szDecimals": 2
    },
    "inverse": false,
@@ -249,22 +249,22 @@
    "index": null,
    "info": {
     "baseId": 15,
-    "dayBaseVlm": "5423845656.0",
-    "dayNtlVlm": "24168630.7117379978",
+    "dayBaseVlm": "5914212075.0",
+    "dayNtlVlm": "26726600.3505530097",
     "funding": "0.0000125",
     "impactPxs": [
-     "0.004568",
-     "0.00457"
+     "0.00443",
+     "0.004431"
     ],
     "marginTableId": 52,
-    "markPx": "0.004567",
+    "markPx": "0.004431",
     "maxLeverage": 10,
-    "midPx": "0.004568",
+    "midPx": "0.00443",
     "name": "kPEPE",
-    "openInterest": "9619849482.0",
-    "oraclePx": "0.004572",
-    "premium": "-0.0004374453",
-    "prevDayPx": "0.004514",
+    "openInterest": "10504620124.0",
+    "oraclePx": "0.004432",
+    "premium": "-0.0002256318",
+    "prevDayPx": "0.004315",
     "szDecimals": 0
    },
    "inverse": false,
@@ -314,6 +314,84 @@
   },
   {
    "active": true,
+   "base": "STX",
+   "baseId": "19",
+   "baseName": "STX",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "19",
+   "index": null,
+   "info": {
+    "baseId": 19,
+    "dayBaseVlm": "6869162.0999999996",
+    "dayNtlVlm": "1980261.0610499992",
+    "funding": "0.0000125",
+    "impactPxs": [
+     "0.28935",
+     "0.28995"
+    ],
+    "marginTableId": 5,
+    "markPx": "0.28953",
+    "maxLeverage": 5,
+    "midPx": "0.2897",
+    "name": "STX",
+    "openInterest": "6340959.1999999993",
+    "oraclePx": "0.2897",
+    "premium": "0.0",
+    "prevDayPx": "0.29214",
+    "szDecimals": 1
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 5,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.1,
+    "price": 1e-05
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "STX/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": true,
    "base": "XRP",
    "baseId": "25",
    "baseName": "XRP",
@@ -327,22 +405,22 @@
    "index": null,
    "info": {
     "baseId": 25,
-    "dayBaseVlm": "51230054.0",
-    "dayNtlVlm": "53040889.3223000094",
-    "funding": "0.0000125",
+    "dayBaseVlm": "71121672.0",
+    "dayNtlVlm": "72671768.0317000151",
+    "funding": "0.0000110181",
     "impactPxs": [
-     "1.030205",
-     "1.0304"
+     "1.01509",
+     "1.0152"
     ],
     "marginTableId": 53,
-    "markPx": "1.0307",
+    "markPx": "1.0151",
     "maxLeverage": 20,
-    "midPx": "1.03035",
+    "midPx": "1.01515",
     "name": "XRP",
-    "openInterest": "89898362.0",
-    "oraclePx": "1.0311",
-    "premium": "-0.0006788866",
-    "prevDayPx": "1.0503",
+    "openInterest": "89162982.0",
+    "oraclePx": "1.015595",
+    "premium": "-0.0003889346",
+    "prevDayPx": "1.0242",
     "szDecimals": 0
    },
    "inverse": false,
@@ -405,22 +483,22 @@
    "index": null,
    "info": {
     "baseId": 38,
-    "dayBaseVlm": "108064955.0",
-    "dayNtlVlm": "465015.9214379999",
+    "dayBaseVlm": "216672464.0",
+    "dayNtlVlm": "926410.2870459999",
     "funding": "0.0000125",
     "impactPxs": [
-     "0.004346",
-     "0.004349"
+     "0.004276",
+     "0.004279"
     ],
     "marginTableId": 51,
-    "markPx": "0.004348",
+    "markPx": "0.004278",
     "maxLeverage": 10,
-    "midPx": "0.004348",
+    "midPx": "0.004278",
     "name": "kSHIB",
-    "openInterest": "665517000.0",
-    "oraclePx": "0.004349",
+    "openInterest": "726441388.0",
+    "oraclePx": "0.004278",
     "premium": "0.0",
-    "prevDayPx": "0.004341",
+    "prevDayPx": "0.004299",
     "szDecimals": 0
    },
    "inverse": false,
@@ -465,6 +543,425 @@
    "subType": null,
    "swap": true,
    "symbol": "KSHIB/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": true,
+   "base": "XYZ-NVDA",
+   "baseId": "110002",
+   "baseName": "xyz:NVDA",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "110002",
+   "index": null,
+   "info": {
+    "baseId": 110002,
+    "collateralToken": "0",
+    "dayBaseVlm": "6113559.0579999825",
+    "dayNtlVlm": "1010946880.8540682793",
+    "deployerFeeScale": "1.0",
+    "dex": "xyz",
+    "funding": "0.0000179191",
+    "growthMode": "enabled",
+    "hip3": true,
+    "impactPxs": [
+     "160.2",
+     "160.218"
+    ],
+    "lastFeeScaleChangeTime": "2025-11-23T17:37:10.033211662",
+    "marginTableId": 20,
+    "markPx": "160.2",
+    "maxLeverage": 20,
+    "midPx": "160.205",
+    "name": "xyz:NVDA",
+    "openInterest": "2501772.1379999984",
+    "oraclePx": "160.15",
+    "premium": "0.0003684046",
+    "prevDayPx": "165.22",
+    "szDecimals": 3
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 20,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.001,
+    "price": 0.01
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "XYZ-NVDA/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": true,
+   "base": "XYZ-GOLD",
+   "baseId": "110003",
+   "baseName": "xyz:GOLD",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "110003",
+   "index": null,
+   "info": {
+    "baseId": 110003,
+    "collateralToken": "0",
+    "dayBaseVlm": "16226.7627",
+    "dayNtlVlm": "63162355.9688499868",
+    "deployerFeeScale": "1.0",
+    "dex": "xyz",
+    "funding": "0.00000625",
+    "hip3": true,
+    "impactPxs": [
+     "3878.9",
+     "3879.03"
+    ],
+    "lastFeeScaleChangeTime": "1970-01-01T00:00:00",
+    "marginTableId": 25,
+    "markPx": "3879.0",
+    "maxLeverage": 25,
+    "midPx": "3878.95",
+    "name": "xyz:GOLD",
+    "openInterest": "74712.9488",
+    "oraclePx": "3877.5",
+    "premium": "0.0003778208",
+    "prevDayPx": "3882.2",
+    "szDecimals": 4
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 25,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.0001,
+    "price": 0.1
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "XYZ-GOLD/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": false,
+   "base": "KM-US500",
+   "baseId": "150000",
+   "baseName": "km:US500",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "150000",
+   "index": null,
+   "info": {
+    "baseId": 150000,
+    "collateralToken": "360",
+    "dayBaseVlm": "0.0",
+    "dayNtlVlm": "0.0",
+    "deployerFeeScale": "1.0",
+    "dex": "km",
+    "funding": "0.0",
+    "growthMode": "enabled",
+    "hip3": true,
+    "impactPxs": null,
+    "isDelisted": true,
+    "lastFeeScaleChangeTime": "2026-01-07T14:08:58.174529333",
+    "marginTableId": 25,
+    "markPx": "750.97",
+    "maxLeverage": 25,
+    "midPx": null,
+    "name": "km:US500",
+    "openInterest": "0.0",
+    "oraclePx": "749.64",
+    "premium": null,
+    "prevDayPx": "751.2",
+    "szDecimals": 3
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 25,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.001,
+    "price": 0.01
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "KM-US500/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": true,
+   "base": "PARA-STX",
+   "baseId": "180010",
+   "baseName": "para:STX",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "180010",
+   "index": null,
+   "info": {
+    "baseId": 180010,
+    "collateralToken": "0",
+    "dayBaseVlm": "34.018",
+    "dayNtlVlm": "18306.69697",
+    "deployerFeeScale": "1.0",
+    "dex": "para",
+    "funding": "0.0000075",
+    "growthMode": "enabled",
+    "hip3": true,
+    "impactPxs": [
+     "517.769",
+     "519.61"
+    ],
+    "lastFeeScaleChangeTime": "2026-07-23T11:04:24.867897798",
+    "marginMode": "noCross",
+    "marginTableId": 10,
+    "markPx": "518.64",
+    "maxLeverage": 10,
+    "midPx": "518.915",
+    "name": "para:STX",
+    "onlyIsolated": true,
+    "openInterest": "680.01",
+    "oraclePx": "518.5",
+    "premium": "0.0003654773",
+    "prevDayPx": "542.89",
+    "szDecimals": 3
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 10,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.001,
+    "price": 0.01
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "PARA-STX/USDC:USDC",
+   "taker": 0.00045,
+   "type": "swap"
+  },
+  {
+   "active": true,
+   "base": "IO-NVDA",
+   "baseId": "200014",
+   "baseName": "io:NVDA",
+   "contract": true,
+   "contractSize": 1.0,
+   "created": null,
+   "expiry": null,
+   "expiryDatetime": null,
+   "future": false,
+   "id": "200014",
+   "index": null,
+   "info": {
+    "baseId": 200014,
+    "collateralToken": "0",
+    "dayBaseVlm": "95532.9140000002",
+    "dayNtlVlm": "15829395.5985300038",
+    "deployerFeeScale": "1.0",
+    "dex": "io",
+    "funding": "0.00000625",
+    "growthMode": "enabled",
+    "hip3": true,
+    "impactPxs": [
+     "160.027",
+     "160.149"
+    ],
+    "lastFeeScaleChangeTime": "2026-10-27T14:54:43.587693751",
+    "marginTableId": 25,
+    "markPx": "160.19",
+    "maxLeverage": 25,
+    "midPx": "160.11",
+    "name": "io:NVDA",
+    "openInterest": "29679.07",
+    "oraclePx": "160.16",
+    "premium": "-0.0004495504",
+    "prevDayPx": "165.22",
+    "szDecimals": 3
+   },
+   "inverse": false,
+   "limits": {
+    "amount": {
+     "max": null,
+     "min": null
+    },
+    "cost": {
+     "max": null,
+     "min": 10.0
+    },
+    "leverage": {
+     "max": 25,
+     "min": null
+    },
+    "price": {
+     "max": null,
+     "min": null
+    }
+   },
+   "linear": true,
+   "lowercaseId": null,
+   "maker": 0.00015,
+   "margin": null,
+   "marginModes": {
+    "cross": null,
+    "isolated": null
+   },
+   "option": false,
+   "optionType": null,
+   "precision": {
+    "amount": 0.001,
+    "price": 0.01
+   },
+   "quote": "USDC",
+   "quoteId": "USDC",
+   "settle": "USDC",
+   "settleId": "USDC",
+   "spot": false,
+   "strike": null,
+   "subType": null,
+   "swap": true,
+   "symbol": "IO-NVDA/USDC:USDC",
    "taker": 0.00045,
    "type": "swap"
   }

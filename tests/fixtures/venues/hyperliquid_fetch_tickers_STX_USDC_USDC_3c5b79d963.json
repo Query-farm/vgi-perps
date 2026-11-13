@@ -1,0 +1,49 @@
+{
+ "body": {
+  "STX/USDC:USDC": {
+   "ask": 0.29104,
+   "askVolume": null,
+   "average": null,
+   "baseVolume": null,
+   "bid": 0.29035,
+   "bidVolume": null,
+   "change": null,
+   "close": 0.29067,
+   "datetime": null,
+   "high": null,
+   "indexPrice": null,
+   "info": {
+    "baseId": 19,
+    "dayBaseVlm": "6853408.6000000006",
+    "dayNtlVlm": "1975655.8136469997",
+    "funding": "0.0000125",
+    "impactPxs": [
+     "0.29035",
+     "0.29104"
+    ],
+    "marginTableId": 5,
+    "markPx": "0.29051",
+    "maxLeverage": 5,
+    "midPx": "0.29067",
+    "name": "STX",
+    "openInterest": "6339821.0",
+    "oraclePx": "0.2908",
+    "premium": "0.0",
+    "prevDayPx": "0.29063",
+    "szDecimals": 1
+   },
+   "last": 0.29067,
+   "low": null,
+   "markPrice": null,
+   "open": null,
+   "percentage": null,
+   "previousClose": 0.29063,
+   "quoteVolume": 1975655.8136469997,
+   "symbol": "STX/USDC:USDC",
+   "timestamp": null,
+   "vwap": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_tickers [[[\"STX/USDC:USDC\"]], {}]",
+ "status": 200
+}

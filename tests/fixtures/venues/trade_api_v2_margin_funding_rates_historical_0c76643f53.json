@@ -1,0 +1,26 @@
+{
+ "body": {
+  "funding_rates": [
+   {
+    "funding_rate": 2.7565074772e-05,
+    "funding_time": "2026-11-12T21:00:00Z",
+    "mark_price": "3.3206",
+    "market_ticker": "KXNVDAPERP"
+   },
+   {
+    "funding_rate": 6.90846821051e-05,
+    "funding_time": "2026-11-11T21:00:00Z",
+    "mark_price": "3.4765",
+    "market_ticker": "KXNVDAPERP"
+   },
+   {
+    "funding_rate": 0.0002942453190014,
+    "funding_time": "2026-11-10T21:00:00Z",
+    "mark_price": "3.3788",
+    "market_ticker": "KXNVDAPERP"
+   }
+  ]
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/funding_rates/historical?end_ts=1794527999&start_ts=1794268800&ticker=KXNVDAPERP",
+ "status": 200
+}

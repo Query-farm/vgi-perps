@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.5 (2026-11-13)
+
+- Hyperliquid now includes its HIP-3 builder-deployed dexes (`xyz`, `para`, `io`, `mkts`;
+  171 active markets: US stocks, ETFs, gold, silver, oil, FX, rate and index perps).
+  `symbol` keeps the dex prefix (`xyz:NVDA`); `underlying` drops it (`NVDA`), so tickers
+  shared with Kalshi pair up in `funding_spread` and `premium`. No further mapping
+  (`GOLD` is not `XAU`). New nullable `dex` column on `instruments()`. Builder markets
+  report `asset_class = 'unknown'` and no funding cap or maintenance margin.
+- Underlyings containing `:` are rejected on every ccxt venue.
+- HIP-3 dexes loaded: `xyz`, `para`, `io` (170 of 171 active markets), set with
+  `PERPS_HYPERLIQUID_DEXES`. Hyperliquid's market list is cached for 10 minutes and ccxt
+  calls retry HTTP 429 twice (0.5 s, 1 s). Funding-rate and ticker calls are grouped per dex
+  (ccxt refuses funding rates across HIP-3 dexes in one call).
+
 ## 0.1.4 (2026-11-13)
 
 - Fix: `marks(venue := 'og')` reported `next_funding_time` one window late (the rate

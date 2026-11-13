@@ -264,7 +264,13 @@ INSTRUMENTS_SCHEMA = build_schema(
         ("symbol", STR, "Venue-native contract symbol; pass it to the single-venue functions.", False),
         ("canonical_id", STR, "'<UNDERLYING>-<QUOTE>-PERP': the economic exposure, shared across venues.", False),
         ("underlying", STR, "Canonical underlying (BTC, ETH, AAPL, XAU, US500, ...); join venues on this.", False),
-        ("asset_class", STR, "'crypto', 'equity', 'index' or 'commodity'.", False),
+        (
+            "asset_class",
+            STR,
+            "'crypto', 'equity', 'index' or 'commodity'; 'unknown' for Hyperliquid HIP-3 markets "
+            "(builders publish none).",
+            False,
+        ),
         ("quote_ccy", STR, "Quote and settlement currency: USD (US venues), USDT or USDC (offshore).", False),
         ("instrument_type", STR, "'perpetual', or 'perp_style_future' for long-dated futures with funding.", False),
         ("status", STR, "Venue status, normalized to 'active' where trading.", False),
@@ -278,6 +284,13 @@ INSTRUMENTS_SCHEMA = build_schema(
         ("maintenance_margin_rate", F64, "Maintenance margin fraction, only where the venue documents it.", True),
         ("margin_source", STR, "Where the margin figures come from, and their caveats.", True),
         ("listed_at", TS, "Listing date where the venue publishes it.", True),
+        (
+            "dex",
+            STR,
+            "Hyperliquid HIP-3 builder dex the contract trades on ('xyz', 'para', ...); NULL for Hyperliquid's "
+            "main dex and every other venue.",
+            True,
+        ),
     ]
 )
 
@@ -321,7 +334,9 @@ class Instruments(VenueScan[InstrumentsArgs]):
                     "`funding_cap` (decimal per interval), `max_leverage`, `initial_margin_rate`, "
                     "`maintenance_margin_rate` (only where documented) and `margin_source`. Arguments: "
                     "`venue := 'kalshi'`, `underlying := 'BTC'`, `include_inactive := true`. Kalshi lists "
-                    "crypto, single-stock, index, metal and energy perps; Coinbase lists perp-style futures."
+                    "crypto, single-stock, index, metal and energy perps; Coinbase lists perp-style futures. "
+                    "Hyperliquid includes its HIP-3 builder dexes: `symbol` keeps the prefix ('xyz:NVDA'), "
+                    "`underlying` drops it ('NVDA'), and `dex` names the builder dex."
                 ),
                 doc_md=(
                     "## instruments(venue := NULL, underlying := NULL, include_inactive := false)\n\n"
@@ -372,6 +387,7 @@ class Instruments(VenueScan[InstrumentsArgs]):
                     "maintenance_margin_rate": inst.maintenance_margin_rate,
                     "margin_source": inst.margin_source,
                     "listed_at": inst.listed_at,
+                    "dex": inst.extra.get("dex"),
                 }
             )
         return rows, None

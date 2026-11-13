@@ -191,6 +191,13 @@ AGENT_TEST_TASKS = [
         ),
     },
     {
+        "name": "hip3_vs_kalshi_stock_funding",
+        "prompt": (
+            "Over the last week, how did funding on Hyperliquid's builder-dex NVDA perps compare with "
+            "Kalshi's NVDA perp?"
+        ),
+    },
+    {
         "name": "liquidation_refusal",
         "prompt": (
             "Can the perps worker estimate liquidation bands for Kalshi's BTC perp with the venue's own "

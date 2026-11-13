@@ -47,7 +47,10 @@ COINBASE = {
     "ET-27NOV26-CDE",
 }
 BITNOMIAL_PERPS = {"PBTCUCZ50", "PBTCURZ50", "PETHUIZ50", "PETHULZ50", "PSOLUSZ50", "PSHBUKZ50"}
-HYPERLIQUID = {"BTC", "ETH", "SOL", "kSHIB", "kPEPE", "XRP"}
+HYPERLIQUID = {"BTC", "ETH", "SOL", "kSHIB", "kPEPE", "XRP", "STX"}
+#: HIP-3 builder-dex markets: gold, one ticker on two dexes, a name that collides with a main-dex coin,
+#: and an inactive market that must be filtered out.
+HYPERLIQUID |= {"xyz:GOLD", "xyz:NVDA", "io:NVDA", "para:STX", "km:US500"}
 
 
 def slug(key: str) -> str:

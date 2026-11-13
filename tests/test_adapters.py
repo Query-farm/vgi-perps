@@ -444,6 +444,65 @@ def test_hyperliquid_recorded_markets_and_margin() -> None:
     assert pepe.underlying == "PEPE" and pepe.contract_size == 1000.0
 
 
+def test_hyperliquid_hip3_strips_the_dex_prefix_from_the_underlying_only() -> None:
+    h = HyperliquidAdapter()
+    gold = h.instrument("xyz:GOLD")
+    assert (gold.underlying, gold.extra["dex"], gold.asset_class) == ("GOLD", "xyz", "unknown")
+    assert gold.canonical_id == "GOLD-USDC-PERP"  # no further mapping: not XAU
+    assert gold.maintenance_margin_rate is None and gold.funding_cap is None  # builder tables unpublished
+    assert gold.max_leverage == 25.0
+    nvda = {i.symbol for i in h.instruments() if i.underlying == "NVDA"}
+    assert nvda == {"xyz:NVDA", "io:NVDA"}
+    # A stripped name can collide with a main-dex coin; dex tells them apart.
+    stx = {i.symbol: i.extra.get("dex") for i in h.instruments() if i.underlying == "STX"}
+    assert stx == {"STX": None, "para:STX": "para"}
+    assert "km:US500" not in {i.symbol for i in h.instruments()}  # inactive builder market
+
+
+def test_hip3_market_shape_without_recording() -> None:
+    market = _ccxt_market(
+        id="110003",
+        symbol="XYZ-NVDA/USDC:USDC",
+        base="XYZ-NVDA",
+        baseName="xyz:NVDA",
+        settle="USDC",
+        info={"name": "xyz:NVDA", "dex": "xyz", "hip3": True, "maxLeverage": 10},
+    )
+    inst = ccxt_inst("hyperliquid", market)
+    assert inst is not None and (inst.symbol, inst.underlying) == ("xyz:NVDA", "NVDA")
+    assert inst.funding_interval_hours == 1.0 and inst.max_leverage == 10.0
+    # The same shape on a non-Hyperliquid venue is not treated as HIP-3.
+    assert ccxt_inst("binance", market) is None
+
+
+def test_hyperliquid_groups_ccxt_calls_per_dex() -> None:
+    """ccxt rejects fetch_funding_rates across HIP-3 dexes, so each dex gets its own call."""
+    h = HyperliquidAdapter()
+    groups = h._groups([i for i in h.instruments() if i.underlying in ("NVDA", "STX")])
+    assert sorted(map(sorted, groups)) == [
+        ["IO-NVDA/USDC:USDC"],
+        ["PARA-STX/USDC:USDC"],
+        ["STX/USDC:USDC"],
+        ["XYZ-NVDA/USDC:USDC"],
+    ]
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [(None, ["xyz", "para", "io"]), ("xyz", ["xyz"]), (" xyz , km ", ["xyz", "km"]), ("none", []), ("", [])],
+)
+def test_hyperliquid_dex_setting(monkeypatch: pytest.MonkeyPatch, value: str | None, expected: list[str]) -> None:
+    from perps_worker import offshore_client
+
+    if value is None:
+        monkeypatch.delenv("PERPS_HYPERLIQUID_DEXES", raising=False)
+    else:
+        monkeypatch.setenv("PERPS_HYPERLIQUID_DEXES", value)
+    assert offshore_client.hyperliquid_dexes() == expected
+    options = offshore_client._options("hyperliquid")["fetchMarkets"]
+    assert options["types"] == (["swap", "hip3"] if expected else ["swap"])
+
+
 def test_offshore_needs_an_underlying() -> None:
     h = HyperliquidAdapter()
     with pytest.raises(VenueError, match="underlying"):
@@ -455,3 +514,64 @@ def test_geo_blocked_venue_raises_venue_error() -> None:
         BinanceAdapter().instruments()
     with pytest.raises(VenueError, match="403"):
         BybitAdapter().instruments()
+
+
+def test_market_list_is_cached_across_processes_and_handed_to_ccxt(
+    tmp_path: Any, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A fresh worker reuses the on-disk market list and never asks ccxt to load markets again."""
+    from perps_worker import offshore_client, replay
+
+    monkeypatch.delenv(replay.FIXTURES_ENV, raising=False)
+    monkeypatch.setenv("PERPS_CACHE_DIR", str(tmp_path))
+
+    class FakeExchange:
+        def __init__(self) -> None:
+            self.fetches = 0
+            self.injected: list[Any] = []
+
+        def fetch_markets(self) -> list[dict[str, Any]]:
+            self.fetches += 1
+            return [{"symbol": "BTC/USDC:USDC"}]
+
+        def set_markets(self, markets: list[Any]) -> None:
+            self.injected.append(markets)
+
+    first, second = FakeExchange(), FakeExchange()
+    monkeypatch.setattr(offshore_client, "_exchange", lambda _id: first)
+    assert offshore_client.call("hyperliquid", "fetch_markets") == [{"symbol": "BTC/USDC:USDC"}]
+    assert first.fetches == 1 and first.injected == [[{"symbol": "BTC/USDC:USDC"}]]
+    monkeypatch.setattr(offshore_client, "_exchange", lambda _id: second)  # a new worker process
+    assert offshore_client.call("hyperliquid", "fetch_markets") == [{"symbol": "BTC/USDC:USDC"}]
+    assert second.fetches == 0 and second.injected == [[{"symbol": "BTC/USDC:USDC"}]]
+
+
+def test_only_http_429_is_retried(monkeypatch: pytest.MonkeyPatch) -> None:
+    """ccxt reports Bybit's 403 geo-block as RateLimitExceeded; retrying it only adds seconds."""
+    import ccxt
+
+    from perps_worker import offshore_client, replay
+
+    monkeypatch.delenv(replay.FIXTURES_ENV, raising=False)
+    monkeypatch.setattr(offshore_client, "RETRY_BASE_SECONDS", 0.0)
+    calls = {"n": 0}
+
+    class Blocked:
+        def fetch_order_book(self, *_: Any) -> None:
+            calls["n"] += 1
+            raise ccxt.RateLimitExceeded("bybit GET https://api.bybit.com 403 Forbidden CloudFront")
+
+    class Throttled:
+        def fetch_order_book(self, *_: Any) -> None:
+            calls["n"] += 1
+            raise ccxt.RateLimitExceeded("hyperliquid POST https://api.hyperliquid.xyz/info 429 Too Many Requests")
+
+    monkeypatch.setattr(offshore_client, "_exchange", lambda _id: Blocked())
+    with pytest.raises(offshore_client.OffshoreError, match="403"):
+        offshore_client.call("bybit", "fetch_order_book", "BTC/USDT:USDT", 5)
+    assert calls["n"] == 1
+    calls["n"] = 0
+    monkeypatch.setattr(offshore_client, "_exchange", lambda _id: Throttled())
+    with pytest.raises(offshore_client.OffshoreError, match="429"):
+        offshore_client.call("hyperliquid", "fetch_order_book", "BTC/USDC:USDC", 5)
+    assert calls["n"] == offshore_client.RATE_LIMIT_RETRIES + 1

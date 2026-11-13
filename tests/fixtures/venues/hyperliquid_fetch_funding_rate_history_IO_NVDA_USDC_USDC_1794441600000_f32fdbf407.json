@@ -1,0 +1,510 @@
+{
+ "body": [
+  {
+   "datetime": "2026-11-12T00:00:00.060Z",
+   "fundingRate": 0.0001263671,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0001263671",
+    "premium": "0.0023218735",
+    "time": 1794441600060
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794441600060
+  },
+  {
+   "datetime": "2026-11-12T01:00:00.008Z",
+   "fundingRate": 0.0001262198,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0001262198",
+    "premium": "0.0023195166",
+    "time": 1794445200008
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794445200008
+  },
+  {
+   "datetime": "2026-11-12T02:00:00.019Z",
+   "fundingRate": 0.0001618027,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0001618027",
+    "premium": "0.002888844",
+    "time": 1794448800019
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794448800019
+  },
+  {
+   "datetime": "2026-11-12T03:00:00.039Z",
+   "fundingRate": 8.02889e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000802889",
+    "premium": "0.0015846224",
+    "time": 1794452400039
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794452400039
+  },
+  {
+   "datetime": "2026-11-12T04:00:00.012Z",
+   "fundingRate": 6.10539e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000610539",
+    "premium": "0.0012768626",
+    "time": 1794456000012
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794456000012
+  },
+  {
+   "datetime": "2026-11-12T05:00:00.010Z",
+   "fundingRate": 8.15918e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000815918",
+    "premium": "0.0016054694",
+    "time": 1794459600010
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794459600010
+  },
+  {
+   "datetime": "2026-11-12T06:00:00.013Z",
+   "fundingRate": 9.51273e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000951273",
+    "premium": "0.0018220375",
+    "time": 1794463200013
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794463200013
+  },
+  {
+   "datetime": "2026-11-12T07:00:00.018Z",
+   "fundingRate": 6.87627e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000687627",
+    "premium": "0.001400203",
+    "time": 1794466800018
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794466800018
+  },
+  {
+   "datetime": "2026-11-12T08:00:00.033Z",
+   "fundingRate": 6.54635e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000654635",
+    "premium": "0.0013474166",
+    "time": 1794470400033
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794470400033
+  },
+  {
+   "datetime": "2026-11-12T09:00:00.048Z",
+   "fundingRate": 7.11887e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000711887",
+    "premium": "0.0014390194",
+    "time": 1794474000048
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794474000048
+  },
+  {
+   "datetime": "2026-11-12T10:00:00.004Z",
+   "fundingRate": 8.22051e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000822051",
+    "premium": "0.0016152819",
+    "time": 1794477600004
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794477600004
+  },
+  {
+   "datetime": "2026-11-12T11:00:00.019Z",
+   "fundingRate": 7.48631e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000748631",
+    "premium": "0.0014978102",
+    "time": 1794481200019
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794481200019
+  },
+  {
+   "datetime": "2026-11-12T12:00:00.033Z",
+   "fundingRate": 6.86195e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000686195",
+    "premium": "0.0013979127",
+    "time": 1794484800033
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794484800033
+  },
+  {
+   "datetime": "2026-11-12T13:00:00.053Z",
+   "fundingRate": 5.97184e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000597184",
+    "premium": "0.0012554948",
+    "time": 1794488400053
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794488400053
+  },
+  {
+   "datetime": "2026-11-12T14:00:00.061Z",
+   "fundingRate": 7.25506e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000725506",
+    "premium": "0.0014608097",
+    "time": 1794492000061
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794492000061
+  },
+  {
+   "datetime": "2026-11-12T15:00:00.045Z",
+   "fundingRate": 7.3851e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.000073851",
+    "premium": "0.0014816165",
+    "time": 1794495600045
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794495600045
+  },
+  {
+   "datetime": "2026-11-12T16:00:00.018Z",
+   "fundingRate": 3.5403e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000035403",
+    "premium": "-0.0002433545",
+    "time": 1794499200018
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794499200018
+  },
+  {
+   "datetime": "2026-11-12T17:00:00.022Z",
+   "fundingRate": 6.25e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.00000625",
+    "premium": "-0.000060784",
+    "time": 1794502800022
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794502800022
+  },
+  {
+   "datetime": "2026-11-12T18:00:00.037Z",
+   "fundingRate": 2.01214e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000201214",
+    "premium": "0.000621943",
+    "time": 1794506400037
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794506400037
+  },
+  {
+   "datetime": "2026-11-12T19:00:00.035Z",
+   "fundingRate": 1.21207e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000121207",
+    "premium": "0.0004939319",
+    "time": 1794510000035
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794510000035
+  },
+  {
+   "datetime": "2026-11-12T20:00:00.012Z",
+   "fundingRate": 7.8588e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000078588",
+    "premium": "0.0004257407",
+    "time": 1794513600012
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794513600012
+  },
+  {
+   "datetime": "2026-11-12T21:00:00.021Z",
+   "fundingRate": 1.81803e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000181803",
+    "premium": "0.0005908847",
+    "time": 1794517200021
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794517200021
+  },
+  {
+   "datetime": "2026-11-12T22:00:00.008Z",
+   "fundingRate": 5.5292e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.000055292",
+    "premium": "0.001184672",
+    "time": 1794520800008
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794520800008
+  },
+  {
+   "datetime": "2026-11-12T23:00:00.006Z",
+   "fundingRate": 4.44616e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000444616",
+    "premium": "0.0010113849",
+    "time": 1794524400006
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794524400006
+  },
+  {
+   "datetime": "2026-11-13T00:00:00.015Z",
+   "fundingRate": 4.14372e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000414372",
+    "premium": "0.0009629957",
+    "time": 1794528000015
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794528000015
+  },
+  {
+   "datetime": "2026-11-13T01:00:00.030Z",
+   "fundingRate": 4.44811e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000444811",
+    "premium": "0.0010116984",
+    "time": 1794531600030
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794531600030
+  },
+  {
+   "datetime": "2026-11-13T02:00:00.054Z",
+   "fundingRate": 3.88203e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000388203",
+    "premium": "0.0009211255",
+    "time": 1794535200054
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794535200054
+  },
+  {
+   "datetime": "2026-11-13T03:00:00.011Z",
+   "fundingRate": 7.6136e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000076136",
+    "premium": "0.000421817",
+    "time": 1794538800011
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794538800011
+  },
+  {
+   "datetime": "2026-11-13T04:00:00.015Z",
+   "fundingRate": 8.6702e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000086702",
+    "premium": "0.0004387238",
+    "time": 1794542400015
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794542400015
+  },
+  {
+   "datetime": "2026-11-13T05:00:00.023Z",
+   "fundingRate": 2.04611e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000204611",
+    "premium": "0.0006273774",
+    "time": 1794546000023
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794546000023
+  },
+  {
+   "datetime": "2026-11-13T06:00:00.045Z",
+   "fundingRate": 1.38025e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000138025",
+    "premium": "0.0005208407",
+    "time": 1794549600045
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794549600045
+  },
+  {
+   "datetime": "2026-11-13T07:00:00.028Z",
+   "fundingRate": 1.90596e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000190596",
+    "premium": "0.000604954",
+    "time": 1794553200028
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794553200028
+  },
+  {
+   "datetime": "2026-11-13T08:00:00.062Z",
+   "fundingRate": 1.97283e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000197283",
+    "premium": "0.0006156526",
+    "time": 1794556800062
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794556800062
+  },
+  {
+   "datetime": "2026-11-13T09:00:00.020Z",
+   "fundingRate": 1.30746e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000130746",
+    "premium": "0.0005091943",
+    "time": 1794560400020
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794560400020
+  },
+  {
+   "datetime": "2026-11-13T10:00:00.017Z",
+   "fundingRate": 6.25e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.00000625",
+    "premium": "0.0003587777",
+    "time": 1794564000017
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794564000017
+  },
+  {
+   "datetime": "2026-11-13T11:00:00.086Z",
+   "fundingRate": 6.25e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.00000625",
+    "premium": "0.0002325814",
+    "time": 1794567600086
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794567600086
+  },
+  {
+   "datetime": "2026-11-13T12:00:00.038Z",
+   "fundingRate": 1.00017e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000100017",
+    "premium": "0.000460027",
+    "time": 1794571200038
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794571200038
+  },
+  {
+   "datetime": "2026-11-13T13:00:00.001Z",
+   "fundingRate": 6.25e-06,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.00000625",
+    "premium": "0.0003716457",
+    "time": 1794574800001
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794574800001
+  },
+  {
+   "datetime": "2026-11-13T14:00:00.060Z",
+   "fundingRate": 3.56023e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000356023",
+    "premium": "0.0008696369",
+    "time": 1794578400060
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794578400060
+  },
+  {
+   "datetime": "2026-11-13T15:00:00.002Z",
+   "fundingRate": 1.8909e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.000018909",
+    "premium": "0.0006025445",
+    "time": 1794582000002
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794582000002
+  },
+  {
+   "datetime": "2026-11-13T16:00:00.014Z",
+   "fundingRate": 1.37967e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000137967",
+    "premium": "0.0005207465",
+    "time": 1794585600014
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794585600014
+  },
+  {
+   "datetime": "2026-11-13T17:00:00.059Z",
+   "fundingRate": 2.25926e-05,
+   "info": {
+    "coin": "io:NVDA",
+    "fundingRate": "0.0000225926",
+    "premium": "0.0006614813",
+    "time": 1794589200059
+   },
+   "symbol": "IO-NVDA/USDC:USDC",
+   "timestamp": 1794589200059
+  }
+ ],
+ "key": "CCXT hyperliquid.fetch_funding_rate_history [[\"IO-NVDA/USDC:USDC\", 1794441600000, 500], {}]",
+ "status": 200
+}
