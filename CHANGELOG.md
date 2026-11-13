@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (2026-11-13)
+
+- Fix: Bitnomial funding history longer than one page failed with HTTP 400. Bitnomial returns its pagination cursor already percent-encoded and it was encoded a second time; cross-venue queries silently dropped Bitnomial. The cursor is now decoded before reuse (regression test added).
+
 ## 0.1.0 (2026-11-13)
 
 First version of the perps worker (catalog `perps`).
