@@ -28,6 +28,8 @@ from perps_worker.venues.offshore import (
 from perps_worker.venues.offshore import (
     instrument_from_market as ccxt_inst,
 )
+from perps_worker.venues.og import OgAdapter, is_funding_time, next_funding_time
+from perps_worker.venues.og import base_url as og_url
 
 T0 = datetime(2026, 11, 10, tzinfo=UTC)
 T1 = datetime(2026, 11, 12, 23, 59, 59, tzinfo=UTC)
@@ -291,6 +293,75 @@ def test_bitnomial_has_no_rest_book() -> None:
     b = BitnomialAdapter()
     with pytest.raises(VenueError, match="WebSocket"):
         b.order_book(b.instrument("PBTCUCZ50"), 5)
+
+
+# ------------------------------------------------------------------------ OG.com
+
+
+@pytest.mark.parametrize(
+    ("now", "expected"),
+    [
+        (datetime(2026, 11, 13, 1, 20, tzinfo=UTC), datetime(2026, 11, 13, 8, tzinfo=UTC)),
+        (datetime(2026, 11, 13, 8, tzinfo=UTC), datetime(2026, 11, 13, 16, tzinfo=UTC)),
+        (datetime(2026, 11, 13, 23, 59, 59, tzinfo=UTC), datetime(2026, 11, 14, tzinfo=UTC)),
+    ],
+)
+def test_og_next_funding_time_is_strictly_after(now: datetime, expected: datetime) -> None:
+    assert next_funding_time(now) == expected
+
+
+def test_og_funding_times() -> None:
+    assert is_funding_time(datetime(2026, 11, 13, 16, tzinfo=UTC))
+    assert not is_funding_time(datetime(2026, 11, 13, 15, tzinfo=UTC))
+    assert not is_funding_time(datetime(2026, 11, 13, 16, 0, 1, tzinfo=UTC))
+
+
+def test_og_instrument_units() -> None:
+    inst = OgAdapter().instrument("btc-usd-perp")
+    assert (inst.underlying, inst.contract_size, inst.price_factor, inst.tick_size) == ("BTC", 1.0, 1.0, 0.1)
+    assert inst.funding_interval_hours == 8.0
+    assert inst.max_leverage == pytest.approx(6.6666)
+    assert inst.listed_at == datetime(2026, 9, 4, 15, 49, 32, tzinfo=UTC)
+    assert inst.extra["index_symbol"] == "BTC-USD-INDEX@CdnaMargined"
+
+
+def test_og_settlements_are_the_8h_stamps_and_sign_is_native() -> None:
+    og = OgAdapter()
+    start, end = datetime(2026, 11, 1, tzinfo=UTC), datetime(2026, 11, 2, 8, tzinfo=UTC)
+    pts = sorted(og.funding([og.instrument("SEI-USD-PERP")], start, end), key=lambda p: p.funding_time)
+    assert [p.funding_time.hour for p in pts] == [0, 8, 16, 0, 8]
+    assert all(p.is_final and p.interval_hours == 8.0 for p in pts)
+    assert pts[2].rate == pytest.approx(-0.000205987)  # negative: shorts pay longs
+
+
+def test_og_trades_page_boundary_emits_each_trade_once(synthetic: Writer) -> None:
+    """A full page drops its oldest millisecond and the next page re-reads it (end_ts is exclusive)."""
+    base = og_url()
+    row = {"symbol": "X-USD-PERP", "inst_type": "PERPETUAL_SWAP", "base_ccy": "X", "tradable": True}
+    synthetic(f"{base}/get-instruments", {"inst_type": "PERPETUAL_SWAP"}, {"result": {"data": [row]}})
+    start = datetime(2026, 11, 12, tzinfo=UTC)
+    end = start + timedelta(hours=1)
+    s_ms, e_ms = int(start.timestamp() * 1000), int(end.timestamp() * 1000)
+    m = s_ms + 1000
+
+    def trade(i: int, ms: int) -> dict[str, Any]:
+        return {"d": str(i), "t": ms, "p": "100", "q": "1", "s": "BUY"}
+
+    # Page 1: ids 0..147 at distinct ms above m, then ids 148 and 149 at m (id 150 at m is on page 2).
+    page1 = [trade(i, m + 148 - i) for i in range(148)] + [trade(148, m), trade(149, m)]
+    page2 = [trade(148, m), trade(149, m), trade(150, m), trade(151, m - 1)]
+    params = {"instrument_name": "X-USD-PERP", "count": 150, "start_ts": s_ms}
+    synthetic(f"{base}/get-trades", {**params, "end_ts": e_ms + 1}, {"result": {"data": page1}})
+    synthetic(f"{base}/get-trades", {**params, "end_ts": m + 1}, {"result": {"data": page2}})
+    og = OgAdapter()
+    inst = og.instrument("X-USD-PERP")
+    first, cursor = og.trades(inst, start, end, "")
+    assert (len(first), cursor) == (148, str(m + 1))
+    second, cursor = og.trades(inst, start, end, cursor or "")
+    assert cursor is None
+    ids = [t.trade_id for t in first + second]
+    assert sorted(ids, key=int) == [str(i) for i in range(152)]
+    assert {t.taker_side for t in first} == {"buy"}
 
 
 # ------------------------------------------------- offshore (ccxt unified shapes)

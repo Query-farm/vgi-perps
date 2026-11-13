@@ -1,0 +1,18 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-valuations",
+  "result": {
+   "data": [
+    {
+     "t": 1794532799008,
+     "v": "0.04305"
+    }
+   ],
+   "instrument_name": "SEI-USD-INDEX@CdnaMargined"
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-valuations?count=1&end_ts=1794532800001&instrument_name=SEI-USD-INDEX%40CdnaMargined&valuation_type=index_price",
+ "status": 200
+}

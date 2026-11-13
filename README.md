@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Compare Perpetual Futures Funding, Basis & Depth Across Kalshi, Coinbase & Bitnomial in DuckDB
+# Compare Perpetual Futures Funding, Basis & Depth Across Kalshi, Coinbase, Bitnomial & OG.com in DuckDB
 
 > **vgi-perps** · a [Query.Farm](https://query.farm) VGI worker · powered by public venue APIs and [ccxt](https://github.com/ccxt/ccxt)
 
@@ -15,6 +15,8 @@ table functions:
   2026-11-05), index, metals and energy perps.
 - **Coinbase Derivatives** perpetual-style futures (BIP, ETP, ...).
 - **Bitnomial** perpetual futures.
+- **OG.com** crypto perpetuals (North American Derivatives Exchange, a Crypto.com
+  affiliate; live since 2026-10-27), through Crypto.com's public FCM market-data API.
 - An **offshore benchmark**: Hyperliquid, Binance USD-M and Bybit, through ccxt.
 
 The cross-venue comparison is the point, so every unit and sign is normalized in code:
@@ -105,7 +107,8 @@ days before `end_date` (`now()`); trades default to the last hour.
 |---|---|
 | Coinbase funding history beyond the latest hourly rate | The FairX `/rest/funding-rate` endpoint answers `401 missing CB-ACCESS-KEY`; it needs clearing-member keys. |
 | Bitnomial order book and trades; Hyperliquid trades | WebSocket-only (Bitnomial) or a wallet address is required (Hyperliquid via ccxt). |
-| Maintenance margin for Kalshi, Coinbase, Bitnomial, Binance, Bybit | Not published as a schedule (Kalshi: authenticated portfolio-VaR inputs; Coinbase: only initial FCM rates; Bitnomial: an unlabelled rate; Binance: authenticated brackets). `liquidation_estimate` refuses rather than guesses. |
+| Maintenance margin for Kalshi, Coinbase, Bitnomial, OG.com, Binance, Bybit | Not published as a schedule (Kalshi: authenticated portfolio-VaR inputs; Coinbase: only initial FCM rates; Bitnomial: an unlabelled rate; OG.com: max leverage only; Binance: authenticated brackets). `liquidation_estimate` refuses rather than guesses. |
+| OG.com funding history beyond about 14 days | The public `funding_hist` series keeps about two weeks. |
 | Binance, Bybit from US networks | Geo-blocked (HTTP 451 / 403). Adapters are unit-tested on ccxt-shaped inputs but were not exercised live. |
 
 ## Testing
@@ -145,7 +148,8 @@ The data belongs to the venues and is subject to their terms; see [NOTICE](NOTIC
 terms matter for anything that stores or shares data: Kalshi's Developer Agreement limits
 API use to "facilitating a members own trading" and prohibits storing or sharing API data
 without written authorization; Bitnomial prohibits archiving and redistribution; Coinbase
-reserves redistribution to licensed partners. Details and quotes are in
+reserves redistribution to licensed partners; OG.com's user terms bar automated data
+gathering. Details and quotes are in
 [docs/VENUES.md](docs/VENUES.md#market-data-terms-of-use-gate-for-any-recorder--archive);
 the recorder design in [docs/ARCHIVE.md](docs/ARCHIVE.md) is gated on them. Not legal
 advice.
@@ -157,4 +161,4 @@ Written by [Query.Farm](https://query.farm). Released under the [MIT License](LI
 Copyright 2026 Query Farm LLC - https://query.farm
 
 This project is not affiliated with or endorsed by Kalshi, Coinbase, Bitnomial,
-Hyperliquid, Binance or Bybit.
+OG.com, Crypto.com, Hyperliquid, Binance or Bybit.

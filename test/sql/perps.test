@@ -29,6 +29,7 @@ bybit	error	NULL
 coinbase	ok	8
 hyperliquid	ok	6
 kalshi	ok	14
+og	ok	3
 
 query TTT
 SELECT venue, venue_type, sign_convention FROM perps.main.venues(probe := false) ORDER BY venue;
@@ -39,6 +40,7 @@ bybit	offshore	ccxt unified: positive = longs pay shorts (no flip)
 coinbase	us_regulated	native: positive = longs pay shorts (CFTC filing 2025-32 App. B; no flip)
 hyperliquid	offshore	ccxt unified: positive = longs pay shorts (no flip)
 kalshi	us_regulated	native: positive = longs pay shorts (no flip)
+og	us_regulated	native: positive = longs pay shorts (no flip)
 
 query TT
 SELECT venue, left(last_error, 40) FROM perps.main.venues() WHERE status = 'error' ORDER BY venue;
@@ -74,6 +76,8 @@ hyperliquid	open_interest	partial	false
 hyperliquid	premium_index	unsupported	false
 hyperliquid	trades	unsupported	false
 kalshi	maintenance_margin	unsupported	true
+og	maintenance_margin	unsupported	false
+og	premium_index	unsupported	false
 
 # ------------------------------------------------------------- instruments
 
@@ -87,6 +91,7 @@ bitnomial	PBTCURZ50	0.0001	5.0	8.0	0.0005	NULL	NULL
 coinbase	BIP-20DEC30-CDE	0.01	5.0	1.0	NULL	9.9921	NULL
 hyperliquid	BTC	1.0	1.0	1.0	0.005	40.0	0.0125
 kalshi	KXBTCPERP	0.0001	1.0	8.0	0.02	6.3858	NULL
+og	BTC-USD-PERP	1.0	0.1	8.0	NULL	6.6666	NULL
 
 # 1000x units: Kalshi kSHIB (1000 kSHIB x 1000 SHIB), Coinbase 1000SHIB (10000 x 1000), Hyperliquid kSHIB.
 query TTTT
@@ -152,6 +157,7 @@ SELECT venue, count(*), round(min(rate_per_interval), 10), round(max(rate_per_in
 ----
 bitnomial	54	0.0001	0.0001
 kalshi	66	-0.0006446722	0.0006275553
+og	27	0.0001	0.0001
 
 # Cross-venue BTC with estimates: Binance and Bybit fail and are skipped with a warning.
 query TTIIT
@@ -161,6 +167,7 @@ bitnomial	PBTCUCZ50	9	1	0.1095
 bitnomial	PBTCURZ50	9	1	0.1095
 hyperliquid	BTC	72	1	0.08642934
 kalshi	KXBTCPERP	9	1	0.14711568
+og	BTC-USD-PERP	9	1	0.1095
 
 # Bitnomial publishes mark and index (in ticks) with every settlement.
 query TTTTT
@@ -186,6 +193,7 @@ bitnomial	PBTCURZ50	71630.0	last_funding_mark	71630.0	0.0	0.0001	0.1095	315761.0
 coinbase	BIP-20DEC30-CDE	70817.5	mid	70742.374782	10.61955	5e-06	0.0438	201879.0	false
 hyperliquid	BTC	70938.0	venue_mark	70962.0	-3.382092	1.25e-05	0.1095	39552.01788	true
 kalshi	KXBTCPERP	70793.0	venue_mark	70825.0	-4.518179	0.0001233609	0.13508019	2628608.0	true
+og	BTC-USD-PERP	70882.1	venue_mark	70876.55	0.783052	0.0001	0.1095	4.0244	false
 
 query TI
 SELECT venue, count(*) FROM perps.main.marks() GROUP BY venue ORDER BY venue;
@@ -193,6 +201,7 @@ SELECT venue, count(*) FROM perps.main.marks() GROUP BY venue ORDER BY venue;
 bitnomial	6
 coinbase	8
 kalshi	12
+og	3
 
 # ----------------------------------------------------------------- premium
 
@@ -204,6 +213,7 @@ bitnomial	PETHULZ50	hyperliquid index	2010.2	-18.903592
 coinbase	ETP-20DEC30-CDE	hyperliquid index	2010.2	-15.918814
 hyperliquid	ETH	hyperliquid index	2010.2	-4.477166
 kalshi	KXETHPERP	hyperliquid index	2010.2	-19.401055
+og	ETH-USD-PERP	hyperliquid index	2010.2	-15.719829
 
 # ---------------------------------------------------------- funding_spread
 
@@ -212,9 +222,13 @@ SELECT venue_a, symbol_a, venue_b, symbol_b, round(annualized_a, 8), round(annua
 ----
 bitnomial	PBTCUCZ50	hyperliquid	BTC	0.1095	0.08642934	230.7066	9	72	short bitnomial / long hyperliquid
 bitnomial	PBTCUCZ50	kalshi	KXBTCPERP	0.1095	0.14711568	-376.1568	9	9	long bitnomial / short kalshi
+bitnomial	PBTCUCZ50	og	BTC-USD-PERP	0.1095	0.1095	0.0	9	9	flat
 bitnomial	PBTCURZ50	hyperliquid	BTC	0.1095	0.08642934	230.7066	9	72	short bitnomial / long hyperliquid
 bitnomial	PBTCURZ50	kalshi	KXBTCPERP	0.1095	0.14711568	-376.1568	9	9	long bitnomial / short kalshi
+bitnomial	PBTCURZ50	og	BTC-USD-PERP	0.1095	0.1095	0.0	9	9	flat
 hyperliquid	BTC	kalshi	KXBTCPERP	0.08642934	0.14711568	-606.8634	72	9	long hyperliquid / short kalshi
+hyperliquid	BTC	og	BTC-USD-PERP	0.08642934	0.1095	-230.7066	72	9	long hyperliquid / short og
+kalshi	KXBTCPERP	og	BTC-USD-PERP	0.14711568	0.1095	376.1568	9	9	short kalshi / long og
 
 # --------------------------------------------------------------- order book
 
@@ -481,7 +495,8 @@ SELECT bool_and(CASE symbol
     WHEN 'SHP-20DEC30-CDE' THEN near(contract_size, 1e7) AND near(tick_size, 1e-8)      -- 10000 x 1000SHIB; 0.00001 / 1000
     WHEN 'PBTCURZ50' THEN near(contract_size, 0.0001) AND near(tick_size, 5.0)          -- myrio BTC; tick = price_increment
     WHEN 'kSHIB' THEN near(contract_size, 1000.0)                                       -- Hyperliquid kSHIB = 1000 SHIB
-    ELSE true END) AND count(*) = 9
+    WHEN 'BTC-USD-PERP' THEN near(contract_size, 1.0) AND near(tick_size, 0.1)          -- OG quotes per coin, size in coins
+    ELSE true END) AND count(*) = 10
 FROM perps.main.instruments() WHERE underlying IN ('BTC', 'SHIB');
 ----
 true
@@ -587,3 +602,55 @@ SELECT * FROM perps.main.kalshi_funding_nowcast('KXBTCPERP', funding_time := TIM
 ----
 <REGEX>:.*not the next funding time.*
 
+
+# ------------------------------------------------------------------- og
+# OG.com's funding history is stamped hourly; only the 00:00/08:00/16:00 UTC
+# points are settlements, each an 8-hour rate.
+query TTT
+SELECT strftime(funding_time, '%Y-%m-%dT%H:%M:%SZ'), rate_per_interval, interval_hours FROM perps.main.funding(venue := 'og', underlying := 'BTC', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:59:59+00') ORDER BY funding_time;
+----
+2026-11-12T00:00:00Z	0.0001	8.0
+2026-11-12T08:00:00Z	0.0001	8.0
+2026-11-12T16:00:00Z	0.0001	8.0
+
+# The next rate is fixed one window ahead (the last estimate before the window opened); not final until it settles.
+query TTTT
+SELECT symbol, strftime(funding_time, '%Y-%m-%dT%H:%M:%SZ'), rate_per_interval, is_final FROM perps.main.funding(venue := 'og', start_date := TIMESTAMPTZ '2026-11-13 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 01:20:00+00', include_estimates := true) ORDER BY ALL;
+----
+BTC-USD-PERP	2026-11-13T00:00:00Z	0.0001	true
+BTC-USD-PERP	2026-11-13T08:00:00Z	0.0001	false
+ETH-USD-PERP	2026-11-13T00:00:00Z	0.0001	true
+ETH-USD-PERP	2026-11-13T08:00:00Z	0.0001	false
+SEI-USD-PERP	2026-11-13T00:00:00Z	0.0001	true
+SEI-USD-PERP	2026-11-13T08:00:00Z	0.0001	false
+
+# SEI went negative (shorts pay longs) in early November; the sign is native.
+query TTT
+SELECT strftime(funding_time, '%Y-%m-%dT%H:%M:%SZ'), rate_per_interval, round(rate_annualized, 8) FROM perps.main.funding(venue := 'og', underlying := 'SEI', start_date := TIMESTAMPTZ '2026-11-01 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-02 08:00:00+00') ORDER BY funding_time;
+----
+2026-11-01T00:00:00Z	0.0001	0.1095
+2026-11-01T08:00:00Z	-5.4796e-05	-0.06000162
+2026-11-01T16:00:00Z	-0.000205987	-0.22555577
+2026-11-02T00:00:00Z	-0.000129695	-0.14201603
+2026-11-02T08:00:00Z	-9.9701e-05	-0.1091726
+
+query TITT
+SELECT side, level, price, size_contracts FROM perps.main.order_book('og', 'BTC-USD-PERP', depth := 3) ORDER BY side, level;
+----
+ask	1	68374.4	0.12
+ask	2	68377.4	0.1462
+ask	3	68397.9	1.494
+bid	1	68340.6	0.12
+bid	2	68309.3	0.1463
+bid	3	68305.5	1.494
+
+# More than one 150-trade page: every trade once.
+query IIT
+SELECT count(*), count(DISTINCT trade_id), round(sum(size_contracts), 4) FROM perps.main.trades('og', 'BTC-USD-PERP', start_date := TIMESTAMPTZ '2026-11-12 18:00:00+00', end_date := TIMESTAMPTZ '2026-11-13 00:00:00+00');
+----
+223	223	1.9812
+
+query ITTT
+SELECT count(*), min(open), max(high), round(sum(volume_contracts), 4) FROM perps.main.candles('og', 'BTC-USD-PERP', bar := '1h', start_date := TIMESTAMPTZ '2026-11-12 00:00:00+00', end_date := TIMESTAMPTZ '2026-11-12 23:00:00+00');
+----
+24	71350.4	74136.2	9.4653

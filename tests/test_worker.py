@@ -14,6 +14,7 @@ def test_venues_reports_failures_as_rows(client: Client) -> None:
         "kalshi": "ok",
         "coinbase": "ok",
         "bitnomial": "ok",
+        "og": "ok",
         "hyperliquid": "ok",
         "binance": "error",
         "bybit": "error",
@@ -25,7 +26,7 @@ def test_venues_reports_failures_as_rows(client: Client) -> None:
 def test_cross_venue_query_skips_a_failing_venue(client: Client) -> None:
     # Binance and Bybit fail (recorded geo-blocks); the other venues still answer.
     t = run_table(client, "instruments", underlying="BTC")
-    assert set(t.column("venue").to_pylist()) == {"kalshi", "coinbase", "bitnomial", "hyperliquid"}
+    assert set(t.column("venue").to_pylist()) == {"kalshi", "coinbase", "bitnomial", "og", "hyperliquid"}
 
 
 def test_single_venue_query_raises(client: Client) -> None:
@@ -51,10 +52,11 @@ def test_empty_range_returns_no_rows(client: Client) -> None:
 
 def test_static_capabilities_cover_every_venue(client: Client) -> None:
     t = run_table(client, "capabilities")
-    assert t.num_rows == 6 * 10
+    assert t.num_rows == 7 * 10
     rows = {(r["venue"], r["capability"]): r for r in t.to_pylist()}
     assert rows[("coinbase", "funding_history")]["support"] == "partial"
     assert rows[("coinbase", "funding_history")]["auth_required"] is True
     assert rows[("bitnomial", "order_book")]["support"] == "unsupported"
     assert rows[("kalshi", "maintenance_margin")]["support"] == "unsupported"
     assert rows[("hyperliquid", "maintenance_margin")]["support"] == "supported"
+    assert rows[("og", "order_book")]["support"] == "supported"

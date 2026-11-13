@@ -10,7 +10,7 @@ from __future__ import annotations
 import itertools
 import statistics
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -27,7 +27,7 @@ def _live(monkeypatch: pytest.MonkeyPatch) -> None:
     replay.reset_cache()
 
 
-@pytest.mark.parametrize("venue", ["kalshi", "coinbase", "bitnomial", "hyperliquid"])
+@pytest.mark.parametrize("venue", ["kalshi", "coinbase", "bitnomial", "og", "hyperliquid"])
 def test_us_and_benchmark_venues_list_btc(venue: str) -> None:
     assert any(i.underlying == "BTC" for i in ADAPTERS[venue].instruments())
 
@@ -35,7 +35,7 @@ def test_us_and_benchmark_venues_list_btc(venue: str) -> None:
 def test_btc_prices_agree_across_venues_per_unit() -> None:
     """If any venue's unit scaling were wrong, its BTC price would be off by orders of magnitude."""
     prices: dict[str, float] = {}
-    for venue in ("kalshi", "coinbase", "hyperliquid"):
+    for venue in ("kalshi", "coinbase", "og", "hyperliquid"):
         adapter = ADAPTERS[venue]
         insts = [i for i in adapter.instruments() if i.underlying == "BTC" and i.status == "active"][:1]
         marks = adapter.marks(insts)
@@ -119,3 +119,14 @@ def test_kalshi_funding_formula_reproduces_the_last_settlements() -> None:
             cap=inst.funding_cap,
         )
         assert nc.projected_rate == pytest.approx(point.rate, abs=1e-12), point.funding_time
+
+
+def test_og_settlements_fall_on_the_8h_funding_times() -> None:
+    """OG.com stamps funding hourly; the 00/08/16 UTC points must exist and the next rate must resolve."""
+    og = ADAPTERS["og"]
+    inst = og.instrument("BTC-USD-PERP")
+    end = datetime.now(UTC)
+    pts = og.funding([inst], end - timedelta(days=2), end)
+    assert len(pts) >= 5 and all(p.funding_time.hour % 8 == 0 for p in pts)
+    nxt = og.funding_estimates([inst])
+    assert nxt and not nxt[0].is_final and nxt[0].funding_time > end

@@ -77,7 +77,10 @@ class Venues(VenueScan[VenuesArgs]):
             **object_tags(
                 title="Venues and Health",
                 category="reference",
-                keywords="venues, exchanges, health, status, kalshi, coinbase, bitnomial, hyperliquid, binance, bybit",
+                keywords=(
+                    "venues, exchanges, health, status, kalshi, coinbase, bitnomial, og.com, "
+                    "hyperliquid, binance, bybit"
+                ),
                 doc_llm=(
                     "One row per venue: `venue` (the name every other function accepts), `venue_type` "
                     "('us_regulated' or 'offshore'), `regulator`, `adapter_version`, `sign_convention`, "

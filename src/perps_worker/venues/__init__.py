@@ -7,6 +7,7 @@ from .bitnomial import BitnomialAdapter
 from .coinbase import CoinbaseAdapter
 from .kalshi import KalshiAdapter
 from .offshore import BinanceAdapter, BybitAdapter, HyperliquidAdapter
+from .og import OgAdapter
 
 #: Every adapter, US-regulated first. One instance per process.
 ADAPTERS: dict[str, Adapter] = {
@@ -15,6 +16,7 @@ ADAPTERS: dict[str, Adapter] = {
         KalshiAdapter(),
         CoinbaseAdapter(),
         BitnomialAdapter(),
+        OgAdapter(),
         HyperliquidAdapter(),
         BinanceAdapter(),
         BybitAdapter(),

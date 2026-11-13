@@ -1,0 +1,125 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-instruments",
+  "result": {
+   "data": [
+    {
+     "base_ccy": "SEI",
+     "beta_product": false,
+     "contract_size": "1",
+     "detail_product_type": "DIGITAL_CURRENCIES",
+     "display_name": "SEIUSD PERP",
+     "event_details": {
+      "attributes": {
+       "DISPLAY_PRECISION": "5",
+       "OPEN_TIME": "20260916-10:58:36.341",
+       "PERIOD_CODE": "O",
+       "PRICE_TICK_SIZE": "0.00001",
+       "QUANTITY_TICK_SIZE": "100",
+       "UNDERLYING_ROUNDING_VALUE": "0.00001"
+      },
+      "eventCode": "",
+      "eventName": "",
+      "metaData": {}
+     },
+     "expiry_timestamp_ms": 0,
+     "inst_id": 6253918,
+     "inst_type": "PERPETUAL_SWAP",
+     "last_updated_time": 1794308826043522708,
+     "margin_buy_enabled": false,
+     "margin_sell_enabled": false,
+     "max_leverage": "4",
+     "price_tick_size": "0.00001",
+     "qty_tick_size": "100",
+     "quantity_decimals": 0,
+     "quote_ccy": "USD",
+     "quote_decimals": 5,
+     "security_sub_type": "PERP",
+     "security_type": "FUTURE",
+     "symbol": "SEI-USD-PERP",
+     "tradable": true,
+     "underlying_symbol": "SEI-USD-INDEX@CdnaMargined"
+    },
+    {
+     "base_ccy": "ETH",
+     "beta_product": false,
+     "contract_size": "1",
+     "detail_product_type": "DIGITAL_CURRENCIES",
+     "display_name": "ETHUSD PERP",
+     "event_details": {
+      "attributes": {
+       "DISPLAY_PRECISION": "5",
+       "OPEN_TIME": "20260904-16:02:14.338",
+       "PERIOD_CODE": "O",
+       "PRICE_TICK_SIZE": "0.01",
+       "QUANTITY_TICK_SIZE": "0.001",
+       "UNDERLYING_ROUNDING_VALUE": "0.00001"
+      },
+      "eventCode": "",
+      "eventName": "",
+      "metaData": {}
+     },
+     "expiry_timestamp_ms": 0,
+     "inst_id": 6253914,
+     "inst_type": "PERPETUAL_SWAP",
+     "last_updated_time": 1794308826043278615,
+     "margin_buy_enabled": false,
+     "margin_sell_enabled": false,
+     "max_leverage": "5.5555",
+     "price_tick_size": "0.01",
+     "qty_tick_size": "0.001",
+     "quantity_decimals": 3,
+     "quote_ccy": "USD",
+     "quote_decimals": 2,
+     "security_sub_type": "PERP",
+     "security_type": "FUTURE",
+     "symbol": "ETH-USD-PERP",
+     "tradable": true,
+     "underlying_symbol": "ETH-USD-INDEX@CdnaMargined"
+    },
+    {
+     "base_ccy": "BTC",
+     "beta_product": false,
+     "contract_size": "1",
+     "detail_product_type": "DIGITAL_CURRENCIES",
+     "display_name": "BTCUSD PERP",
+     "event_details": {
+      "attributes": {
+       "DISPLAY_PRECISION": "5",
+       "OPEN_TIME": "20260904-15:49:32.304",
+       "PERIOD_CODE": "O",
+       "PRICE_TICK_SIZE": "0.1",
+       "QUANTITY_TICK_SIZE": "0.0001",
+       "UNDERLYING_ROUNDING_VALUE": "0.00001"
+      },
+      "eventCode": "",
+      "eventName": "",
+      "metaData": {}
+     },
+     "expiry_timestamp_ms": 0,
+     "inst_id": 6253913,
+     "inst_type": "PERPETUAL_SWAP",
+     "last_updated_time": 1794308826043197869,
+     "margin_buy_enabled": false,
+     "margin_sell_enabled": false,
+     "max_leverage": "6.6666",
+     "price_tick_size": "0.1",
+     "qty_tick_size": "0.0001",
+     "quantity_decimals": 4,
+     "quote_ccy": "USD",
+     "quote_decimals": 1,
+     "security_sub_type": "PERP",
+     "security_type": "FUTURE",
+     "symbol": "BTC-USD-PERP",
+     "tradable": true,
+     "underlying_symbol": "BTC-USD-INDEX@CdnaMargined"
+    }
+   ],
+   "next_cursor": null
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-instruments?inst_type=PERPETUAL_SWAP",
+ "status": 200
+}

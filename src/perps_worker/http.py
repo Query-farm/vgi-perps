@@ -1,4 +1,4 @@
-"""The one outbound-HTTP chokepoint for the US venues (Kalshi, Coinbase, Bitnomial).
+"""The one outbound-HTTP chokepoint for the US venues (Kalshi, Coinbase, Bitnomial, OG.com).
 
 Every US-venue request in this package goes through :func:`get_json`, which
 issues ``GET`` and nothing else. ``tests/test_readonly_guard.py`` asserts that

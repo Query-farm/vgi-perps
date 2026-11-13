@@ -1,0 +1,46 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-book",
+  "result": {
+   "data": [
+    {
+     "asks": [
+      [
+       "68374.4",
+       "0.1200"
+      ],
+      [
+       "68377.4",
+       "0.1462"
+      ],
+      [
+       "68397.9",
+       "1.4940"
+      ]
+     ],
+     "bids": [
+      [
+       "68340.6",
+       "0.1200"
+      ],
+      [
+       "68309.3",
+       "0.1463"
+      ],
+      [
+       "68305.5",
+       "1.4940"
+      ]
+     ],
+     "t": 1794584082366
+    }
+   ],
+   "depth": 3,
+   "instrument_name": "BTC-USD-PERP"
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-book?depth=3&instrument_name=BTC-USD-PERP",
+ "status": 200
+}

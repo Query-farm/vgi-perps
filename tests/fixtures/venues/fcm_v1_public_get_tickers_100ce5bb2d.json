@@ -1,0 +1,28 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-tickers",
+  "result": {
+   "data": [
+    {
+     "a": "0.04325",
+     "b": "0.04322",
+     "c": "0.0349",
+     "h": "0.04427",
+     "i": "SEI-USD-PERP",
+     "k": "0.04331",
+     "l": "0.04112",
+     "oi": "98800",
+     "t": 1794583986149,
+     "v": "159100",
+     "vv": "6859.03",
+     "w": null,
+     "ww": null
+    }
+   ]
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-tickers?instrument_name=SEI-USD-PERP",
+ "status": 200
+}

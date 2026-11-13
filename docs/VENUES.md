@@ -11,18 +11,18 @@ observations are marked *probed*. `make live-check` re-verifies the load-bearing
 `S` supported, `P` partial, `-` unsupported, `A` needs API credentials. The same matrix
 is queryable: `SELECT * FROM perps.main.capabilities()`.
 
-| Capability | Kalshi | Coinbase Derivatives | Bitnomial | Hyperliquid | Binance USD-M | Bybit |
-|---|---|---|---|---|---|---|
-| instruments | S | S (Advanced Trade) | S | S | S¹ | S¹ |
-| funding history | S, since listing | P: latest hourly rate only; full history A (FairX) | S, since 2026-05-16 | S | S¹ | S¹ |
-| funding estimate | S (1 call/market) | - | S (1 call/product) | S | S¹ | S¹ |
-| mark / index | S / S | P: mid (no public mark) / S | P: mark + index as of last funding | S / S | S¹ | S¹ |
-| premium index | S (per second, ≤1h windows) | - | - (only at each funding) | - | - | - |
-| open interest | S (+ hourly in candles) | S | S | P | P¹ | P¹ |
-| order book | S (depth ≤100, or all) | S | - (WebSocket only) | S | S¹ | S¹ |
-| trades | S (cursor) | S (time-window paging) | - (WebSocket; REST is block trades only) | - (needs a wallet address) | P¹ | P¹ |
-| candles | S 1m/1h/1d | S 1m/1h/1d (350/call) | P: daily, `/web` "non-stable" | S | S¹ | S¹ |
-| maintenance-margin schedule | - A (portfolio VaR model) | - (initial rates only) | - (rate unlabelled) | S (documented rule) | - A | - |
+| Capability | Kalshi | Coinbase Derivatives | Bitnomial | OG.com | Hyperliquid | Binance USD-M | Bybit |
+|---|---|---|---|---|---|---|---|
+| instruments | S | S (Advanced Trade) | S | S | S | S¹ | S¹ |
+| funding history | S, since listing | P: latest hourly rate only; full history A (FairX) | S, since 2026-05-16 | S, about 14 days | S | S¹ | S¹ |
+| funding estimate | S (1 call/market) | - | S (1 call/product) | S (fixed one window ahead) | S | S¹ | S¹ |
+| mark / index | S / S | P: mid (no public mark) / S | P: mark + index as of last funding | S / S (per minute) | S / S | S¹ | S¹ |
+| premium index | S (per second, ≤1h windows) | - | - (only at each funding) | - | - | - | - |
+| open interest | S (+ hourly in candles) | S | S | S | P | P¹ | P¹ |
+| order book | S (depth ≤100, or all) | S | - (WebSocket only) | S (≤50) | S | S¹ | S¹ |
+| trades | S (cursor) | S (time-window paging) | - (WebSocket; REST is block trades only) | S (150/page) | - (needs a wallet address) | P¹ | P¹ |
+| candles | S 1m/1h/1d | S 1m/1h/1d (350/call) | P: daily, `/web` "non-stable" | S 1m/1h/1d (300/call) | S | S¹ | S¹ |
+| maintenance-margin schedule | - A (portfolio VaR model) | - (initial rates only) | - (rate unlabelled) | - (max leverage only) | S (documented rule) | - A | - |
 
 ¹ Binance and Bybit are geo-blocked from US networks (*probed*: Binance `HTTP 451
 "Service unavailable from a restricted location"`, Bybit `HTTP 403 "The Amazon CloudFront
@@ -167,6 +167,54 @@ them as `status = 'error'` and cross-venue queries skip them with a warning.
 - **Margin:** product data has `product_group_margin_rate` (0.15/0.18), not labelled
   initial or maintenance → not used by `liquidation_estimate`.
 
+## OG.com (crypto perpetuals; North American Derivatives Exchange)
+
+- **Regulation:** CFTC DCM and DCO: North American Derivatives Exchange, Inc. (formerly
+  Nadex; also styled "Crypto.com | Derivatives North America", CDNA), a Crypto.com
+  affiliate. US crypto perps launched 2026-10-27, up to 5x for retail, distributed through
+  OG.com, the Crypto.com App and the Crypto.com Exchange
+  ([announcement](https://og.com/company-news/ogcom-and-cryptocom-expand-derivatives-offering-with-launch-of-regulated-crypto-perpetuals-for-the-us-market)).
+  The exchange has also filed rules for perpetual single-stock security futures
+  ([Federal Register 2026-20194](https://www.federalregister.gov/documents/2026/10/02/2026-20194)).
+- **Base:** `https://api.crypto.com/fcm/v1/public/{method}`, the "GEN4 FCM US B2C API
+  (Preview)" ([docs](https://exchange-developer.crypto.com/fcm-b2c/v1/docs/api/rest-introduction)),
+  linked as "APIs" from og.com. "Public market-data endpoints can be explored before
+  onboarding"; 100 requests per second per method per IP. Plain `GET` with query
+  parameters works; a JSON-RPC `POST` to the public methods returns HTTP 500 (*probed*).
+  This is **not** `api.crypto.com/exchange/v1`, the offshore exchange (414 perps, up to
+  50x, not for US persons).
+- **Listings (*probed*):** `get-instruments?inst_type=PERPETUAL_SWAP` → 6 perps: BTC, ETH,
+  SOL, HYPE, SEI, ZEC (`BTC-USD-PERP`, ...), index `BTC-USD-INDEX@CdnaMargined`. Without
+  `inst_type` the call returns 500 rows of event contracts and no perps.
+- **Quoting:** USD per coin; quantities in coins (`contract_size` 1, `qty_tick_size`
+  0.0001 BTC). `max_leverage` per instrument (BTC 6.6666, i.e. 15% initial).
+- **Funding:** "Funding is paid three times a day, at 00:00, 08:00, and 16:00 UTC ... The
+  rate is shown as an amount per eight-hour interval"
+  ([Funding Payments](https://help.og.com/en/articles/17252978-funding-payments)). Rule
+  16.14 (in the stock-perp filing): positive = longs pay shorts, **no flip**; the rate
+  combines a time-weighted premium, an interest component, an asset multiplier, and an
+  outer clamp to a floor and cap. *Probed*: BTC, ETH, SOL and HYPE sat at 0.0001 (10.95%/yr)
+  for every hour of the 14-day history; SEI and ZEC went negative in late October and
+  early November.
+- **Funding history:** `get-valuations?valuation_type=funding_hist` is stamped **hourly**,
+  newest first, but the value changes only in 8-hour blocks `T-7h .. T` for each funding
+  time `T` (*probed*). The point stamped at `T` is taken as the settlement at `T`. About 14
+  days are kept.
+- **Next rate (inferred, *probed* once):** `valuation_type=estimated_funding_rate` (per
+  minute, about 1000 minutes kept) drifts during a window. On 2026-11-13 the SEI estimate
+  reached 0.000073951 just before 08:00 UTC, and the funding history then showed
+  0.000073951 for the 09:00–15:00 stamps. So the rate settling at the next funding time
+  `N` is fixed in advance: it is the last estimate before `N - 8h`. `funding_estimates()`
+  reports it with `is_final = false`. Crypto.com's own documentation of these series
+  refused automated fetches (HTTP 403); this mapping is an observation, not a quote.
+- **Paging:** `get-trades` max `count` 150 (151 → `Invalid count`), newest first,
+  `start_ts` inclusive, `end_ts` exclusive (*probed*); the adapter drops a full page's
+  oldest millisecond and resumes with `end_ts` just after it. `get-candlestick` returns at
+  most 300 bars, the latest in the range, so it is walked forward in 300-bar windows.
+- **Margin:** isolated per position; only `max_leverage` is published. The help centre's
+  example (3x, $45 maintenance on $300) implies 15%, but no schedule is published, so
+  `liquidation_estimate` needs `mm_rate`.
+
 ## Offshore benchmark (ccxt 4.5.x)
 
 - **Hyperliquid:** hourly funding; the API reports the hourly rate (`0.0000125` = the
@@ -195,29 +243,30 @@ them as `status = 'error'` and cross-venue queries skip them with a warning.
 | Coinbase | Market Data Terms of Use (last updated 2023-02-06): "Coinbase reserves all rights in the Market Data not expressly granted in these Terms"; the license is "revocable, nonexclusive, nontransferable, non-sublicensable". Redistribution goes through named "authorized redistribution partners" (e.g. Amberdata). The full text returned HTTP 403 to automated fetches, so it was read through search excerpts only — **verify by hand**. | [coinbase.com/legal/market_data](https://www.coinbase.com/legal/market_data) |
 | Binance | Public datasets are governed by the Binance Vision terms plus the general Terms of Use; restricts using the Binance name to market "your project, company, paper, or software tool without prior written consent". Not reviewed in full. | [Binance Vision Terms of Use](https://data.binance.vision/Binance_Vision-Terms_of_Use.pdf) |
 | Bybit | API Terms: "you or your API Client shall not commercially exploit the APIs". | [Bybit API Terms & Conditions](https://bybit.nl/en/help-center/article/API-Terms) |
+| OG.com | The FCM API docs publish no data licence and invite public market-data calls without an account. The OG.com user Terms (v1.6, 2026-01-12) bar account holders from "automated use of the Services ... such as using scripts, bots, data mining tools, or similar data gathering and extraction tools"; whether that reaches the public API is unclear. **Ask before archiving or redistributing.** | [FCM API docs](https://exchange-developer.crypto.com/fcm-b2c/v1/docs/api/rest-introduction), [OG.com Terms](https://static.og.com/assets/documents/terms-and-conditions-v1.6-20260112.pdf) |
 | Hyperliquid | Not found; the interface terms exclude US persons. **Unreviewed.** | — |
 
 **Bottom line for a recorder/archive:** Kalshi's agreement, read literally, forbids
 storing API data for anything but your own trading and forbids sharing it; Bitnomial
 forbids archiving and end-user data services; Coinbase reserves redistribution to
-licensed partners. An archive that is shared, sold or published needs **written
+licensed partners; OG.com's user terms bar automated data gathering. An archive that is shared, sold or published needs **written
 licences** from each venue first. Even this worker's on-demand use sits under Kalshi §3
 (member-only, own-trading use) and §3.5 (benchmarking). This is a reading of the terms,
 not legal advice. See [ARCHIVE.md](ARCHIVE.md).
 
 ## Normalization decisions (summary)
 
-| | Kalshi | Coinbase | Bitnomial | Hyperliquid | Binance / Bybit |
-|---|---|---|---|---|---|
-| Native price unit | USD per contract | USD per coin (per 1000 for `1000X`) | ticks | USDC per coin (per 1000 for `kX`) | USDT per named unit |
-| Price factor to per-unit | `1 / (contract_size * multiplier)` | `1` or `1/1000` | `price_increment` | `1` or `1/1000` | `1` or `1/1000` |
-| Contract size (units) | `contract_size * multiplier` | `contract_size` (x1000 for `1000X`) | `contract_size` | `contractSize` (x1000) | `contractSize` (x1000) |
-| Funding sign | native = canonical | native = canonical | native = canonical | native = canonical | native = canonical |
-| Interval | 8h crypto, 24h others (observed) | 1h | `interval_end - interval_start` | 1h | inferred / `fundingInterval` |
-| Cap | `funding_cap` if unit = percentage | none | spec bound ±0.0005 | 0.005/h | not published via ccxt |
-| Mark | `settlement_mark_price` | mid (no public mark) | mark at last funding | `markPx` | ccxt `markPrice` |
-| Index | `reference_price` | `index_price` | `price_index` at last funding | oracle | ccxt `indexPrice` |
-| Taker side | `taker_side` bid→buy, ask→sell | inverse of maker `side` | n/a | n/a | ccxt `side` |
+| | Kalshi | Coinbase | Bitnomial | OG.com | Hyperliquid | Binance / Bybit |
+|---|---|---|---|---|---|---|
+| Native price unit | USD per contract | USD per coin (per 1000 for `1000X`) | ticks | USD per coin | USDC per coin (per 1000 for `kX`) | USDT per named unit |
+| Price factor to per-unit | `1 / (contract_size * multiplier)` | `1` or `1/1000` | `price_increment` | `1` | `1` or `1/1000` | `1` or `1/1000` |
+| Contract size (units) | `contract_size * multiplier` | `contract_size` (x1000 for `1000X`) | `contract_size` | `contract_size` (1) | `contractSize` (x1000) | `contractSize` (x1000) |
+| Funding sign | native = canonical | native = canonical | native = canonical | native = canonical | native = canonical | native = canonical |
+| Interval | 8h crypto, 24h others (observed) | 1h | `interval_end - interval_start` | 8h (00/08/16 UTC) | 1h | inferred / `fundingInterval` |
+| Cap | `funding_cap` if unit = percentage | none | spec bound ±0.0005 | not published | 0.005/h | not published via ccxt |
+| Mark | `settlement_mark_price` | mid (no public mark) | mark at last funding | `mark_price` valuation | `markPx` | ccxt `markPrice` |
+| Index | `reference_price` | `index_price` | `price_index` at last funding | `index_price` valuation | oracle | ccxt `indexPrice` |
+| Taker side | `taker_side` bid→buy, ask→sell | inverse of maker `side` | n/a | `s` | n/a | ccxt `side` |
 
 Fields that do not normalize are exposed as `raw_kalshi_markets()`,
 `raw_kalshi_premium_index()`, `raw_coinbase_products()` and `raw_bitnomial_products()`.

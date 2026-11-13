@@ -1,6 +1,6 @@
 [project]
 name = "vgi-perps-worker"
-version = "0.1.2"
+version = "0.1.3"
 description = "Normalized cross-venue market data for US-regulated perpetual futures (Kalshi, Coinbase Derivatives, Bitnomial) with an offshore benchmark, as DuckDB SQL"
 readme = "README.md"
 license = "MIT"

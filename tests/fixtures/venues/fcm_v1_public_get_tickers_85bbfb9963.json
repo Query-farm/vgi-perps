@@ -1,0 +1,28 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-tickers",
+  "result": {
+   "data": [
+    {
+     "a": "68270.1",
+     "b": "68346.8",
+     "c": "-0.0426",
+     "h": "72115.0",
+     "i": "BTC-USD-PERP",
+     "k": "68384.8",
+     "l": "67534.3",
+     "oi": "4.0244",
+     "t": 1794583987471,
+     "v": "21.7850",
+     "vv": "1520994.64",
+     "w": null,
+     "ww": null
+    }
+   ]
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-tickers?instrument_name=BTC-USD-PERP",
+ "status": 200
+}

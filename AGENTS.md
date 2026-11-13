@@ -30,7 +30,7 @@ src/perps_worker/
   model.py           # normalized records + the unit/sign conventions
   normalize.py       # pure arithmetic (annualization, premium, unit prefixes), golden-tested
   derived.py         # carry spreads, depth metrics, liquidation bands, golden-tested
-  venues/            # one adapter per venue: kalshi, coinbase, bitnomial, offshore (ccxt)
+  venues/            # one adapter per venue: kalshi, coinbase, bitnomial, og, offshore (ccxt)
   functions/         # VGI table functions: reference, market, analytics, raw
 tests/               # pytest: goldens, adapters, read-only guard, worker; test_live.py is opt-in
 tests/fixtures/venues/  # recorded venue responses (+ synthetic/ pagination case)

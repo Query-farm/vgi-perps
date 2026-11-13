@@ -185,6 +185,12 @@ AGENT_TEST_TASKS = [
         "prompt": "What product-group margin rate does Bitnomial publish for its centi-bitcoin perpetual?",
     },
     {
+        "name": "og_funding_schedule",
+        "prompt": (
+            "On OG.com, at what UTC times does the BTC perpetual settle funding, and what was the last settled rate?"
+        ),
+    },
+    {
         "name": "liquidation_refusal",
         "prompt": (
             "Can the perps worker estimate liquidation bands for Kalshi's BTC perp with the venue's own "
@@ -204,7 +210,8 @@ CATALOG_TAGS = {
     "vgi.author": "Query.Farm",
     "vgi.copyright": "Copyright 2026 Query Farm LLC - https://query.farm",
     "vgi.keywords": keywords_array(
-        "perpetual futures, perps, funding rate, kalshi, coinbase derivatives, bitnomial, hyperliquid, "
+        "perpetual futures, perps, funding rate, kalshi, coinbase derivatives, bitnomial, og.com, crypto.com, "
+        "hyperliquid, "
         "basis, carry, cftc, crypto derivatives, market data"
     ),
     "vgi.support_contact": f"{SOURCE_URL}/issues",

@@ -43,6 +43,11 @@
           "kalshi",
           "ok",
           14
+        ],
+        [
+          "og",
+          "ok",
+          3
         ]
       ]
     },
@@ -83,6 +88,13 @@
           "KXBTCPERP",
           0.0001,
           1.0,
+          8.0
+        ],
+        [
+          "og",
+          "BTC-USD-PERP",
+          1.0,
+          0.1,
           8.0
         ]
       ]
@@ -155,6 +167,12 @@
           "KXBTCPERP",
           70793.0,
           "venue_mark"
+        ],
+        [
+          "og",
+          "BTC-USD-PERP",
+          70882.1,
+          "venue_mark"
         ]
       ]
     },
@@ -175,6 +193,13 @@
           "kalshi",
           -376.1568,
           "long bitnomial / short kalshi"
+        ],
+        [
+          "bitnomial",
+          "PBTCUCZ50",
+          "og",
+          0.0,
+          "flat"
         ]
       ]
     },
@@ -258,6 +283,9 @@
         ],
         [
           "kalshi"
+        ],
+        [
+          "og"
         ]
       ]
     }
