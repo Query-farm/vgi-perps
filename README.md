@@ -39,13 +39,6 @@ by `tests/test_readonly_guard.py`. Symbols that reach a URL path are percent-enc
 
 ## Quick start
 
-Not released yet. Build from source:
-
-```bash
-git clone https://github.com/Query-farm/vgi-perps && cd vgi-perps
-make build          # uv sync: the worker lands at .venv/bin/vgi-perps-worker
-```
-
 ```sql
 -- DuckDB 2.0
 SET allow_extension_repositories = 'allowed';
@@ -53,7 +46,8 @@ CREATE EXTENSION REPOSITORY IF NOT EXISTS query_farm WITH PREFIX 'https://duckdb
 INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
-ATTACH 'perps' (TYPE vgi, LOCATION '/abs/path/to/vgi-perps/.venv/bin/vgi-perps-worker');
+ATTACH 'perps' (TYPE vgi,
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.0 vgi-perps-worker');
 
 -- Which venues are reachable from here (Binance and Bybit geo-block US networks)
 SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
@@ -67,9 +61,14 @@ SELECT venue_a, venue_b, spread_bps, carry_trade
 FROM perps.main.funding_spread('BTC') ORDER BY abs(spread_bps) DESC;
 ```
 
+`uvx` fetches and caches the worker on first use; change `@v0.1.0` to move to a newer release.
+
 Other ways to run it: `vgi-perps-worker --http --port 8000` serves HTTP (attach with
 `LOCATION 'http://127.0.0.1:8000'`), and `scripts/fixture-worker` serves the recorded
 fixtures offline (no network; "now" pinned to the recording time).
+
+Build from source: `git clone https://github.com/Query-farm/vgi-perps && cd vgi-perps && make build`
+(the worker lands at `.venv/bin/vgi-perps-worker`).
 
 ## SQL surface
 
