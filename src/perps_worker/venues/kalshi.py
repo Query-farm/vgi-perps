@@ -127,7 +127,11 @@ def instrument_from_market(market: dict[str, Any]) -> Instrument:
             if leverage
             else None
         ),
-        extra={"market_id": str(market.get("market_id") or "")},
+        extra={
+            "market_id": str(market.get("market_id") or ""),
+            "funding_deadband": str(market.get("funding_deadband") or ""),
+            "funding_invalid_premium_handling": str(market.get("funding_invalid_premium_handling") or ""),
+        },
     )
 
 
@@ -290,6 +294,30 @@ class KalshiAdapter(Adapter):
             if when is not None and value is not None:
                 out.append((when, value))
         return out
+
+    def premium_seconds(self, inst: Instrument, start: datetime, end: datetime) -> dict[int, float]:
+        """Per-second premium for ``[start, end)``, keyed by 1-based offset from ``start`` (hourly calls)."""
+        out: dict[int, float] = {}
+        cursor = start
+        while cursor < end:
+            chunk_end = min(cursor + timedelta(hours=1), end)
+            for ts, value in self.premium_index(inst, cursor, chunk_end):
+                offset = int((ts - start).total_seconds()) + 1
+                if 1 <= offset <= int((end - start).total_seconds()):
+                    out[offset] = value
+            cursor = chunk_end
+        return out
+
+    def estimate(self, inst: Instrument) -> dict[str, Any]:
+        """Kalshi's provisional estimate for the current window (raw body)."""
+        return self._estimate(inst)
+
+    def settled_rate(self, inst: Instrument, when: datetime) -> float | None:
+        """Return the settled funding rate at exactly ``when``, if Kalshi has published it."""
+        for point in self.funding([inst], when - timedelta(seconds=1), when + timedelta(seconds=1)):
+            if point.funding_time == when:
+                return point.rate
+        return None
 
     # ------------------------------------------------------------- book/trades
     def order_book(self, inst: Instrument, depth: int) -> tuple[list[BookLevel], list[BookLevel]]:

@@ -128,6 +128,11 @@ AGENT_TEST_TASKS = [
         "prompt": "Does Kalshi list single-stock perpetual futures? Name one underlying stock if so.",
     },
     {
+        "name": "kalshi_funding_forecast",
+        "prompt": "Where is the next funding settlement of Kalshi's BTC perpetual heading, annualized, "
+        "and how much of that window's weight has already accrued?",
+    },
+    {
         "name": "btc_funding_history",
         "prompt": "How many funding settlements did Kalshi's BTC perpetual have over the last three days?",
     },

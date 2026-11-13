@@ -20,6 +20,7 @@ from vgi.catalog import Catalog, Schema
 
 from .functions.analytics import DepthMetrics, FundingSpread, LiquidationEstimate, Premium
 from .functions.market import Candles, Funding, Marks, OrderBook, Trades
+from .functions.nowcast import KalshiFundingNowcast
 from .functions.raw import RawBitnomialProducts, RawCoinbaseProducts, RawKalshiMarkets, RawKalshiPremiumIndex
 from .functions.reference import Capabilities, Instruments, Venues
 from .meta import (
@@ -46,6 +47,7 @@ FUNCTIONS: list[type[Any]] = [
     FundingSpread,
     DepthMetrics,
     LiquidationEstimate,
+    KalshiFundingNowcast,
     RawKalshiMarkets,
     RawKalshiPremiumIndex,
     RawCoinbaseProducts,

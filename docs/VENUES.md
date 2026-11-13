@@ -44,6 +44,23 @@ them as `status = 'error'` and cross-venue queries skip them with a warning.
   payments), `/margin/funding_schedule`, `/margin/estimate_maintenance_margin/metadata`,
   orders, fills, positions, balance. None is called; `tests/test_readonly_guard.py`
   forbids the paths in source.
+- **Funding formula (*verified*, not documented by Kalshi):** the settled rate for a
+  window is the **linear time-weighted mean of the per-second premium index**: second
+  `i` of the window (1 = the first second after the previous funding time) weighs `i`,
+  so `F = sum(i * p_i) / sum(i)` over the 28,800 seconds of an 8-hour window. Under
+  `funding_invalid_premium_handling = dampen` (BTC) a second with no premium counts as 0;
+  under `exclude` it is left out. The result is then set to exactly 0 when
+  `|F| < funding_deadband` (0.0001 for BTC: no settlement has ever fallen between 0 and
+  ±1 bp) and clamped to `funding_cap`. Checked 2026-11-13: ten consecutive BTC windows
+  (2026-11-10 05:00 to 2026-11-13 05:00 UTC) reproduce to within 5e-17 (floating-point
+  rounding), including three that averaged 0.94, 0.33 and 0.42 bp and settled at 0. A simple average misses by 5-20%. Kalshi's
+  `/margin/funding_rates/estimate` is the same weighted mean over the seconds elapsed so
+  far, matched to 13 significant digits. The help center only says "TWAP" and the
+  changelog that the premium-index series "may differ from actual funding calculations";
+  the weighting is ours. `kalshi_funding_nowcast()` implements it, and
+  `tests/test_live.py::test_kalshi_funding_formula_reproduces_the_last_settlements`
+  re-checks it against live settlements. `exclude` markets (single-stock perps) are not
+  yet verified.
 - **Listings (*probed*):** 126 markets (86 active): 94 Equities, 19 Crypto, 6 Metals,
   4 Energy, 3 Indices. **Single-stock perps are live** (AAPL, TSLA, NVDA, ... 58 with
   funding in the 8 days to 2026-11-12); their first funding is 2026-11-05, consistent with

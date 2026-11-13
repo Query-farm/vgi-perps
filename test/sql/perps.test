@@ -550,3 +550,40 @@ query I
 SELECT count(*) FROM perps.main.raw_bitnomial_products(symbol := 'NOPE');
 ----
 0
+
+# ------------------------------------------------------ kalshi_funding_nowcast
+
+# Synthetic premiums (tests/fixtures/venues/synthetic/*_nowcast.json) for the
+# window 2026-11-12 21:00 -> 2026-11-13 05:00 UTC, observed to the pinned now
+# (01:20 UTC, 15,600 s). Second i weighs i; missing seconds count as 0 (dampen).
+#   accrued   = (1*0.01 - 7200*0.0001 + 15000*0.0002 + 15600*0.0002) / (15600*15601/2) = 4.4458e-8
+#   projected = (5.41 + 0.0002 * (sum of weights 15601..28800)) / (28800*28801/2) = 1.41331e-4
+query TTIT
+SELECT symbol, funding_time::VARCHAR, elapsed_seconds, invalid_premium_handling
+FROM perps.main.kalshi_funding_nowcast('KXBTCPERP');
+----
+KXBTCPERP	2026-11-13 05:00:00+00	15600	dampen
+
+query TTTTTT
+SELECT abs(weight_accrued - 121687800.0 / 414734400.0) < 1e-12,
+       abs(accrued_rate - 5.41 / 121687800.0) < 1e-18,
+       abs(assumed_premium - 0.0002) < 1e-15,
+       abs(projected_rate - (5.41 + 0.0002 * 293046600.0) / 414734400.0) < 1e-15,
+       abs(projected_rate_annualized - projected_rate * 1095) < 1e-12,
+       abs(kalshi_estimate_rate - 0.0001233609059254) < 1e-16
+FROM perps.main.kalshi_funding_nowcast('KXBTCPERP');
+----
+true	true	true	true	true	true
+
+# A flat premium inside the deadband projects exactly zero.
+query T
+SELECT projected_rate::VARCHAR
+FROM perps.main.kalshi_funding_nowcast('KXBTCPERP', assume_premium := 0.00005);
+----
+0.0
+
+statement error
+SELECT * FROM perps.main.kalshi_funding_nowcast('KXBTCPERP', funding_time := TIMESTAMPTZ '2027-01-01 00:00:00+00');
+----
+<REGEX>:.*not the next funding time.*
+

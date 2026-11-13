@@ -130,3 +130,50 @@ def test_liquidation_bands_split_open_interest_both_sides() -> None:
     assert [r["cum_notional_usd"] for r in longs] == pytest.approx([0.0, 3000.0, 8000.0])
     assert sum(r["weight"] for r in longs) == pytest.approx(1.0)
     assert len([r for r in rows if r["side"] == "short"]) == 3
+
+
+# ------------------------------------------------------------ Kalshi funding
+
+
+def test_weight_sum_closed_form() -> None:
+    assert derived.weight_sum(1, 4) == 10.0
+    assert derived.weight_sum(3, 5) == 12.0
+    assert derived.weight_sum(5, 4) == 0.0
+    assert derived.weight_sum(1, 28_800) == 28_800 * 28_801 / 2
+
+
+def test_kalshi_nowcast_finished_window_is_the_linear_twap() -> None:
+    # 4-second window, premiums 1..4 bps: sum(i * p_i) / sum(i) = (1+4+9+16)/10 = 3 bps.
+    p = {1: 0.0001, 2: 0.0002, 3: 0.0003, 4: 0.0004}
+    nc = derived.kalshi_funding_nowcast(p, 4, 4, handling="dampen", assumed=None, deadband=0.0001, cap=0.02)
+    assert nc.accrued_rate == pytest.approx(0.0003, abs=1e-15)
+    assert nc.projected_rate == pytest.approx(0.0003, abs=1e-15)
+    assert nc.weight_accrued == 1.0
+
+
+def test_kalshi_nowcast_dampen_counts_missing_seconds_as_zero_exclude_drops_them() -> None:
+    p = {1: 0.0004, 2: 0.0, 4: 0.0004}  # second 2 reports no premium, second 3 is missing
+    damp = derived.kalshi_funding_nowcast(p, 4, 4, handling="dampen", assumed=None, deadband=None, cap=None)
+    excl = derived.kalshi_funding_nowcast(p, 4, 4, handling="exclude", assumed=None, deadband=None, cap=None)
+    assert damp.accrued_rate == pytest.approx((1 * 0.0004 + 4 * 0.0004) / 10, abs=1e-15)  # 2 bps
+    assert excl.accrued_rate == pytest.approx((1 * 0.0004 + 4 * 0.0004) / 5, abs=1e-15)  # 4 bps
+
+
+def test_kalshi_nowcast_projects_the_rest_with_its_larger_weight() -> None:
+    # 2 of 4 seconds seen at 1 bp; the rest assumed 3 bps: (1+2)*1 + (3+4)*3 = 24 bps*s over weight 10.
+    p = {1: 0.0001, 2: 0.0001}
+    nc = derived.kalshi_funding_nowcast(p, 2, 4, handling="dampen", assumed=0.0003, deadband=0.0001, cap=0.02)
+    assert nc.accrued_rate == pytest.approx(0.0001, abs=1e-15)
+    assert nc.weight_accrued == pytest.approx(0.3)
+    assert nc.projected_raw == pytest.approx(0.00024, abs=1e-15)
+    no_view = derived.kalshi_funding_nowcast(p, 2, 4, handling="dampen", assumed=None, deadband=None, cap=None)
+    assert no_view.projected_raw is None and no_view.projected_rate is None
+
+
+def test_kalshi_settle_deadband_then_cap() -> None:
+    assert derived.settle_kalshi_rate(0.0000939, 0.0001, 0.02) == 0.0  # the Nov 11 13:00 UTC window
+    assert derived.settle_kalshi_rate(-0.0000999, 0.0001, 0.02) == 0.0
+    assert derived.settle_kalshi_rate(0.0001, 0.0001, 0.02) == 0.0001
+    assert derived.settle_kalshi_rate(0.05, 0.0001, 0.02) == 0.02
+    assert derived.settle_kalshi_rate(-0.05, 0.0001, 0.02) == -0.02
+    assert derived.settle_kalshi_rate(None, 0.0001, 0.02) is None

@@ -208,3 +208,92 @@ def liquidation_bands(
             r["cum_notional_usd"] = running
         rows += side_rows
     return rows
+
+
+# ------------------------------------------------------------ Kalshi funding
+
+#: Version tag written into every kalshi_funding_nowcast row.
+KALSHI_FUNDING_METHOD = "kalshi_linear_twap_v1"
+
+
+def weight_sum(first: int, last: int) -> float:
+    """Sum of the integer weights ``first..last`` inclusive; 0 when ``last < first``."""
+    if last < first:
+        return 0.0
+    return (first + last) * (last - first + 1) / 2.0
+
+
+@dataclass(frozen=True, slots=True)
+class FundingNowcast:
+    """Kalshi funding for one window: accrued so far, and projected to the settlement."""
+
+    #: Linear-weighted mean premium over the elapsed seconds (what Kalshi's estimate reports, before the deadband).
+    accrued_rate: float | None
+    #: Share of the whole window's weight already elapsed: ``elapsed(elapsed+1) / (T(T+1))``.
+    weight_accrued: float
+    #: Projected window average before the deadband and cap.
+    projected_raw: float | None
+    #: Projected settlement: 0 inside the deadband, clamped to the cap.
+    projected_rate: float | None
+
+
+def settle_kalshi_rate(raw: float | None, deadband: float | None, cap: float | None) -> float | None:
+    """Apply Kalshi's zero threshold, then the cap. ``|raw| < deadband`` settles at exactly 0."""
+    if raw is None:
+        return None
+    if deadband and abs(raw) < deadband:
+        return 0.0
+    if cap:
+        return max(-cap, min(cap, raw))
+    return raw
+
+
+def kalshi_funding_nowcast(
+    premiums: dict[int, float],
+    elapsed: int,
+    interval: int,
+    *,
+    handling: str,
+    assumed: float | None,
+    deadband: float | None,
+    cap: float | None,
+) -> FundingNowcast:
+    """Kalshi's funding formula, reverse-engineered and matched exactly against settlements.
+
+    Second ``i`` of the window (1 = the first second after the previous funding
+    time, ``interval`` = the last) has weight ``i``; funding is the weighted mean
+    of the per-second premium index. Under ``dampen`` a second with no premium
+    (reported as 0, or missing) counts as 0; under ``exclude`` it is left out.
+    The remaining ``elapsed+1..interval`` seconds are filled with ``assumed``.
+
+    Args:
+        premiums: Premium index (fraction) by 1-based second offset in the window.
+        elapsed: Seconds of the window observed so far (``interval`` for a finished window).
+        interval: Seconds in the window (28,800 for an 8-hour market).
+        handling: The market's ``funding_invalid_premium_handling``: 'dampen' or 'exclude'.
+        assumed: Premium assumed for the unobserved rest of the window; ``None`` = no projection.
+        deadband: Zero threshold per interval (``funding_deadband``).
+        cap: Absolute cap per interval (``funding_cap``).
+
+    Returns:
+        The accrued and projected rates.
+
+    """
+    elapsed = max(0, min(elapsed, interval))
+    included = [(i, p) for i, p in premiums.items() if 1 <= i <= elapsed and not (handling == "exclude" and p == 0.0)]
+    numerator = sum(i * p for i, p in included)
+    observed_weight = weight_sum(1, elapsed) if handling != "exclude" else float(sum(i for i, _ in included))
+    accrued = numerator / observed_weight if observed_weight else None
+    remaining = weight_sum(elapsed + 1, interval)
+    if remaining == 0.0:
+        raw = accrued
+    elif assumed is None:
+        raw = None
+    else:
+        raw = (numerator + assumed * remaining) / (observed_weight + remaining)
+    return FundingNowcast(
+        accrued_rate=accrued,
+        weight_accrued=weight_sum(1, elapsed) / weight_sum(1, interval) if interval else 0.0,
+        projected_raw=raw,
+        projected_rate=settle_kalshi_rate(raw, deadband, cap),
+    )

@@ -1631,7 +1631,7 @@ wheels = [
 
 [[package]]
 name = "vgi-perps-worker"
-version = "0.1.1"
+version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "ccxt" },

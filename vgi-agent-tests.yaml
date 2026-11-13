@@ -62,3 +62,7 @@ tasks:
   - name: bitnomial_margin_rate
     check_sql: >-
       SELECT product_group_margin_rate > 0 FROM perps.main.raw_bitnomial_products(symbol := 'PBTCUCZ50')
+  - name: kalshi_funding_forecast
+    check_sql: >-
+      SELECT weight_accrued BETWEEN 0 AND 1 AND method = 'kalshi_linear_twap_v1'
+      FROM perps.main.kalshi_funding_nowcast('KXBTCPERP')

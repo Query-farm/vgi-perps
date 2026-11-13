@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.2 (2026-11-13)
+
+- New: `kalshi_funding_nowcast(symbol, funding_time, assume_premium, recent_minutes)`.
+  Kalshi's funding is the linear time-weighted mean of the per-second premium
+  (second i of the window weighs i), zeroed inside the deadband and capped. This was
+  reverse-engineered and verified against ten consecutive BTC settlements (to 5e-17) and
+  Kalshi's own estimate (docs/VENUES.md). The function returns the accrued rate, the
+  share of the window's weight already elapsed, a projection to settlement, and for a past
+  window the settled rate beside the reconstruction.
+- Kalshi instruments carry `funding_deadband` and `funding_invalid_premium_handling`.
+- Live check `test_kalshi_funding_formula_reproduces_the_last_settlements`.
+
 ## 0.1.1 (2026-11-13)
 
 - Fix: Bitnomial funding history longer than one page failed with HTTP 400. Bitnomial returns its pagination cursor already percent-encoded and it was encoded a second time; cross-venue queries silently dropped Bitnomial. The cursor is now decoded before reuse (regression test added).

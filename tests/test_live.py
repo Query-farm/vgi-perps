@@ -88,3 +88,34 @@ def test_geo_blocked_offshore_venues_fail_cleanly(venue: str) -> None:
         assert ADAPTERS[venue].instruments()
     except VenueError as exc:  # expected from US networks: 451 / 403
         assert venue in str(exc)
+
+
+def test_kalshi_funding_formula_reproduces_the_last_settlements() -> None:
+    """Kalshi does not publish its formula; this re-derives the last settled BTC windows from the
+    per-second premium (linear time weights, deadband, cap) and requires an exact match."""
+    from perps_worker import derived
+    from perps_worker.venues.kalshi import KalshiAdapter
+
+    kalshi = ADAPTERS["kalshi"]
+    assert isinstance(kalshi, KalshiAdapter)
+    inst = kalshi.instrument("KXBTCPERP")
+    now = replay.now()
+    settled = sorted(
+        (p for p in kalshi.funding([inst], now - timedelta(days=1), now) if p.is_final),
+        key=lambda p: p.funding_time,
+    )[-2:]
+    assert settled, "no settled KXBTCPERP funding in the last day"
+    interval = int((inst.funding_interval_hours or 8) * 3600)
+    for point in settled:
+        start = point.funding_time - timedelta(seconds=interval)
+        premiums = kalshi.premium_seconds(inst, start, point.funding_time)
+        nc = derived.kalshi_funding_nowcast(
+            premiums,
+            interval,
+            interval,
+            handling=inst.extra["funding_invalid_premium_handling"],
+            assumed=None,
+            deadband=float(inst.extra["funding_deadband"]),
+            cap=inst.funding_cap,
+        )
+        assert nc.projected_rate == pytest.approx(point.rate, abs=1e-12), point.funding_time

@@ -1,0 +1,12 @@
+{
+ "body": {
+  "points": [
+   {
+    "premium_index": "-0.0001",
+    "second_ts": "2026-11-12T22:59:59Z"
+   }
+  ]
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/funding_rates/premium_index?end_ts=1794524400&start_ts=1794520800&ticker=KXBTCPERP",
+ "status": 200
+}

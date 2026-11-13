@@ -47,7 +47,7 @@ INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
 ATTACH 'perps' (TYPE vgi,
-  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.1 vgi-perps-worker');
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.2 vgi-perps-worker');
 
 -- Which venues are reachable from here (Binance and Bybit geo-block US networks)
 SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
@@ -61,7 +61,7 @@ SELECT venue_a, venue_b, spread_bps, carry_trade
 FROM perps.main.funding_spread('BTC') ORDER BY abs(spread_bps) DESC;
 ```
 
-`uvx` fetches and caches the worker on first use; change `@v0.1.1` to move to a newer release.
+`uvx` fetches and caches the worker on first use; change `@v0.1.2` to move to a newer release.
 
 Other ways to run it: `vgi-perps-worker --http --port 8000` serves HTTP (attach with
 `LOCATION 'http://127.0.0.1:8000'`), and `scripts/fixture-worker` serves the recorded
@@ -89,6 +89,7 @@ optional; `venue`/`symbol` of single-venue functions are positional.
 | `funding_spread(underlying, start_date, end_date)` | Mean annualized funding per contract and the spread for every cross-venue pair, with the direction that collects it. |
 | `depth_metrics(venue, symbol, notional_usd := 100000, depth := 200)` | Spread, bps cost to fill the notional on each side, depth and imbalance. |
 | `liquidation_estimate(venue, symbol, leverages, weights, mm_rate := NULL, entry_price := NULL)` | **Estimate** of liquidation bands from open interest and an assumed leverage mix. Uses only a documented maintenance schedule (Hyperliquid); refuses other venues unless you pass `mm_rate`. Every row carries `estimate_method` and `mm_source`. |
+| `kalshi_funding_nowcast(symbol, funding_time := NULL, assume_premium := NULL, recent_minutes := 15)` | Kalshi funding for one window from the per-second premium with Kalshi's linear time weights: accrued so far (equals Kalshi's estimate), projected to settlement, or reconstructed for a past window next to the settled rate. Early in a window the estimate carries ~1% of the final weight; this shows how much has accrued. |
 | `raw_kalshi_markets(symbol)`, `raw_kalshi_premium_index(symbol, start_date, end_date)`, `raw_coinbase_products(symbol)`, `raw_bitnomial_products(symbol)` | Venue-specific fields that do not normalize (per-contract marks, deadbands, FCM margin by side, price limits, ...). |
 
 Defaults: `venue := NULL` scans every venue; `underlying := NULL` keeps every underlying
