@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import pytest
@@ -254,6 +254,37 @@ def test_bitnomial_funding_cursor_terminates(synthetic: Writer) -> None:
     synthetic(f"{root}/funding-rates/", {**base, "cursor": None}, {"data": [row], "pagination": {"cursor": "more"}})
     b = BitnomialAdapter()
     assert len(b.funding([b.instrument("PX")], T0, T1)) == 1
+
+
+def test_bitnomial_funding_cursor_is_decoded_before_reuse(synthetic: Writer) -> None:
+    """Bitnomial's cursor arrives percent-encoded; sending it back as-is double-encodes it (HTTP 400)."""
+    root = "https://bitnomial.com/exchange/api/v1"
+    spec = {"product_id": 1, "symbol": "PX", "type": "perpetual", "contract_size_unit": "BTC", "price_increment": 1}
+    synthetic(f"{root}/prod/product/specs/", {"active": "true"}, [spec])
+    base = {
+        "begin_time": "2026-11-10T00:00:00Z",
+        "end_time": "2026-11-12T23:59:59Z",
+        "order": "asc",
+        "limit": 500,
+        "product_id": "1",
+    }
+
+    def row(i: int) -> dict[str, object]:
+        start = datetime(2026, 11, 10, tzinfo=UTC) + timedelta(minutes=i)
+        return {
+            "product_id": 1,
+            "funding_rate": 0.0001,
+            "interval_start": start.isoformat().replace("+00:00", "Z"),
+            "interval_end": (start + timedelta(hours=8)).isoformat().replace("+00:00", "Z"),
+        }
+
+    full_page = {"data": [row(i) for i in range(500)], "pagination": {"cursor": "AAAAOR4AAO%2BtAA%3D"}}
+    synthetic(f"{root}/funding-rates/", {**base, "cursor": None}, full_page)
+    # Registered under the DECODED cursor: only a decoded cursor finds page 2.
+    last_page = {"data": [row(500)], "pagination": {"cursor": "AAAAOR4AAO%2BtAB%3D"}}
+    synthetic(f"{root}/funding-rates/", {**base, "cursor": "AAAAOR4AAO+tAA="}, last_page)
+    b = BitnomialAdapter()
+    assert len(b.funding([b.instrument("PX")], T0, T1)) == 501
 
 
 def test_bitnomial_has_no_rest_book() -> None:

@@ -22,6 +22,7 @@ from __future__ import annotations
 import os
 from datetime import UTC, datetime, timedelta
 from typing import Any
+from urllib.parse import unquote
 
 from .. import http
 from ..model import Candle, FundingPoint, Instrument, Mark
@@ -124,6 +125,9 @@ class BitnomialAdapter(Adapter):
             page = _as_list(body)
             rows += page
             cursor = ((body.get("pagination") or {}).get("cursor")) if isinstance(body, dict) else None
+            # Bitnomial returns the cursor already percent-encoded (base64 '+'/'=' as %2B/%3D);
+            # httpx encodes query values again, so decode it or page 2 is an HTTP 400.
+            cursor = unquote(cursor) if cursor else None
             if not page or not cursor or len(page) < int(params.get("limit", _PAGE)):
                 return rows
         raise VenueError(f"bitnomial funding history still paging after {_MAX_PAGES} pages; narrow the date range")
