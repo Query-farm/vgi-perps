@@ -334,6 +334,15 @@ def test_og_settlements_are_the_8h_stamps_and_sign_is_native() -> None:
     assert pts[2].rate == pytest.approx(-0.000205987)  # negative: shorts pay longs
 
 
+def test_og_mark_rate_settles_at_next_funding_time() -> None:
+    """Like every venue, marks().next_funding_time is when the reported funding_rate settles."""
+    og = OgAdapter()
+    (mark,) = og.marks([og.instrument("BTC-USD-PERP")])
+    assert mark.next_funding_time == datetime(2026, 11, 13, 8, tzinfo=UTC)  # PERPS_NOW 01:20Z
+    assert mark.funding_time == datetime(2026, 11, 13, tzinfo=UTC)
+    assert mark.funding_rate == 0.0001 and mark.funding_rate_is_estimate is False
+
+
 def test_og_trades_page_boundary_emits_each_trade_once(synthetic: Writer) -> None:
     """A full page drops its oldest millisecond and the next page re-reads it (end_ts is exclusive)."""
     base = og_url()

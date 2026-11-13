@@ -231,8 +231,9 @@ class OgAdapter(Adapter):
                     ask=to_float(tick.get("k")),
                     funding_rate=nxt.rate if nxt else None,
                     funding_rate_is_estimate=False if nxt else None,
-                    funding_time=nxt.funding_time if nxt else None,
-                    next_funding_time=None if nxt is None else nxt.funding_time + timedelta(hours=FUNDING_HOURS),
+                    # funding_rate settles at next_funding_time; funding_time is the last settlement.
+                    funding_time=next_funding_time(now) - timedelta(hours=FUNDING_HOURS),
+                    next_funding_time=nxt.funding_time if nxt else next_funding_time(now),
                     open_interest_contracts=oi,
                     open_interest_usd=None
                     if oi is None or mark_price is None

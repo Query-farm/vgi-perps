@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 (2026-11-13)
+
+- Fix: `marks(venue := 'og')` reported `next_funding_time` one window late (the rate
+  shown settles at the next 00/08/16 UTC, not 8 hours after it). Regression test added.
+
 ## 0.1.3 (2026-11-13)
 
 - New venue `og`: OG.com crypto perpetuals (North American Derivatives Exchange, Inc.,
