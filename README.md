@@ -50,7 +50,7 @@ INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
 ATTACH 'perps' (TYPE vgi,
-  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.2 vgi-perps-worker');
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.5 vgi-perps-worker');
 
 -- Which venues are reachable from here (Binance and Bybit geo-block US networks)
 SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
@@ -62,9 +62,15 @@ FROM perps.main.funding(underlying := 'BTC') GROUP BY venue ORDER BY mean_apr DE
 -- Cross-venue carry: who pays more, and which way to lean
 SELECT venue_a, venue_b, spread_bps, carry_trade
 FROM perps.main.funding_spread('BTC') ORDER BY abs(spread_bps) DESC;
+
+-- Combine functions: how much of its funding cap each BTC perp's current rate uses
+SELECT m.venue, m.symbol, m.funding_rate, i.funding_cap, abs(m.funding_rate) / i.funding_cap AS cap_used
+FROM perps.main.marks(underlying := 'BTC') AS m
+JOIN perps.main.instruments(underlying := 'BTC') AS i USING (venue, symbol)
+WHERE i.funding_cap IS NOT NULL ORDER BY cap_used DESC, m.venue, m.symbol;
 ```
 
-`uvx` fetches and caches the worker on first use; change `@v0.1.2` to move to a newer release.
+`uvx` fetches and caches the worker on first use; change `@v0.1.5` to move to a newer release.
 
 Other ways to run it: `vgi-perps-worker --http --port 8000` serves HTTP (attach with
 `LOCATION 'http://127.0.0.1:8000'`), and `scripts/fixture-worker` serves the recorded

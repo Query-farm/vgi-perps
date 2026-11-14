@@ -19,6 +19,7 @@ from vgi import Worker
 from vgi.catalog import Catalog, Schema
 
 from .functions.analytics import DepthMetrics, FundingSpread, LiquidationEstimate, Premium
+from .functions.composed import COMPOSED_EXAMPLES
 from .functions.market import Candles, Funding, Marks, OrderBook, Trades
 from .functions.nowcast import KalshiFundingNowcast
 from .functions.raw import RawBitnomialProducts, RawCoinbaseProducts, RawKalshiMarkets, RawKalshiPremiumIndex
@@ -66,8 +67,10 @@ def _stamp_example_queries(functions: list[type[Any]]) -> list[dict[str, str]]:
                 bucket.append(entry)
     for fn in functions:
         fn.Meta.tags = {**fn.Meta.tags, "vgi.example_queries": json.dumps(by_name[fn.Meta.name])}
-    # The schema-level list carries one example per function: agent tools cap a tag at 4,000 chars.
-    return [entries[0] for entries in by_name.values() if entries]
+    # The schema-level list carries one example per function plus every example that combines
+    # several functions; vgi-lint caps a vgi.example_queries tag at 8,000 chars.
+    composed = [{"description": ex.description, "sql": ex.sql} for ex in COMPOSED_EXAMPLES]
+    return [entries[0] for entries in by_name.values() if entries] + composed
 
 
 _ALL_EXAMPLES = _stamp_example_queries(FUNCTIONS)

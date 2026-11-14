@@ -16,6 +16,24 @@ tasks:
   - name: kalshi_single_stock_perps
     check_sql: >-
       SELECT count(*) > 0 FROM perps.main.instruments(venue := 'kalshi') WHERE asset_class = 'equity'
+  # Composed (instruments + funding) over a fixed past window. The agent saves its answer in a
+  # temp table; check_sql recomputes the truth live and compares every row, so a wrong, partial
+  # or rounded answer fails.
+  - name: kalshi_crypto_funding_week
+    check_sql: >-
+      WITH truth AS (
+        SELECT f.symbol, sum(f.rate_bps) AS total_funding_bps
+        FROM perps.main.funding(venue := 'kalshi', start_date := TIMESTAMPTZ '2026-11-06 00:00:00+00',
+                                end_date := TIMESTAMPTZ '2026-11-13 00:00:00+00') AS f
+        JOIN perps.main.instruments(venue := 'kalshi') AS i USING (venue, symbol)
+        WHERE i.asset_class = 'crypto'
+        GROUP BY f.symbol
+      )
+      SELECT count(*) > 0
+        AND count(*) = (SELECT count(*) FROM kalshi_crypto_funding)
+        AND count(*) = count(a.symbol)
+        AND bool_and(abs(t.total_funding_bps - a.total_funding_bps) < 1e-6)
+      FROM truth AS t LEFT JOIN kalshi_crypto_funding AS a ON a.symbol = t.symbol
   - name: liquidation_refusal
     check_sql: >-
       SELECT support = 'unsupported' FROM perps.main.capabilities(venue := 'kalshi')

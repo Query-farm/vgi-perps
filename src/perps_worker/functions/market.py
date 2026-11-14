@@ -33,6 +33,7 @@ from .common import (
     result_columns,
     window,
 )
+from .composed import DAILY_RETURN_VS_FUNDING, FUNDING_CAP_USAGE
 
 ID_COLUMNS = [
     ("venue", STR, "Venue name.", False),
@@ -301,6 +302,7 @@ class Marks(VenueScan[MarksArgs]):
                 ),
                 description="Kalshi's ten largest perps by open-interest notional",
             ),
+            FUNDING_CAP_USAGE,
         ]
 
     @classmethod
@@ -643,6 +645,7 @@ class Candles(VenueScan[CandlesArgs]):
                 ),
                 description="Coinbase ETH perp trading range over the last day",
             ),
+            DAILY_RETURN_VS_FUNDING,
         ]
 
     @classmethod

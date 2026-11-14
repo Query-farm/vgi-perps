@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from conftest import run_table
 from vgi.client import Client
@@ -60,3 +62,18 @@ def test_static_capabilities_cover_every_venue(client: Client) -> None:
     assert rows[("kalshi", "maintenance_margin")]["support"] == "unsupported"
     assert rows[("hyperliquid", "maintenance_margin")]["support"] == "supported"
     assert rows[("og", "order_book")]["support"] == "supported"
+
+
+def test_composed_examples_are_published_where_agents_see_them() -> None:
+    """Each composed example sits on the schema list and in its driving function's first five."""
+    from perps_worker.functions.composed import COMPOSED_EXAMPLES
+    from perps_worker.worker import FUNCTIONS, PerpsWorker
+
+    schema_tag = PerpsWorker.catalog.schemas[0].tags["vgi.example_queries"]
+    assert len(schema_tag) <= 8000
+    schema_list = json.loads(schema_tag)
+    for ex in COMPOSED_EXAMPLES:
+        entry = {"description": ex.description, "sql": ex.sql}
+        assert entry in schema_list
+        owners = [f for f in FUNCTIONS if entry in json.loads(f.Meta.tags["vgi.example_queries"])[:5]]
+        assert len(owners) == 1, ex.description

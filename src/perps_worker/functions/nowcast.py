@@ -17,6 +17,7 @@ from ..normalize import annualize, parse_iso, to_float
 from ..venues import Adapter, VenueError, get
 from ..venues.kalshi import KalshiAdapter
 from .common import F64, STR, TS, ArgumentError, VenueScan, build_schema, result_columns
+from .composed import NOWCAST_VS_WEEK
 
 NOWCAST_SCHEMA = build_schema(
     [
@@ -160,6 +161,7 @@ class KalshiFundingNowcast(VenueScan[NowcastArgs]):
                 ),
                 description="Settlement if the BTC premium holds at 2 bps for the rest of the window",
             ),
+            NOWCAST_VS_WEEK,
         ]
 
     @classmethod

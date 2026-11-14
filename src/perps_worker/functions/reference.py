@@ -26,6 +26,7 @@ from .common import (
     instrument_row,
     result_columns,
 )
+from .composed import LIVE_ORDER_BOOK_VENUES
 
 # ---------------------------------------------------------------------- venues
 
@@ -109,6 +110,7 @@ class Venues(VenueScan[VenuesArgs]):
                 ),
                 description="US-regulated venues and how many capabilities each supports, without network calls",
             ),
+            LIVE_ORDER_BOOK_VENUES,
         ]
 
     @classmethod

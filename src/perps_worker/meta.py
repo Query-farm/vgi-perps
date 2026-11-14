@@ -198,6 +198,15 @@ AGENT_TEST_TASKS = [
         ),
     },
     {
+        "name": "kalshi_crypto_funding_week",
+        "prompt": (
+            "For every Kalshi perpetual whose asset class is crypto, total the funding rates (in bps) that "
+            "settled from 2026-11-06 00:00 UTC through 2026-11-13 00:00 UTC. Save the unrounded result as a "
+            "temp table named kalshi_crypto_funding with columns symbol (VARCHAR, the Kalshi ticker) and "
+            "total_funding_bps (DOUBLE), one row per contract."
+        ),
+    },
+    {
         "name": "liquidation_refusal",
         "prompt": (
             "Can the perps worker estimate liquidation bands for Kalshi's BTC perp with the venue's own "
