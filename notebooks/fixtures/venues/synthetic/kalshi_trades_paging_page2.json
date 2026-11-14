@@ -1,0 +1,28 @@
+{
+ "body": {
+  "cursor": "page3",
+  "trades": [
+   {
+    "count": "2.00",
+    "created_time": "2026-11-01T00:05:00Z",
+    "is_block_trade": false,
+    "price": "7.0020",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "synthetic-4"
+   },
+   {
+    "count": "100.00",
+    "created_time": "2026-11-01T00:01:00Z",
+    "is_block_trade": true,
+    "price": "7.0030",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "synthetic-5"
+   }
+  ]
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/trades?cursor=page2&limit=1000&max_ts=1793491800&min_ts=1793491200&ticker=KXBTCPERP",
+ "status": 200,
+ "synthetic": "hand-written pagination fixture; prices illustrative"
+}

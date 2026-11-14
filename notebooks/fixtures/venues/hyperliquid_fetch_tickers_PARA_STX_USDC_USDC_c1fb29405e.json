@@ -1,0 +1,58 @@
+{
+ "body": {
+  "PARA-STX/USDC:USDC": {
+   "ask": 521.15,
+   "askVolume": null,
+   "average": null,
+   "baseVolume": null,
+   "bid": 519.668,
+   "bidVolume": null,
+   "change": null,
+   "close": 520.41,
+   "datetime": null,
+   "high": null,
+   "indexPrice": null,
+   "info": {
+    "baseId": 180010,
+    "collateralToken": "0",
+    "collateralTokenName": "USDC",
+    "dayBaseVlm": "34.018",
+    "dayNtlVlm": "18306.69697",
+    "deployerFeeScale": "1.0",
+    "dex": "para",
+    "funding": "0.0000075",
+    "growthMode": "enabled",
+    "hip3": true,
+    "impactPxs": [
+     "519.668",
+     "521.15"
+    ],
+    "lastFeeScaleChangeTime": "2026-07-23T11:04:24.867897798",
+    "marginMode": "noCross",
+    "marginTableId": 10,
+    "markPx": "520.29",
+    "maxLeverage": 10,
+    "midPx": "520.41",
+    "name": "para:STX",
+    "onlyIsolated": true,
+    "openInterest": "680.01",
+    "oraclePx": "520.29",
+    "premium": "0.0002287186",
+    "prevDayPx": "542.89",
+    "szDecimals": 3
+   },
+   "last": 520.41,
+   "low": null,
+   "markPrice": null,
+   "open": null,
+   "percentage": null,
+   "previousClose": 542.89,
+   "quoteVolume": 18306.69697,
+   "symbol": "PARA-STX/USDC:USDC",
+   "timestamp": null,
+   "vwap": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_tickers [[[\"PARA-STX/USDC:USDC\"]], {}]",
+ "status": 200
+}

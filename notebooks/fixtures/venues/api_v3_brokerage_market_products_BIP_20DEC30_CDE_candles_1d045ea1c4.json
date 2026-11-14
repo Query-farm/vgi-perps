@@ -1,0 +1,64 @@
+{
+ "body": {
+  "candles": [
+   {
+    "close": "71055",
+    "high": "71430",
+    "low": "70590",
+    "open": "71375",
+    "start": "1794528000",
+    "volume": "35967"
+   },
+   {
+    "close": "71375",
+    "high": "71470",
+    "low": "71025",
+    "open": "71325",
+    "start": "1794524400",
+    "volume": "36984"
+   },
+   {
+    "close": "71335",
+    "high": "71475",
+    "low": "71225",
+    "open": "71475",
+    "start": "1794520800",
+    "volume": "3164"
+   },
+   {
+    "close": "71475",
+    "high": "71545",
+    "low": "71270",
+    "open": "71375",
+    "start": "1794517200",
+    "volume": "22071"
+   },
+   {
+    "close": "71355",
+    "high": "71630",
+    "low": "71335",
+    "open": "71630",
+    "start": "1794513600",
+    "volume": "35291"
+   },
+   {
+    "close": "71620",
+    "high": "71695",
+    "low": "71355",
+    "open": "71690",
+    "start": "1794510000",
+    "volume": "14839"
+   },
+   {
+    "close": "71650",
+    "high": "72015",
+    "low": "71510",
+    "open": "71850",
+    "start": "1794506400",
+    "volume": "10283"
+   }
+  ]
+ },
+ "key": "GET https://api.coinbase.com/api/v3/brokerage/market/products/BIP-20DEC30-CDE/candles?end=1794528000&granularity=ONE_HOUR&limit=350&start=1794506400",
+ "status": 200
+}

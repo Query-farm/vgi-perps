@@ -1,0 +1,58 @@
+{
+ "body": {
+  "last": "70880",
+  "mid_market": "70880",
+  "pricebook": {
+   "asks": [
+    {
+     "price": "70885",
+     "size": "3"
+    },
+    {
+     "price": "70890",
+     "size": "491"
+    },
+    {
+     "price": "70895",
+     "size": "501"
+    },
+    {
+     "price": "70900",
+     "size": "542"
+    },
+    {
+     "price": "70905",
+     "size": "678"
+    }
+   ],
+   "bids": [
+    {
+     "price": "70875",
+     "size": "1"
+    },
+    {
+     "price": "70870",
+     "size": "346"
+    },
+    {
+     "price": "70865",
+     "size": "522"
+    },
+    {
+     "price": "70860",
+     "size": "586"
+    },
+    {
+     "price": "70855",
+     "size": "679"
+    }
+   ],
+   "product_id": "BIP-20DEC30-CDE",
+   "time": "2026-11-13T01:16:23.248523Z"
+  },
+  "spread_absolute": "10",
+  "spread_bps": "1.410735698667"
+ },
+ "key": "GET https://api.coinbase.com/api/v3/brokerage/market/product_book?limit=5&product_id=BIP-20DEC30-CDE",
+ "status": 200
+}

@@ -1,0 +1,49 @@
+{
+ "body": {
+  "BTC/USDC:USDC": {
+   "ask": 70942.8,
+   "askVolume": null,
+   "average": null,
+   "baseVolume": null,
+   "bid": 70938.0,
+   "bidVolume": null,
+   "change": null,
+   "close": 70938.5,
+   "datetime": null,
+   "high": null,
+   "indexPrice": null,
+   "info": {
+    "baseId": 0,
+    "dayBaseVlm": "50111.92012",
+    "dayNtlVlm": "3615886296.9754934311",
+    "funding": "0.0000125",
+    "impactPxs": [
+     "70938.0",
+     "70942.8"
+    ],
+    "marginTableId": 56,
+    "markPx": "70938.0",
+    "maxLeverage": 40,
+    "midPx": "70938.5",
+    "name": "BTC",
+    "openInterest": "39552.01788",
+    "oraclePx": "70962.0",
+    "premium": "-0.0002705673",
+    "prevDayPx": "73814.0",
+    "szDecimals": 5
+   },
+   "last": 70938.5,
+   "low": null,
+   "markPrice": null,
+   "open": null,
+   "percentage": null,
+   "previousClose": 73814.0,
+   "quoteVolume": 3615886296.9754934,
+   "symbol": "BTC/USDC:USDC",
+   "timestamp": null,
+   "vwap": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_tickers [[[\"BTC/USDC:USDC\"]], {}]",
+ "status": 200
+}

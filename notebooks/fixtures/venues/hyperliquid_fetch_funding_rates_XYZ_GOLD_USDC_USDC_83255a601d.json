@@ -1,0 +1,46 @@
+{
+ "body": {
+  "XYZ-GOLD/USDC:USDC": {
+   "datetime": null,
+   "estimatedSettlePrice": null,
+   "fundingDatetime": "2026-11-13T18:00:00.000Z",
+   "fundingRate": 6.25e-06,
+   "fundingTimestamp": 1794592800000,
+   "indexPrice": 3877.8,
+   "info": {
+    "dayBaseVlm": "16227.6267",
+    "dayNtlVlm": "63165709.1528499871",
+    "deployerFeeScale": "1.0",
+    "funding": "0.00000625",
+    "impactPxs": [
+     "3879.6",
+     "3879.7"
+    ],
+    "lastFeeScaleChangeTime": "1970-01-01T00:00:00",
+    "marginTableId": 25,
+    "markPx": "3879.4",
+    "maxLeverage": 25,
+    "midPx": "3879.65",
+    "name": "xyz:GOLD",
+    "openInterest": "74714.215",
+    "oraclePx": "3877.8",
+    "premium": "0.0004770746",
+    "prevDayPx": "3882.2",
+    "szDecimals": 4
+   },
+   "interestRate": null,
+   "interval": "1h",
+   "markPrice": 3879.4,
+   "nextFundingDatetime": null,
+   "nextFundingRate": null,
+   "nextFundingTimestamp": null,
+   "previousFundingDatetime": null,
+   "previousFundingRate": null,
+   "previousFundingTimestamp": null,
+   "symbol": "XYZ-GOLD/USDC:USDC",
+   "timestamp": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_funding_rates [[[\"XYZ-GOLD/USDC:USDC\"]], {}]",
+ "status": 200
+}

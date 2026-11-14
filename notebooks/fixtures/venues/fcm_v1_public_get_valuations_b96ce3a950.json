@@ -1,0 +1,22 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-valuations",
+  "result": {
+   "data": [
+    {
+     "t": 1794531600000,
+     "v": "0.0001"
+    },
+    {
+     "t": 1794528000000,
+     "v": "0.0001"
+    }
+   ],
+   "instrument_name": "BTC-USD-PERP"
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-valuations?count=3&end_ts=1794532800001&instrument_name=BTC-USD-PERP&start_ts=1794528000000&valuation_type=funding_hist",
+ "status": 200
+}

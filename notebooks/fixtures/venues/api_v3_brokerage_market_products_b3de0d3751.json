@@ -1,0 +1,14 @@
+{
+ "body": {
+  "num_products": 0,
+  "pagination": {
+   "has_next": false,
+   "has_prev": false,
+   "next_cursor": "",
+   "prev_cursor": ""
+  },
+  "products": []
+ },
+ "key": "GET https://api.coinbase.com/api/v3/brokerage/market/products?limit=100&offset=100&product_type=FUTURE",
+ "status": 200
+}

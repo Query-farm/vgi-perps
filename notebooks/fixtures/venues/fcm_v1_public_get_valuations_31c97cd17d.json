@@ -1,0 +1,18 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-valuations",
+  "result": {
+   "data": [
+    {
+     "t": 1794527999059,
+     "v": "0.0001"
+    }
+   ],
+   "instrument_name": "SEI-USD-PERP"
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-valuations?count=1&end_ts=1794528000000&instrument_name=SEI-USD-PERP&valuation_type=estimated_funding_rate",
+ "status": 200
+}

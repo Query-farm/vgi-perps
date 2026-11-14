@@ -1,0 +1,44 @@
+{
+ "body": {
+  "STX/USDC:USDC": {
+   "datetime": null,
+   "estimatedSettlePrice": null,
+   "fundingDatetime": "2026-11-13T18:00:00.000Z",
+   "fundingRate": 1.25e-05,
+   "fundingTimestamp": 1794592800000,
+   "indexPrice": 0.2908,
+   "info": {
+    "dayBaseVlm": "6853408.6000000006",
+    "dayNtlVlm": "1975655.8136469997",
+    "funding": "0.0000125",
+    "impactPxs": [
+     "0.29035",
+     "0.29104"
+    ],
+    "marginTableId": 5,
+    "markPx": "0.29051",
+    "maxLeverage": 5,
+    "midPx": "0.29067",
+    "name": "STX",
+    "openInterest": "6339821.0",
+    "oraclePx": "0.2908",
+    "premium": "0.0",
+    "prevDayPx": "0.29063",
+    "szDecimals": 1
+   },
+   "interestRate": null,
+   "interval": "1h",
+   "markPrice": 0.29051,
+   "nextFundingDatetime": null,
+   "nextFundingRate": null,
+   "nextFundingTimestamp": null,
+   "previousFundingDatetime": null,
+   "previousFundingRate": null,
+   "previousFundingTimestamp": null,
+   "symbol": "STX/USDC:USDC",
+   "timestamp": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_funding_rates [[[\"STX/USDC:USDC\"]], {}]",
+ "status": 200
+}

@@ -1,0 +1,1260 @@
+{
+ "body": {
+  "cursor": "",
+  "trades": [
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:59.325987Z",
+    "is_block_trade": false,
+    "price": "7.0981",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-3f19-8e76-594d-9ce894ae207c"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:58.330125Z",
+    "is_block_trade": false,
+    "price": "7.0980",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-2d51-9ea7-929f-286310553f0a"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:58.186409Z",
+    "is_block_trade": false,
+    "price": "7.0983",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-2d51-9a10-5d76-9daa5e34b975"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:58.186409Z",
+    "is_block_trade": false,
+    "price": "7.0982",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-2d51-90e1-79e9-8ac76f88ffd0"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:58.186409Z",
+    "is_block_trade": false,
+    "price": "7.0983",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-2169-9533-4c08-e443193611cc"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:57.843761Z",
+    "is_block_trade": false,
+    "price": "7.0985",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-1189-b4ab-29fd-fc245c7048d2"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:57.843761Z",
+    "is_block_trade": false,
+    "price": "7.0986",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-1189-b109-1238-81322edaa94e"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:57.069014Z",
+    "is_block_trade": false,
+    "price": "7.0994",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-1189-af03-1249-9451e1b5e76e"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:57.055897Z",
+    "is_block_trade": false,
+    "price": "7.0988",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-15e1-94e2-5b29-545b795761ab"
+   },
+   {
+    "count": "199.00",
+    "created_time": "2026-11-13T01:00:56.654044Z",
+    "is_block_trade": false,
+    "price": "7.0985",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-0441-ac0a-ce1a-4ca6c2dcbfbf"
+   },
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:56.450051Z",
+    "is_block_trade": false,
+    "price": "7.0989",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-0441-a821-9cc0-aaff1919a1f4"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:56.158431Z",
+    "is_block_trade": false,
+    "price": "7.0986",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdb-cb79-a5b2-9721-e75684e137d1"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:56.147602Z",
+    "is_block_trade": false,
+    "price": "7.0986",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-0441-896f-069b-6b1ea90ce5bd"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:56.147602Z",
+    "is_block_trade": false,
+    "price": "7.0987",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bdc-0441-82cb-1451-b61c414957f9"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:53.516306Z",
+    "is_block_trade": false,
+    "price": "7.0991",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-23a9-9a54-9e11-d3b5365e3baa"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:53.434869Z",
+    "is_block_trade": false,
+    "price": "7.0994",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-1089-afb5-19ff-b1c68fb1cca0"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:52.851247Z",
+    "is_block_trade": false,
+    "price": "7.0993",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-3721-bd8c-02f8-06be78ad59ad"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:52.337063Z",
+    "is_block_trade": false,
+    "price": "7.0988",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-3721-aedb-3d58-d0ed43ce2f6a"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:52.337063Z",
+    "is_block_trade": false,
+    "price": "7.0989",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-3721-ae3a-2dc0-cd5ab43441f9"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:52.129461Z",
+    "is_block_trade": false,
+    "price": "7.0986",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-3721-90d7-68e6-00963945c0fa"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:52.025416Z",
+    "is_block_trade": false,
+    "price": "7.0984",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-2b39-b022-493c-4669938e143d"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:51.641884Z",
+    "is_block_trade": false,
+    "price": "7.0982",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-5b59-94c1-4e1a-520b3873386b"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:50.894342Z",
+    "is_block_trade": false,
+    "price": "7.0987",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-4e91-8574-4314-4e4735457c60"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:47.821714Z",
+    "is_block_trade": false,
+    "price": "7.0992",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-a679-8f2d-d69a-dcc9ab38d5a4"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:47.772843Z",
+    "is_block_trade": false,
+    "price": "7.0997",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-a679-9707-f02b-5fca2d0acfd6"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:46.382827Z",
+    "is_block_trade": false,
+    "price": "7.0999",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-b2f1-87d5-e49c-01ce0ebd17ed"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:46.257906Z",
+    "is_block_trade": false,
+    "price": "7.1004",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-b2f1-8e68-b8c3-781fb1788ca2"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:46.257906Z",
+    "is_block_trade": false,
+    "price": "7.1003",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-b2f1-8259-a9f7-f0ac1a9b388e"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:45.653508Z",
+    "is_block_trade": false,
+    "price": "7.1007",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-8f69-a733-9f2a-6bf26642ca55"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:45.653508Z",
+    "is_block_trade": false,
+    "price": "7.1008",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-8f69-a0a9-8a77-a64e3a2a2315"
+   },
+   {
+    "count": "8.00",
+    "created_time": "2026-11-13T01:00:44.779335Z",
+    "is_block_trade": false,
+    "price": "7.1001",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-9be1-9d6e-0780-aa83b1799ce6"
+   },
+   {
+    "count": "1.00",
+    "created_time": "2026-11-13T01:00:44.586443Z",
+    "is_block_trade": false,
+    "price": "7.1005",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-9be1-b878-7e10-f74441519db2"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:44.586443Z",
+    "is_block_trade": false,
+    "price": "7.1006",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-9be1-b2e9-7293-bf1a546df372"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:43.736767Z",
+    "is_block_trade": false,
+    "price": "7.1007",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-9a61-a658-cd48-b88b8156301a"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:43.707003Z",
+    "is_block_trade": false,
+    "price": "7.1006",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-f799-8c1d-28d1-1f6f7ae6b5a5"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:43.707003Z",
+    "is_block_trade": false,
+    "price": "7.1007",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-f799-896f-10a0-3dac2ed9d1e3"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:43.262837Z",
+    "is_block_trade": false,
+    "price": "7.1014",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-f799-bff9-ed2d-24351914ed1e"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:43.262608Z",
+    "is_block_trade": false,
+    "price": "7.1013",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-f799-a819-ab62-098c55765633"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:42.078901Z",
+    "is_block_trade": false,
+    "price": "7.1007",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-ece9-a7eb-d9c1-541ecd7a32a9"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:41.753681Z",
+    "is_block_trade": false,
+    "price": "7.1005",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-dc09-9317-6656-62875ccddc5d"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:41.753681Z",
+    "is_block_trade": false,
+    "price": "7.1005",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-8d69-948f-550d-caefc143f5ba"
+   },
+   {
+    "count": "1.00",
+    "created_time": "2026-11-13T01:00:41.497439Z",
+    "is_block_trade": false,
+    "price": "7.1027",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-dc09-b1ec-7279-068a3a9d96e3"
+   },
+   {
+    "count": "4.00",
+    "created_time": "2026-11-13T01:00:41.315052Z",
+    "is_block_trade": false,
+    "price": "7.1033",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-b1f1-b407-15d8-6d12d84b6dfb"
+   },
+   {
+    "count": "182.00",
+    "created_time": "2026-11-13T01:00:41.306612Z",
+    "is_block_trade": false,
+    "price": "7.1038",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-dc09-8cbf-96d7-21ff1ae0617c"
+   },
+   {
+    "count": "11.00",
+    "created_time": "2026-11-13T01:00:41.306612Z",
+    "is_block_trade": false,
+    "price": "7.1037",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-dc09-8396-9cf4-341a1dc202ed"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:41.044344Z",
+    "is_block_trade": false,
+    "price": "7.1037",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-dc09-978d-191a-c1ea9404ed9d"
+   },
+   {
+    "count": "194.00",
+    "created_time": "2026-11-13T01:00:40.583835Z",
+    "is_block_trade": false,
+    "price": "7.1039",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-c9c1-bd3c-999a-88fb8619cf34"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:40.485763Z",
+    "is_block_trade": false,
+    "price": "7.1037",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc4-c9c1-99a9-3096-2c6dd31a6a41"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:39.872226Z",
+    "is_block_trade": false,
+    "price": "7.1037",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-45b9-99f2-994a-1116b44ff04c"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:39.872226Z",
+    "is_block_trade": false,
+    "price": "7.1036",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-45b9-92a6-b623-a4c6df9eb6f9"
+   },
+   {
+    "count": "2.00",
+    "created_time": "2026-11-13T01:00:38.902937Z",
+    "is_block_trade": false,
+    "price": "7.1038",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-5131-98cc-9a21-defcd4391021"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:37.095086Z",
+    "is_block_trade": false,
+    "price": "7.1045",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-6b29-ac92-2c4d-b61930d9171e"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:37.095086Z",
+    "is_block_trade": false,
+    "price": "7.1044",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-6b29-aa12-09cd-7987f6413907"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:36.296981Z",
+    "is_block_trade": false,
+    "price": "7.1058",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-63b9-b775-b95b-8665e63c9300"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:34.975677Z",
+    "is_block_trade": false,
+    "price": "7.1061",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-0611-9f67-db81-d415011e98eb"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:34.975677Z",
+    "is_block_trade": false,
+    "price": "7.1062",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-0611-9777-e1d1-b85f87f1192b"
+   },
+   {
+    "count": "107.00",
+    "created_time": "2026-11-13T01:00:34.462511Z",
+    "is_block_trade": false,
+    "price": "7.1055",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-0611-ad9b-72b6-50d46e58449f"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:34.262821Z",
+    "is_block_trade": false,
+    "price": "7.1056",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-0611-b298-a2df-65ca1c58d42a"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:34.131537Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-0a29-bd6b-f7cc-49107074a989"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:33.504642Z",
+    "is_block_trade": false,
+    "price": "7.1059",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-3ac9-bcbc-7720-685ee1a2d18e"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:33.504642Z",
+    "is_block_trade": false,
+    "price": "7.1060",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-3ac9-b207-6dee-b08cd19a19ea"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:33.023277Z",
+    "is_block_trade": false,
+    "price": "7.1064",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-3e21-a924-c671-85c0255b0104"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:32.044972Z",
+    "is_block_trade": false,
+    "price": "7.1063",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f271-9a33-6dfc-152cbfecc097"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:31.947099Z",
+    "is_block_trade": false,
+    "price": "7.1080",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-e5d1-8ce1-70e2-a8a647603993"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:31.947099Z",
+    "is_block_trade": false,
+    "price": "7.1082",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-e1f9-8f2b-7d32-c59edc4aae0f"
+   },
+   {
+    "count": "3.00",
+    "created_time": "2026-11-13T01:00:31.590529Z",
+    "is_block_trade": false,
+    "price": "7.1085",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-e5d1-bf1a-1b29-2021a409155e"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:30.937326Z",
+    "is_block_trade": false,
+    "price": "7.1084",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f909-9ae2-252b-cd5198a93aca"
+   },
+   {
+    "count": "6.00",
+    "created_time": "2026-11-13T01:00:30.937326Z",
+    "is_block_trade": false,
+    "price": "7.1085",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f571-9eb9-25b9-76eb2befcf1b"
+   },
+   {
+    "count": "189.00",
+    "created_time": "2026-11-13T01:00:30.937326Z",
+    "is_block_trade": false,
+    "price": "7.1085",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f571-9444-3c26-0f98277c5184"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:30.669675Z",
+    "is_block_trade": false,
+    "price": "7.1086",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f571-9f15-a7b8-393a0534052b"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:30.669675Z",
+    "is_block_trade": false,
+    "price": "7.1087",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f571-9479-a4de-41896013ec68"
+   },
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:30.227421Z",
+    "is_block_trade": false,
+    "price": "7.1086",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-f571-829d-87dc-0dbc8f9ce17a"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:30.195045Z",
+    "is_block_trade": false,
+    "price": "7.1086",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-fd21-9486-720a-6ca01cfda34e"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:30.195045Z",
+    "is_block_trade": false,
+    "price": "7.1087",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-fd21-9302-5efe-0bdfd65a8e75"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:28.004911Z",
+    "is_block_trade": false,
+    "price": "7.1085",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-c391-9a42-a12a-df612eaea125"
+   },
+   {
+    "count": "1.00",
+    "created_time": "2026-11-13T01:00:27.336895Z",
+    "is_block_trade": false,
+    "price": "7.1086",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc5-b019-afc2-0fd2-08d3a150e45a"
+   },
+   {
+    "count": "2.00",
+    "created_time": "2026-11-13T01:00:22.589864Z",
+    "is_block_trade": false,
+    "price": "7.1064",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-8db1-b1e9-4c58-a6a5556eee35"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:21.432017Z",
+    "is_block_trade": false,
+    "price": "7.1054",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-9aa9-83ab-62a7-78b75b2cc1ae"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:21.303103Z",
+    "is_block_trade": false,
+    "price": "7.1057",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-9aa9-bf72-79b4-2c6429d2b7c6"
+   },
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:21.150294Z",
+    "is_block_trade": false,
+    "price": "7.1058",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-9aa9-99d0-511d-0c858a7b603f"
+   },
+   {
+    "count": "11.00",
+    "created_time": "2026-11-13T01:00:20.105472Z",
+    "is_block_trade": false,
+    "price": "7.1049",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-a621-b377-4ee8-71c326a1eb0f"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:20.074506Z",
+    "is_block_trade": false,
+    "price": "7.1047",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-a621-a0cb-da82-812a6dfb3152"
+   },
+   {
+    "count": "198.00",
+    "created_time": "2026-11-13T01:00:19.589001Z",
+    "is_block_trade": false,
+    "price": "7.1035",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-b259-8d0e-82ca-80f7c4cadcfc"
+   },
+   {
+    "count": "361.00",
+    "created_time": "2026-11-13T01:00:18.86075Z",
+    "is_block_trade": false,
+    "price": "7.1033",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-df91-990c-f543-4aa9dd64d680"
+   },
+   {
+    "count": "26.00",
+    "created_time": "2026-11-13T01:00:18.601129Z",
+    "is_block_trade": false,
+    "price": "7.1034",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-df91-be88-0fee-7b42774dfdc3"
+   },
+   {
+    "count": "200.00",
+    "created_time": "2026-11-13T01:00:17.818342Z",
+    "is_block_trade": false,
+    "price": "7.1033",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-cb49-b8f0-5ecc-1c9131a5cd09"
+   },
+   {
+    "count": "200.00",
+    "created_time": "2026-11-13T01:00:16.560908Z",
+    "is_block_trade": false,
+    "price": "7.1035",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-f101-9ada-ac3f-42ef5403f8d2"
+   },
+   {
+    "count": "199.00",
+    "created_time": "2026-11-13T01:00:15.577786Z",
+    "is_block_trade": false,
+    "price": "7.1039",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-e579-bc10-fdb5-d4eff189ca77"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:15.529765Z",
+    "is_block_trade": false,
+    "price": "7.1041",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-e579-9257-4923-56fdb8f092ce"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:14.817031Z",
+    "is_block_trade": false,
+    "price": "7.1037",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-29f1-96d8-cf72-f6a19c90a3e5"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:14.817031Z",
+    "is_block_trade": false,
+    "price": "7.1036",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-29f1-9351-dfbe-dab020eb690c"
+   },
+   {
+    "count": "432.00",
+    "created_time": "2026-11-13T01:00:14.665508Z",
+    "is_block_trade": false,
+    "price": "7.1039",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-29f1-913c-8014-7be7dd008974"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:14.539008Z",
+    "is_block_trade": false,
+    "price": "7.1044",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-29f1-853c-5625-2301e4de7f35"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:13.864275Z",
+    "is_block_trade": false,
+    "price": "7.1046",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-3c69-91fb-e100-01db6af8114c"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:13.849376Z",
+    "is_block_trade": false,
+    "price": "7.1047",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-3c69-95ad-e347-d81ab8c737c5"
+   },
+   {
+    "count": "197.00",
+    "created_time": "2026-11-13T01:00:12.818408Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-00e1-9edf-0ed6-c81f640a5bb6"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:12.493291Z",
+    "is_block_trade": false,
+    "price": "7.1045",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-00e1-b0d2-93e8-7332d39bc353"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:12.493291Z",
+    "is_block_trade": false,
+    "price": "7.1044",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-00e1-b0ca-a1d7-090607c67aab"
+   },
+   {
+    "count": "11.00",
+    "created_time": "2026-11-13T01:00:12.422316Z",
+    "is_block_trade": false,
+    "price": "7.1046",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-00e1-9d2a-fa37-c5166f4e0932"
+   },
+   {
+    "count": "21.00",
+    "created_time": "2026-11-13T01:00:12.422316Z",
+    "is_block_trade": false,
+    "price": "7.1047",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-00e1-9614-dd71-8a489382f606"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:11.492805Z",
+    "is_block_trade": false,
+    "price": "7.1047",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-1499-aa33-738d-c70bcc33124c"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:11.492805Z",
+    "is_block_trade": false,
+    "price": "7.1046",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-1499-a232-6b27-6861eb86fb51"
+   },
+   {
+    "count": "586.00",
+    "created_time": "2026-11-13T01:00:11.271793Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-1499-ae89-3922-3d444b3cae8e"
+   },
+   {
+    "count": "198.00",
+    "created_time": "2026-11-13T01:00:11.271793Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-1499-aa85-1a61-fd40026a4704"
+   },
+   {
+    "count": "197.00",
+    "created_time": "2026-11-13T01:00:10.484468Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-7bd1-a3aa-0800-657228e26757"
+   },
+   {
+    "count": "587.00",
+    "created_time": "2026-11-13T01:00:09.610942Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-6f09-950f-5f3c-9795ef8ff434"
+   },
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:09.519252Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-6f09-b05c-1a4d-cbed74465a0d"
+   },
+   {
+    "count": "586.00",
+    "created_time": "2026-11-13T01:00:09.483408Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-6f09-9bf8-4515-5e59d5cd4341"
+   },
+   {
+    "count": "195.00",
+    "created_time": "2026-11-13T01:00:09.389136Z",
+    "is_block_trade": false,
+    "price": "7.1052",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-6f09-91e0-166a-11e52b535b20"
+   },
+   {
+    "count": "17.00",
+    "created_time": "2026-11-13T01:00:08.81124Z",
+    "is_block_trade": false,
+    "price": "7.1045",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-52c1-bc84-57c6-81486b7104f6"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:08.81124Z",
+    "is_block_trade": false,
+    "price": "7.1045",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-52c1-b025-7663-70fb29957060"
+   },
+   {
+    "count": "197.00",
+    "created_time": "2026-11-13T01:00:08.442414Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-52c1-8ed3-a9ba-44b91c22f447"
+   },
+   {
+    "count": "198.00",
+    "created_time": "2026-11-13T01:00:08.187691Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-56d9-a2d0-8fb1-ef05441cd9e6"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:08.172081Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-56d9-a951-8e47-c3da87cb354b"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:08.172081Z",
+    "is_block_trade": false,
+    "price": "7.1052",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-56d9-a4e7-975a-83d8acbe76c5"
+   },
+   {
+    "count": "197.00",
+    "created_time": "2026-11-13T01:00:07.392835Z",
+    "is_block_trade": false,
+    "price": "7.1051",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-46b9-b4d4-0593-4f6e262f3ee1"
+   },
+   {
+    "count": "11.00",
+    "created_time": "2026-11-13T01:00:07.309853Z",
+    "is_block_trade": false,
+    "price": "7.1054",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-46b9-8e43-bfba-c8e0c6a80e13"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:07.309853Z",
+    "is_block_trade": false,
+    "price": "7.1054",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-46b9-8d6c-a3f1-8e4a56de65b9"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:07.309853Z",
+    "is_block_trade": false,
+    "price": "7.1053",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-46b9-874c-8f4f-c2decda5d903"
+   },
+   {
+    "count": "196.00",
+    "created_time": "2026-11-13T01:00:07.268135Z",
+    "is_block_trade": false,
+    "price": "7.1053",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc6-46b9-b894-cd15-51b8b3481005"
+   },
+   {
+    "count": "8.00",
+    "created_time": "2026-11-13T01:00:05.018287Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-de01-b24e-1f65-f6db254676c2"
+   },
+   {
+    "count": "1.00",
+    "created_time": "2026-11-13T01:00:04.740238Z",
+    "is_block_trade": false,
+    "price": "7.1050",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-eab9-bb55-6e7d-d6d25de9569a"
+   },
+   {
+    "count": "20.00",
+    "created_time": "2026-11-13T01:00:04.620958Z",
+    "is_block_trade": false,
+    "price": "7.1055",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-d791-bfc9-d16b-b7ad18298a77"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:04.608609Z",
+    "is_block_trade": false,
+    "price": "7.1055",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-eea1-b531-50a0-d85466ce35db"
+   },
+   {
+    "count": "13.00",
+    "created_time": "2026-11-13T01:00:04.608609Z",
+    "is_block_trade": false,
+    "price": "7.1058",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-eea1-b381-60c7-95e1a0db7aaa"
+   },
+   {
+    "count": "198.00",
+    "created_time": "2026-11-13T01:00:04.554372Z",
+    "is_block_trade": false,
+    "price": "7.1067",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-eea1-a8ba-cb68-7af2c42b504c"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:03.95404Z",
+    "is_block_trade": false,
+    "price": "7.1054",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-fad9-bf69-a751-acb989cfa7a0"
+   },
+   {
+    "count": "431.00",
+    "created_time": "2026-11-13T01:00:03.95404Z",
+    "is_block_trade": false,
+    "price": "7.1055",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-fad9-be5d-9889-ce27965cfa7a"
+   },
+   {
+    "count": "11.00",
+    "created_time": "2026-11-13T01:00:03.42873Z",
+    "is_block_trade": false,
+    "price": "7.1053",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-fad9-8a53-5b42-d2a898073c02"
+   },
+   {
+    "count": "194.00",
+    "created_time": "2026-11-13T01:00:03.420933Z",
+    "is_block_trade": false,
+    "price": "7.1053",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-fad9-acaf-2c20-76b5a618ae73"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:02.692413Z",
+    "is_block_trade": false,
+    "price": "7.1057",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-9711-a2e9-a011-6d22e46e844c"
+   },
+   {
+    "count": "16.00",
+    "created_time": "2026-11-13T01:00:02.692413Z",
+    "is_block_trade": false,
+    "price": "7.1057",
+    "taker_side": "bid",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-9329-af02-b4f8-698be10ce998"
+   },
+   {
+    "count": "199.00",
+    "created_time": "2026-11-13T01:00:02.68342Z",
+    "is_block_trade": false,
+    "price": "7.1054",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-9711-8b2e-cb17-f7dd55ee9e35"
+   },
+   {
+    "count": "194.00",
+    "created_time": "2026-11-13T01:00:01.263179Z",
+    "is_block_trade": false,
+    "price": "7.1044",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-83c9-b3b2-26d9-bc36303fb483"
+   },
+   {
+    "count": "15.00",
+    "created_time": "2026-11-13T01:00:01.182798Z",
+    "is_block_trade": false,
+    "price": "7.1046",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-83c9-97a7-1c29-84ff45f83e14"
+   },
+   {
+    "count": "150.00",
+    "created_time": "2026-11-13T01:00:00.240465Z",
+    "is_block_trade": false,
+    "price": "7.1029",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-bc81-b872-eb0f-11cbf158bd1a"
+   },
+   {
+    "count": "15.00",
+    "created_time": "2026-11-13T01:00:00.076737Z",
+    "is_block_trade": false,
+    "price": "7.1039",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-b899-82b7-f227-073fe2c982a6"
+   },
+   {
+    "count": "195.00",
+    "created_time": "2026-11-13T01:00:00.010051Z",
+    "is_block_trade": false,
+    "price": "7.1042",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-bc81-aa6a-bc54-18d22bcb4f1d"
+   },
+   {
+    "count": "583.00",
+    "created_time": "2026-11-13T01:00:00.010051Z",
+    "is_block_trade": false,
+    "price": "7.1042",
+    "taker_side": "ask",
+    "ticker": "KXBTCPERP",
+    "trade_id": "07269bc7-bc81-a948-9644-6f866e5988ca"
+   }
+  ]
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/trades?limit=1000&max_ts=1794531660&min_ts=1794531600&ticker=KXBTCPERP",
+ "status": 200
+}

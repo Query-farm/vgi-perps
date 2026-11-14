@@ -1,0 +1,248 @@
+{
+ "body": {
+  "points": [
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:00Z"
+   },
+   {
+    "premium_index": "0.0000681266412327",
+    "second_ts": "2026-11-13T01:00:01Z"
+   },
+   {
+    "premium_index": "0.0000655891467697",
+    "second_ts": "2026-11-13T01:00:02Z"
+   },
+   {
+    "premium_index": "0.0000660114223688",
+    "second_ts": "2026-11-13T01:00:03Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:04Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:05Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:06Z"
+   },
+   {
+    "premium_index": "0.000069253754201",
+    "second_ts": "2026-11-13T01:00:07Z"
+   },
+   {
+    "premium_index": "0.0000084451851185",
+    "second_ts": "2026-11-13T01:00:08Z"
+   },
+   {
+    "premium_index": "0.000066156836746",
+    "second_ts": "2026-11-13T01:00:09Z"
+   },
+   {
+    "premium_index": "0.000063762879785",
+    "second_ts": "2026-11-13T01:00:10Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:11Z"
+   },
+   {
+    "premium_index": "0.0000682702912326",
+    "second_ts": "2026-11-13T01:00:12Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:13Z"
+   },
+   {
+    "premium_index": "0.0000228036110785",
+    "second_ts": "2026-11-13T01:00:14Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:15Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:16Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:17Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:18Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:19Z"
+   },
+   {
+    "premium_index": "0.0000812215838828",
+    "second_ts": "2026-11-13T01:00:20Z"
+   },
+   {
+    "premium_index": "0.0001439916831079",
+    "second_ts": "2026-11-13T01:00:21Z"
+   },
+   {
+    "premium_index": "0.0002319574279299",
+    "second_ts": "2026-11-13T01:00:22Z"
+   },
+   {
+    "premium_index": "0.0001501562145323",
+    "second_ts": "2026-11-13T01:00:23Z"
+   },
+   {
+    "premium_index": "0.000079645014011",
+    "second_ts": "2026-11-13T01:00:24Z"
+   },
+   {
+    "premium_index": "0.0001084917826973",
+    "second_ts": "2026-11-13T01:00:25Z"
+   },
+   {
+    "premium_index": "0.0001627848048193",
+    "second_ts": "2026-11-13T01:00:26Z"
+   },
+   {
+    "premium_index": "0.0001474508726897",
+    "second_ts": "2026-11-13T01:00:27Z"
+   },
+   {
+    "premium_index": "0.0001080543851227",
+    "second_ts": "2026-11-13T01:00:28Z"
+   },
+   {
+    "premium_index": "0.0000493813334902",
+    "second_ts": "2026-11-13T01:00:29Z"
+   },
+   {
+    "premium_index": "0.0000925738079153",
+    "second_ts": "2026-11-13T01:00:30Z"
+   },
+   {
+    "premium_index": "0.0000448803923475",
+    "second_ts": "2026-11-13T01:00:31Z"
+   },
+   {
+    "premium_index": "-0.0001982243097285",
+    "second_ts": "2026-11-13T01:00:32Z"
+   },
+   {
+    "premium_index": "-0.0001972813448678",
+    "second_ts": "2026-11-13T01:00:33Z"
+   },
+   {
+    "premium_index": "0.0000080225837139",
+    "second_ts": "2026-11-13T01:00:34Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:35Z"
+   },
+   {
+    "premium_index": "-0.0001798460416562",
+    "second_ts": "2026-11-13T01:00:36Z"
+   },
+   {
+    "premium_index": "-0.0000955694751378",
+    "second_ts": "2026-11-13T01:00:37Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:38Z"
+   },
+   {
+    "premium_index": "-0.000031389338576",
+    "second_ts": "2026-11-13T01:00:39Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:40Z"
+   },
+   {
+    "premium_index": "-0.0001403435277352",
+    "second_ts": "2026-11-13T01:00:41Z"
+   },
+   {
+    "premium_index": "-0.0000239397169762",
+    "second_ts": "2026-11-13T01:00:42Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:43Z"
+   },
+   {
+    "premium_index": "-0.0000761860127269",
+    "second_ts": "2026-11-13T01:00:44Z"
+   },
+   {
+    "premium_index": "0.0000202806732507",
+    "second_ts": "2026-11-13T01:00:45Z"
+   },
+   {
+    "premium_index": "-0.0001091384051006",
+    "second_ts": "2026-11-13T01:00:46Z"
+   },
+   {
+    "premium_index": "-0.0001097124533775",
+    "second_ts": "2026-11-13T01:00:47Z"
+   },
+   {
+    "premium_index": "-0.000031549633489",
+    "second_ts": "2026-11-13T01:00:48Z"
+   },
+   {
+    "premium_index": "-0.0000249324675241",
+    "second_ts": "2026-11-13T01:00:49Z"
+   },
+   {
+    "premium_index": "-0.0000154951183334",
+    "second_ts": "2026-11-13T01:00:50Z"
+   },
+   {
+    "premium_index": "-0.0001257871734552",
+    "second_ts": "2026-11-13T01:00:51Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:52Z"
+   },
+   {
+    "premium_index": "-0.0000839437092641",
+    "second_ts": "2026-11-13T01:00:53Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:54Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:55Z"
+   },
+   {
+    "premium_index": "-0.0000480339804492",
+    "second_ts": "2026-11-13T01:00:56Z"
+   },
+   {
+    "premium_index": "0.0000884672513394",
+    "second_ts": "2026-11-13T01:00:57Z"
+   },
+   {
+    "premium_index": "-0.0000381766978171",
+    "second_ts": "2026-11-13T01:00:58Z"
+   },
+   {
+    "premium_index": "0",
+    "second_ts": "2026-11-13T01:00:59Z"
+   }
+  ]
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/funding_rates/premium_index?end_ts=1794531660&start_ts=1794531600&ticker=KXBTCPERP",
+ "status": 200
+}

@@ -73,6 +73,13 @@ fixtures offline (no network; "now" pinned to the recording time).
 Build from source: `git clone https://github.com/Query-farm/vgi-perps && cd vgi-perps && make build`
 (the worker lands at `.venv/bin/vgi-perps-worker`).
 
+## Python notebooks
+
+The [notebooks](notebooks/README.md) directory contains executed, SQL-first Haybarn
+examples with charts: cross-venue funding, liquidity and market activity, and a
+Kalshi funding nowcast walkthrough. They use the real VGI worker with clearly
+labelled replay data and include setup, rerun and live-data instructions.
+
 ## SQL surface
 
 All functions live in `perps.main`. Arguments shown `name := value` are named and

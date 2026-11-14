@@ -1,0 +1,28 @@
+{
+ "body": {
+  "code": 0,
+  "id": -1,
+  "method": "public/get-tickers",
+  "result": {
+   "data": [
+    {
+     "a": "1921.69",
+     "b": "1921.56",
+     "c": "-0.0392",
+     "h": "2023.40",
+     "i": "ETH-USD-PERP",
+     "k": "1923.90",
+     "l": "1893.70",
+     "oi": "14.953",
+     "t": 1794583987344,
+     "v": "67.007",
+     "vv": "131215.40",
+     "w": null,
+     "ww": null
+    }
+   ]
+  }
+ },
+ "key": "GET https://api.crypto.com/fcm/v1/public/get-tickers?instrument_name=ETH-USD-PERP",
+ "status": 200
+}

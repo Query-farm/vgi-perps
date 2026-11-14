@@ -1,0 +1,13 @@
+{
+ "body": {
+  "computed_time": "2026-11-13T01:16:21.852724Z",
+  "funding_rate": 0.0001233609059254,
+  "mark_price": "7.0847",
+  "market_ticker": "KXBTCPERP",
+  "next_funding_time": "2026-11-13T05:00:00Z",
+  "premium_index": "0.0001607721353518",
+  "premium_index_ts": "2026-11-13T01:16:17Z"
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/funding_rates/estimate?ticker=KXBTCPERP",
+ "status": 200
+}

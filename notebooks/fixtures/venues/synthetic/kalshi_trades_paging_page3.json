@@ -1,0 +1,9 @@
+{
+ "body": {
+  "cursor": "page4",
+  "trades": []
+ },
+ "key": "GET https://api.elections.kalshi.com/trade-api/v2/margin/trades?cursor=page3&limit=1000&max_ts=1793491800&min_ts=1793491200&ticker=KXBTCPERP",
+ "status": 200,
+ "synthetic": "hand-written pagination fixture; prices illustrative"
+}

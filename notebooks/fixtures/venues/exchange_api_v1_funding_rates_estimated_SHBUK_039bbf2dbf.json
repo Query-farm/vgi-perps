@@ -1,0 +1,9 @@
+{
+ "body": {
+  "funding_rate": 0.0001,
+  "interval_end": "2026-11-13T09:00:00Z",
+  "interval_start": "2026-11-13T01:00:00Z"
+ },
+ "key": "GET https://bitnomial.com/exchange/api/v1/funding-rates/estimated/SHBUK",
+ "status": 200
+}

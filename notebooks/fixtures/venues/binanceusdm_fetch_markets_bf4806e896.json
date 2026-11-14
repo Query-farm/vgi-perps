@@ -1,0 +1,5 @@
+{
+ "body": "ExchangeNotAvailable: binanceusdm GET https://fapi.binance.com/fapi/v1/exchangeInfo 451  {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error.\"\n}",
+ "key": "CCXT binanceusdm.fetch_markets [[], {}]",
+ "status": 599
+}

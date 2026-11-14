@@ -1,0 +1,55 @@
+{
+ "body": {
+  "XYZ-GOLD/USDC:USDC": {
+   "ask": 3879.7,
+   "askVolume": null,
+   "average": null,
+   "baseVolume": null,
+   "bid": 3879.6,
+   "bidVolume": null,
+   "change": null,
+   "close": 3879.65,
+   "datetime": null,
+   "high": null,
+   "indexPrice": null,
+   "info": {
+    "baseId": 110003,
+    "collateralToken": "0",
+    "collateralTokenName": "USDC",
+    "dayBaseVlm": "16227.6267",
+    "dayNtlVlm": "63165709.1528499871",
+    "deployerFeeScale": "1.0",
+    "dex": "xyz",
+    "funding": "0.00000625",
+    "hip3": true,
+    "impactPxs": [
+     "3879.6",
+     "3879.7"
+    ],
+    "lastFeeScaleChangeTime": "1970-01-01T00:00:00",
+    "marginTableId": 25,
+    "markPx": "3879.4",
+    "maxLeverage": 25,
+    "midPx": "3879.65",
+    "name": "xyz:GOLD",
+    "openInterest": "74714.215",
+    "oraclePx": "3877.8",
+    "premium": "0.0004770746",
+    "prevDayPx": "3882.2",
+    "szDecimals": 4
+   },
+   "last": 3879.65,
+   "low": null,
+   "markPrice": null,
+   "open": null,
+   "percentage": null,
+   "previousClose": 3882.2,
+   "quoteVolume": 63165709.15284999,
+   "symbol": "XYZ-GOLD/USDC:USDC",
+   "timestamp": null,
+   "vwap": null
+  }
+ },
+ "key": "CCXT hyperliquid.fetch_tickers [[[\"XYZ-GOLD/USDC:USDC\"]], {}]",
+ "status": 200
+}
