@@ -25,7 +25,7 @@ from .functions.nowcast import KalshiFundingNowcast
 from .functions.raw import RawBitnomialProducts, RawCoinbaseProducts, RawKalshiMarkets, RawKalshiPremiumIndex
 from .functions.reference import Capabilities, Instruments, Venues
 from .meta import (
-    CATALOG_DOC_MD,
+    CATALOG_COMMENT,
     CATALOG_NAME,
     CATALOG_TAGS,
     SCHEMA_CATEGORIES,
@@ -81,7 +81,7 @@ class PerpsWorker(Worker):
 
     catalog = Catalog(
         name=CATALOG_NAME,
-        comment=CATALOG_DOC_MD,
+        comment=CATALOG_COMMENT,
         source_url=SOURCE_URL,
         tags=CATALOG_TAGS,
         schemas=[

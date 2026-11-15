@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6 (2026-11-14)
+
+- The catalog comment is now one plain-text sentence saying what the worker covers (rule
+  VGI001). The longer Markdown description stays in the catalog's `vgi.doc_md` and
+  `vgi.doc_llm` tags.
+
 ## 0.1.5 (2026-11-13)
 
 - Hyperliquid now includes its HIP-3 builder-deployed dexes (`xyz`, `para`, `io`, `mkts`;

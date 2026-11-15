@@ -66,6 +66,13 @@ CONVENTIONS_MD = (
     "simple: `rate * 8760 / interval_hours`. Times are UTC `TIMESTAMPTZ`."
 )
 
+#: The catalog COMMENT: one plain-text sentence directories show as the one-line description.
+CATALOG_COMMENT = (
+    "Normalized market data for US-regulated perpetual futures on Kalshi, Coinbase "
+    "Derivatives and Bitnomial, with Hyperliquid, Binance and Bybit as an offshore benchmark: "
+    "funding, marks, order books, trades and carry analytics. Read-only, no API key needed."
+)
+
 CATALOG_DOC_LLM = (
     "Normalized, cross-venue market data for US-regulated perpetual futures: Kalshi perps "
     "(crypto, single stocks, indices, metals, energy), Coinbase Derivatives perpetual-style "
