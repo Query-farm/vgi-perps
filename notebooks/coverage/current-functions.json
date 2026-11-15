@@ -1,0 +1,747 @@
+{
+  "query": "SELECT * FROM duckdb_functions() WHERE database_name='perps'",
+  "columns": [
+    "database_name",
+    "database_oid",
+    "schema_name",
+    "function_name",
+    "alias_of",
+    "function_type",
+    "description",
+    "comment",
+    "tags",
+    "return_type",
+    "parameters",
+    "parameter_types",
+    "varargs",
+    "macro_definition",
+    "has_side_effects",
+    "internal",
+    "extension_name",
+    "function_oid",
+    "examples",
+    "stability",
+    "categories"
+  ],
+  "rows": [
+    [
+      "perps",
+      "22595",
+      "main",
+      "trades",
+      null,
+      "table",
+      "Public trades for one contract in a time window, normalized price and USD size, with taker side",
+      null,
+      {
+        "vgi.category": "market_data",
+        "vgi.doc_llm": "Public trades for one contract: `trades('kalshi', 'KXBTCPERP', start_date := now() - INTERVAL 10 MINUTE)`. Venue and symbol are positional. Columns: `trade_id`, `ts`, `price` per underlying unit, `size_contracts`, `size_usd`, `taker_side` ('buy'/'sell'; Coinbase publishes the maker side, so it is inverted), `is_block_trade`. Default window is the last hour; `max_trades` caps the result (default 10,000). Pages stream in batches. Bitnomial trades are WebSocket-only and raise an error.",
+        "vgi.doc_md": "## trades(venue, symbol, start_date := NULL, end_date := NULL, max_trades := 10000)\n\nPublic prints with aggressor side and USD size.",
+        "vgi.example_queries": "[{\"description\": \"Aggressor buy vs sell notional on Kalshi BTC over 15 minutes\", \"sql\": \"SELECT taker_side, count(*) AS n, sum(size_usd) AS usd FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := now() - INTERVAL 15 MINUTE) GROUP BY taker_side ORDER BY taker_side\"}, {\"description\": \"Per-minute traded notional on Coinbase's BTC perp\", \"sql\": \"SELECT date_trunc('minute', ts) AS minute, sum(size_usd) AS usd FROM perps.main.trades('coinbase', 'BIP-20DEC30-CDE', max_trades := 2000) GROUP BY minute ORDER BY minute\"}]",
+        "vgi.keywords": "[\"trades\", \"prints\", \"tape\", \"time and sales\", \"taker side\", \"block trades\", \"executions\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"trade_id\", \"type\": \"VARCHAR\", \"description\": \"Venue trade identifier.\"}, {\"name\": \"ts\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Execution time, UTC.\"}, {\"name\": \"price\", \"type\": \"DOUBLE\", \"description\": \"Trade price, quote currency per underlying unit.\"}, {\"name\": \"size_contracts\", \"type\": \"DOUBLE\", \"description\": \"Trade size in contracts.\"}, {\"name\": \"size_usd\", \"type\": \"DOUBLE\", \"description\": \"Trade notional in quote currency.\"}, {\"name\": \"taker_side\", \"type\": \"VARCHAR\", \"description\": \"'buy' or 'sell' from the aggressor's side; NULL where the venue does not say.\"}, {\"name\": \"is_block_trade\", \"type\": \"BOOLEAN\", \"description\": \"True for an off-book block trade, where the venue flags it.\"}]",
+        "vgi.title": "Public Trades"
+      },
+      null,
+      [
+        "venue",
+        "symbol",
+        "start_date",
+        "max_trades",
+        "end_date"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE",
+        "BIGINT",
+        "TIMESTAMP WITH TIME ZONE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22614,
+      [
+        "SELECT taker_side, count(*) AS n, sum(size_usd) AS usd FROM perps.main.trades('kalshi', 'KXBTCPERP', start_date := now() - INTERVAL 15 MINUTE) GROUP BY taker_side ORDER BY taker_side",
+        "SELECT date_trunc('minute', ts) AS minute, sum(size_usd) AS usd FROM perps.main.trades('coinbase', 'BIP-20DEC30-CDE', max_trades := 2000) GROUP BY minute ORDER BY minute"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "raw_coinbase_products",
+      null,
+      "table",
+      "Coinbase perp-style futures fields: intraday and overnight FCM margin by side, settlement, sessions",
+      null,
+      {
+        "vgi.category": "venue_raw",
+        "vgi.doc_llm": "Coinbase Derivatives perp-style product fields in native quoting: FCM intraday and overnight margin rates for long and short (initial requirements; overnight is higher), daily `settlement_price_native`, `index_price_native`, the latest hourly `funding_rate` and `funding_time`, nominal `contract_expiry`, session state and close. `symbol := '<id>'` keeps one.",
+        "vgi.doc_md": "## raw_coinbase_products(symbol := NULL)\n\nCoinbase-specific product fields, unnormalized.",
+        "vgi.example_queries": "[{\"description\": \"Coinbase perps with the highest overnight margin\", \"sql\": \"SELECT symbol, intraday_long_margin_rate, overnight_long_margin_rate FROM perps.main.raw_coinbase_products() ORDER BY overnight_long_margin_rate DESC LIMIT 5\"}, {\"description\": \"Where Coinbase charges shorts the most extra overnight margin\", \"sql\": \"SELECT symbol, overnight_short_margin_rate - overnight_long_margin_rate AS short_premium FROM perps.main.raw_coinbase_products() ORDER BY short_premium DESC LIMIT 5\"}]",
+        "vgi.keywords": "[\"coinbase derivatives\", \"fcm margin\", \"intraday margin\", \"overnight margin\", \"settlement price\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Coinbase product id, e.g. 'BIP-20DEC30-CDE'.\"}, {\"name\": \"display_name\", \"type\": \"VARCHAR\", \"description\": \"Coinbase display name.\"}, {\"name\": \"contract_code\", \"type\": \"VARCHAR\", \"description\": \"Exchange contract code (BIP, ETP, ...).\"}, {\"name\": \"contract_expiry\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Nominal expiry of the 5-year perp-style contract.\"}, {\"name\": \"contract_size_native\", \"type\": \"DOUBLE\", \"description\": \"Coinbase contract_size, in the quoted unit (1000 SHIB for '1000SHIB').\"}, {\"name\": \"contract_root_unit\", \"type\": \"VARCHAR\", \"description\": \"Coinbase's underlying root unit.\"}, {\"name\": \"intraday_long_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"FCM intraday initial margin, long.\"}, {\"name\": \"intraday_short_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"FCM intraday initial margin, short.\"}, {\"name\": \"overnight_long_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"FCM overnight initial margin, long.\"}, {\"name\": \"overnight_short_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"FCM overnight initial margin, short.\"}, {\"name\": \"settlement_price_native\", \"type\": \"DOUBLE\", \"description\": \"Most recent official daily settlement price, native quoting.\"}, {\"name\": \"index_price_native\", \"type\": \"DOUBLE\", \"description\": \"Index price, native quoting.\"}, {\"name\": \"funding_rate\", \"type\": \"DOUBLE\", \"description\": \"Latest published hourly funding rate (decimal).\"}, {\"name\": \"funding_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Time of that funding rate.\"}, {\"name\": \"session_state\", \"type\": \"VARCHAR\", \"description\": \"FCM trading session state.\"}, {\"name\": \"session_close\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Current session close time.\"}, {\"name\": \"twenty_four_by_seven\", \"type\": \"BOOLEAN\", \"description\": \"True for products that trade around the clock.\"}]",
+        "vgi.title": "Coinbase Perp-Style Product Internals"
+      },
+      null,
+      [
+        "symbol"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22611,
+      [
+        "SELECT symbol, intraday_long_margin_rate, overnight_long_margin_rate FROM perps.main.raw_coinbase_products() ORDER BY overnight_long_margin_rate DESC LIMIT 5",
+        "SELECT symbol, overnight_short_margin_rate - overnight_long_margin_rate AS short_premium FROM perps.main.raw_coinbase_products() ORDER BY short_premium DESC LIMIT 5"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "raw_bitnomial_products",
+      null,
+      "table",
+      "Bitnomial perpetual fields: size tier, funding bounds, daily price limits, settlement, product-group margin rate",
+      null,
+      {
+        "vgi.category": "venue_raw",
+        "vgi.doc_llm": "Bitnomial perpetual fields converted from ticks to USD per underlying unit: `funding_rate_lower_bound` / `upper_bound`, first funding interval end (Central time), daily price limits, latest settlement, and `product_group_margin_rate` (published without saying whether it is initial or maintenance margin, so liquidation_estimate does not use it). `base_symbol` encodes the size tier (BTCUC centi, BTCUR myrio). `symbol :=` keeps one contract.",
+        "vgi.doc_md": "## raw_bitnomial_products(symbol := NULL)\n\nBitnomial-specific perpetual fields.",
+        "vgi.example_queries": "[{\"description\": \"Bitnomial perps with their size tier and margin rate\", \"sql\": \"SELECT symbol, contract_size, product_group_margin_rate FROM perps.main.raw_bitnomial_products() ORDER BY symbol\"}, {\"description\": \"Today's price limits around settlement for Bitnomial's BTC perps\", \"sql\": \"SELECT symbol, price_limit_lower, settlement_price, price_limit_upper FROM perps.main.raw_bitnomial_products() WHERE base_symbol LIKE 'BTC%' ORDER BY symbol\"}]",
+        "vgi.keywords": "[\"bitnomial\", \"price limits\", \"funding bounds\", \"settlement price\", \"margin rate\", \"product group\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Bitnomial product symbol, e.g. 'PBTCUCZ50'.\"}, {\"name\": \"product_id\", \"type\": \"BIGINT\", \"description\": \"Bitnomial numeric product id.\"}, {\"name\": \"product_name\", \"type\": \"VARCHAR\", \"description\": \"Bitnomial product name.\"}, {\"name\": \"base_symbol\", \"type\": \"VARCHAR\", \"description\": \"Bitnomial base symbol (encodes the size tier, e.g. BTCUC = centi-bitcoin).\"}, {\"name\": \"contract_size\", \"type\": \"DOUBLE\", \"description\": \"Underlying units per contract.\"}, {\"name\": \"price_increment\", \"type\": \"DOUBLE\", \"description\": \"Tick size, USD per underlying unit (prices on the API are in ticks).\"}, {\"name\": \"funding_rate_lower_bound\", \"type\": \"DOUBLE\", \"description\": \"Spec lower bound on the funding rate per interval.\"}, {\"name\": \"funding_rate_upper_bound\", \"type\": \"DOUBLE\", \"description\": \"Spec upper bound on the funding rate per interval.\"}, {\"name\": \"daily_first_funding_interval_end\", \"type\": \"VARCHAR\", \"description\": \"First funding interval end of the day (Central time).\"}, {\"name\": \"price_limit_percentage\", \"type\": \"DOUBLE\", \"description\": \"Daily price limit as a fraction.\"}, {\"name\": \"price_limit_upper\", \"type\": \"DOUBLE\", \"description\": \"Upper price limit today, USD per underlying unit.\"}, {\"name\": \"price_limit_lower\", \"type\": \"DOUBLE\", \"description\": \"Lower price limit today, USD per underlying unit.\"}, {\"name\": \"settlement_price\", \"type\": \"DOUBLE\", \"description\": \"Latest settlement price, USD per underlying unit.\"}, {\"name\": \"settlement_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"When that settlement ran.\"}, {\"name\": \"product_group_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"Published margin rate; Bitnomial does not say whether initial or maintenance.\"}]",
+        "vgi.title": "Bitnomial Perpetual Internals"
+      },
+      null,
+      [
+        "symbol"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22610,
+      [
+        "SELECT symbol, contract_size, product_group_margin_rate FROM perps.main.raw_bitnomial_products() ORDER BY symbol",
+        "SELECT symbol, price_limit_lower, settlement_price, price_limit_upper FROM perps.main.raw_bitnomial_products() WHERE base_symbol LIKE 'BTC%' ORDER BY symbol"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "raw_kalshi_markets",
+      null,
+      "table",
+      "Kalshi-only perps fields: per-contract marks, funding deadband and cap unit, leverage by size, halts",
+      null,
+      {
+        "vgi.category": "venue_raw",
+        "vgi.doc_llm": "Kalshi's margin-market fields that do not normalize across venues, in Kalshi's native per-contract USD quoting: settlement, liquidation and reference marks per contract, `funding_deadband` and `funding_limit_unit` (a 'dollar' cap is USD per contract, not a rate), leverage estimates by notional (JSON), `halt_sources`, session state and `market_version` (bumps after splits). Includes inactive markets; `symbol := 'KXBTCPERP'` keeps one.",
+        "vgi.doc_md": "## raw_kalshi_markets(symbol := NULL)\n\nKalshi-specific margin-market fields, unnormalized.",
+        "vgi.example_queries": "[{\"description\": \"Kalshi crypto perps' funding deadbands\", \"sql\": \"SELECT symbol, funding_deadband, funding_limit_unit FROM perps.main.raw_kalshi_markets() WHERE asset_class = 'Crypto' ORDER BY symbol\"}, {\"description\": \"Kalshi markets whose leverage shrinks most at $1m notional\", \"sql\": \"SELECT symbol, json_extract(leverage_estimates, '$.\\\"1000000\\\"') AS lev_at_1m FROM perps.main.raw_kalshi_markets() WHERE status = 'active' ORDER BY lev_at_1m LIMIT 10\"}]",
+        "vgi.keywords": "[\"kalshi\", \"leverage estimates\", \"funding deadband\", \"liquidation mark\", \"corporate action\", \"halt\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Kalshi market ticker.\"}, {\"name\": \"market_id\", \"type\": \"VARCHAR\", \"description\": \"Stable market UUID (survives ticker renames).\"}, {\"name\": \"market_version\", \"type\": \"BIGINT\", \"description\": \"Increments after a corporate action such as a split.\"}, {\"name\": \"title\", \"type\": \"VARCHAR\", \"description\": \"Kalshi's market title (the contract's unit, e.g. '0.0001 BTC').\"}, {\"name\": \"status\", \"type\": \"VARCHAR\", \"description\": \"'active', 'inactive' or 'closed'.\"}, {\"name\": \"asset_class\", \"type\": \"VARCHAR\", \"description\": \"Kalshi asset class: Crypto, Equities, Indices, Metals, Energy.\"}, {\"name\": \"contract_size_native\", \"type\": \"DOUBLE\", \"description\": \"Kalshi contract_size, in the title's unit.\"}, {\"name\": \"underlying_multiplier\", \"type\": \"DOUBLE\", \"description\": \"Underlying units per contract-size unit (1000 for kSHIB).\"}, {\"name\": \"price_per_contract\", \"type\": \"DOUBLE\", \"description\": \"Last price in Kalshi's native USD-per-contract quoting.\"}, {\"name\": \"settlement_mark_per_contract\", \"type\": \"DOUBLE\", \"description\": \"Mark used for settlement and funding, USD per contract.\"}, {\"name\": \"liquidation_mark_per_contract\", \"type\": \"DOUBLE\", \"description\": \"Mark used for liquidation, USD per contract.\"}, {\"name\": \"reference_price_per_contract\", \"type\": \"DOUBLE\", \"description\": \"Underlying reference price scaled per contract.\"}, {\"name\": \"reference_price_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Timestamp of the reference price (stale when the underlying is closed).\"}, {\"name\": \"funding_cap\", \"type\": \"DOUBLE\", \"description\": \"Funding cap in funding_limit_unit.\"}, {\"name\": \"funding_deadband\", \"type\": \"DOUBLE\", \"description\": \"Rates with |rate| below this are zeroed, in funding_limit_unit.\"}, {\"name\": \"funding_limit_unit\", \"type\": \"VARCHAR\", \"description\": \"'percentage' (cap is a rate) or 'dollar' (cap is USD per contract).\"}, {\"name\": \"funding_invalid_premium_handling\", \"type\": \"VARCHAR\", \"description\": \"'dampen' (count a missing bar as 0) or 'exclude'.\"}, {\"name\": \"leverage_estimates\", \"type\": \"VARCHAR\", \"description\": \"JSON: leverage (1/margin rate) by notional size in USD.\"}, {\"name\": \"long_leverage_estimates\", \"type\": \"VARCHAR\", \"description\": \"JSON: long-side leverage by notional size.\"}, {\"name\": \"short_leverage_estimates\", \"type\": \"VARCHAR\", \"description\": \"JSON: short-side leverage by notional size.\"}, {\"name\": \"halt_sources\", \"type\": \"VARCHAR[]\", \"description\": \"Why the market is halted ('initial_setup', 'corporate_action').\"}, {\"name\": \"is_open\", \"type\": \"BOOLEAN\", \"description\": \"Session state for markets with trading hours; NULL for 24/7 markets.\"}, {\"name\": \"next_close\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Next scheduled close for markets with trading hours.\"}, {\"name\": \"minimum_quantity\", \"type\": \"DOUBLE\", \"description\": \"Minimum order size in contracts.\"}]",
+        "vgi.title": "Kalshi Market Internals"
+      },
+      null,
+      [
+        "symbol"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22612,
+      [
+        "SELECT symbol, funding_deadband, funding_limit_unit FROM perps.main.raw_kalshi_markets() WHERE asset_class = 'Crypto' ORDER BY symbol",
+        "SELECT symbol, json_extract(leverage_estimates, '$.\"1000000\"') AS lev_at_1m FROM perps.main.raw_kalshi_markets() WHERE status = 'active' ORDER BY lev_at_1m LIMIT 10"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "candles",
+      null,
+      "table",
+      "OHLCV bars for one contract (1m, 1h, 1d) with prices per underlying unit and volume in contracts and USD",
+      null,
+      {
+        "vgi.category": "market_data",
+        "vgi.doc_llm": "OHLCV bars for one contract: `candles('kalshi', 'KXETHPERP', bar := '1d')`. Venue and symbol are positional; `bar` is '1m', '1h' (default) or '1d' (named `bar` because `interval` is reserved). `ts` is the bar start (UTC); open/high/low/close per underlying unit (NULL when nothing traded); `volume_contracts`, `volume_usd`, and `open_interest_contracts` on Kalshi. Bitnomial serves daily bars only.",
+        "vgi.doc_md": "## candles(venue, symbol, start_date := NULL, end_date := NULL, bar := '1h')\n\nNormalized OHLCV bars.",
+        "vgi.example_queries": "[{\"description\": \"Two weeks of daily Kalshi BTC closes, volume and open interest\", \"sql\": \"SELECT ts, close, volume_usd, open_interest_contracts FROM perps.main.candles('kalshi', 'KXBTCPERP', bar := '1d') ORDER BY ts DESC LIMIT 14\"}, {\"description\": \"Coinbase ETH perp trading range over the last day\", \"sql\": \"SELECT max(high) - min(low) AS range_usd FROM perps.main.candles('coinbase', 'ETP-20DEC30-CDE', start_date := now() - INTERVAL 1 DAY)\"}, {\"description\": \"Kalshi BTC perp, last week: each daily bar's open-to-close return next to the funding its three settlements charged longs, both in bps\", \"sql\": \"WITH bars AS (SELECT ts, coalesce(lead(ts) OVER (ORDER BY ts), ts + INTERVAL 1 DAY) AS bar_end, (close / open - 1) * 1e4 AS return_bps FROM perps.main.candles('kalshi', 'KXBTCPERP', bar := '1d')) SELECT b.ts, b.return_bps, sum(f.rate_bps) AS funding_bps FROM bars AS b JOIN perps.main.funding(venue := 'kalshi', underlying := 'BTC') AS f ON f.funding_time > b.ts AND f.funding_time <= b.bar_end GROUP BY b.ts, b.return_bps HAVING count(*) = 3 ORDER BY b.ts\"}]",
+        "vgi.keywords": "[\"candles\", \"ohlcv\", \"bars\", \"klines\", \"price history\", \"volume\", \"open interest history\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"ts\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Bar start, UTC.\"}, {\"name\": \"bar\", \"type\": \"VARCHAR\", \"description\": \"Bar length: '1m', '1h' or '1d'.\"}, {\"name\": \"open\", \"type\": \"DOUBLE\", \"description\": \"First trade price per underlying unit; NULL if no trades in the bar.\"}, {\"name\": \"high\", \"type\": \"DOUBLE\", \"description\": \"Highest trade price per underlying unit.\"}, {\"name\": \"low\", \"type\": \"DOUBLE\", \"description\": \"Lowest trade price per underlying unit.\"}, {\"name\": \"close\", \"type\": \"DOUBLE\", \"description\": \"Last trade price per underlying unit.\"}, {\"name\": \"volume_contracts\", \"type\": \"DOUBLE\", \"description\": \"Traded contracts in the bar.\"}, {\"name\": \"volume_usd\", \"type\": \"DOUBLE\", \"description\": \"Traded notional in quote currency, where the venue publishes it or it can be derived.\"}, {\"name\": \"open_interest_contracts\", \"type\": \"DOUBLE\", \"description\": \"Open interest at bar end (Kalshi only).\"}]",
+        "vgi.title": "OHLCV Bars"
+      },
+      null,
+      [
+        "venue",
+        "symbol",
+        "start_date",
+        "end_date",
+        "bar"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE",
+        "TIMESTAMP WITH TIME ZONE",
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22599,
+      [
+        "SELECT ts, close, volume_usd, open_interest_contracts FROM perps.main.candles('kalshi', 'KXBTCPERP', bar := '1d') ORDER BY ts DESC LIMIT 14",
+        "SELECT max(high) - min(low) AS range_usd FROM perps.main.candles('coinbase', 'ETP-20DEC30-CDE', start_date := now() - INTERVAL 1 DAY)",
+        "WITH bars AS (SELECT ts, coalesce(lead(ts) OVER (ORDER BY ts), ts + INTERVAL 1 DAY) AS bar_end, (close / open - 1) * 1e4 AS return_bps FROM perps.main.candles('kalshi', 'KXBTCPERP', bar := '1d')) SELECT b.ts, b.return_bps, sum(f.rate_bps) AS funding_bps FROM bars AS b JOIN perps.main.funding(venue := 'kalshi', underlying := 'BTC') AS f ON f.funding_time > b.ts AND f.funding_time <= b.bar_end GROUP BY b.ts, b.return_bps HAVING count(*) = 3 ORDER BY b.ts"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "premium",
+      null,
+      "table",
+      "Perp premium in bps: each contract's mark against its own venue index, or against another venue's price",
+      null,
+      {
+        "vgi.category": "analytics",
+        "vgi.doc_llm": "Premium of each contract's mark over a reference, in bps (positive = perp trades rich). Default reference is the contract's own venue index; `reference := 'hyperliquid'` (any venue name) compares against that venue's index for the same underlying (or its mark if it publishes no index), which exposes cross-venue basis. Columns: `mark_price`, `mark_source`, `reference_price`, `reference_source`, `premium_bps`, `premium_usd`. Arguments `venue` and `underlying` filter as in marks(). Kalshi's index-perp reference levels are venue-specific and not comparable to other venues' index perps.",
+        "vgi.doc_md": "## premium(venue := NULL, underlying := NULL, reference := NULL)\n\nMark vs the venue index, or vs another venue's price for the same underlying.",
+        "vgi.example_queries": "[{\"description\": \"Which BTC perp trades richest to its own index\", \"sql\": \"SELECT venue, symbol, premium_bps FROM perps.main.premium(underlying := 'BTC') ORDER BY premium_bps DESC NULLS LAST\"}, {\"description\": \"US ETH perps priced against Hyperliquid's oracle\", \"sql\": \"SELECT venue, symbol, reference_source, premium_bps FROM perps.main.premium(underlying := 'ETH', reference := 'hyperliquid') ORDER BY venue\"}]",
+        "vgi.keywords": "[\"premium\", \"basis\", \"mark vs index\", \"perp premium\", \"dislocation\", \"cross-venue basis\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"canonical_id\", \"type\": \"VARCHAR\", \"description\": \"'<UNDERLYING>-<QUOTE>-PERP'.\"}, {\"name\": \"underlying\", \"type\": \"VARCHAR\", \"description\": \"Canonical underlying.\"}, {\"name\": \"as_of\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Snapshot time of the contract's mark.\"}, {\"name\": \"mark_price\", \"type\": \"DOUBLE\", \"description\": \"Contract mark per underlying unit.\"}, {\"name\": \"mark_source\", \"type\": \"VARCHAR\", \"description\": \"'venue_mark', 'mid', 'last_funding_mark' or 'unavailable'.\"}, {\"name\": \"reference_price\", \"type\": \"DOUBLE\", \"description\": \"Reference price per underlying unit.\"}, {\"name\": \"reference_source\", \"type\": \"VARCHAR\", \"description\": \"'<venue> index' (default: the contract's own venue) or '<venue> mark'.\"}, {\"name\": \"premium_bps\", \"type\": \"DOUBLE\", \"description\": \"(mark_price / reference_price - 1) in basis points; positive = perp rich.\"}, {\"name\": \"premium_usd\", \"type\": \"DOUBLE\", \"description\": \"mark_price - reference_price, quote currency per underlying unit.\"}]",
+        "vgi.title": "Perp Premium to Index"
+      },
+      null,
+      [
+        "venue",
+        "underlying",
+        "reference"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22609,
+      [
+        "SELECT venue, symbol, premium_bps FROM perps.main.premium(underlying := 'BTC') ORDER BY premium_bps DESC NULLS LAST",
+        "SELECT venue, symbol, reference_source, premium_bps FROM perps.main.premium(underlying := 'ETH', reference := 'hyperliquid') ORDER BY venue"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "order_book",
+      null,
+      "table",
+      "Aggregated order book for one contract with sizes in contracts, underlying units and USD, plus cumulative depth",
+      null,
+      {
+        "vgi.category": "market_data",
+        "vgi.doc_llm": "Current aggregated book for one contract: `order_book('kalshi', 'KXBTCPERP', depth := 20)`. The venue and symbol are positional (symbol from instruments().symbol). One row per level and side: `side` ('bid'/'ask'), `level` (1 = best), `price` per underlying unit, `size_contracts`, `size_base` (underlying units), `size_usd`, `cum_usd` (cumulative per side). Bitnomial books are WebSocket-only and raise an error.",
+        "vgi.doc_md": "## order_book(venue, symbol, depth := 50)\n\nNormalized L2 book with cumulative notional.",
+        "vgi.example_queries": "[{\"description\": \"Notional resting in the top 25 levels of Kalshi's BTC perp, per side\", \"sql\": \"SELECT side, max(cum_usd) AS depth_usd FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 25) GROUP BY side ORDER BY side\"}, {\"description\": \"Top five levels of Coinbase's nano BTC perp\", \"sql\": \"SELECT side, level, price, size_usd FROM perps.main.order_book('coinbase', 'BIP-20DEC30-CDE', depth := 5) ORDER BY side, level\"}]",
+        "vgi.keywords": "[\"order book\", \"depth\", \"liquidity\", \"bids\", \"asks\", \"l2\", \"market depth\", \"cumulative depth\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"side\", \"type\": \"VARCHAR\", \"description\": \"'bid' or 'ask'.\"}, {\"name\": \"level\", \"type\": \"INTEGER\", \"description\": \"1 = best price on that side.\"}, {\"name\": \"price\", \"type\": \"DOUBLE\", \"description\": \"Level price, quote currency per underlying unit.\"}, {\"name\": \"size_contracts\", \"type\": \"DOUBLE\", \"description\": \"Resting size in contracts.\"}, {\"name\": \"size_base\", \"type\": \"DOUBLE\", \"description\": \"Resting size in underlying units (contracts * contract_size).\"}, {\"name\": \"size_usd\", \"type\": \"DOUBLE\", \"description\": \"Resting notional in quote currency (size_base * price).\"}, {\"name\": \"cum_usd\", \"type\": \"DOUBLE\", \"description\": \"Cumulative notional from the best level to this one, per side.\"}]",
+        "vgi.title": "Order Book Depth"
+      },
+      null,
+      [
+        "venue",
+        "symbol",
+        "depth"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "BIGINT"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22608,
+      [
+        "SELECT side, max(cum_usd) AS depth_usd FROM perps.main.order_book('kalshi', 'KXBTCPERP', depth := 25) GROUP BY side ORDER BY side",
+        "SELECT side, level, price, size_usd FROM perps.main.order_book('coinbase', 'BIP-20DEC30-CDE', depth := 5) ORDER BY side, level"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "instruments",
+      null,
+      "table",
+      "Perpetual contract specifications per venue: underlying, contract size, tick, funding interval, cap, margin",
+      null,
+      {
+        "vgi.category": "reference",
+        "vgi.doc_llm": "One row per perpetual contract. `symbol` is venue-native (pass it to order_book, trades, candles); `underlying` and `canonical_id` are shared across venues (join on them). `contract_size` is underlying units per contract, so notional = contracts * contract_size * price. `tick_size` is in quote currency per underlying unit. `funding_interval_hours`, `funding_cap` (decimal per interval), `max_leverage`, `initial_margin_rate`, `maintenance_margin_rate` (only where documented) and `margin_source`. Arguments: `venue := 'kalshi'`, `underlying := 'BTC'`, `include_inactive := true`. Kalshi lists crypto, single-stock, index, metal and energy perps; Coinbase lists perp-style futures. Hyperliquid includes its HIP-3 builder dexes: `symbol` keeps the prefix ('xyz:NVDA'), `underlying` drops it ('NVDA'), and `dex` names the builder dex.",
+        "vgi.doc_md": "## instruments(venue := NULL, underlying := NULL, include_inactive := false)\n\nContract specifications, normalized: contract size in underlying units, tick in USD per unit, funding interval and cap, margin where published.",
+        "vgi.example_queries": "[{\"description\": \"Every BTC perp: how much BTC one contract is and how often it funds\", \"sql\": \"SELECT venue, symbol, contract_size, funding_interval_hours, funding_cap FROM perps.main.instruments(underlying := 'BTC') ORDER BY venue, contract_size\"}, {\"description\": \"Kalshi's active perps by asset class\", \"sql\": \"SELECT asset_class, count(*) AS contracts FROM perps.main.instruments(venue := 'kalshi') GROUP BY asset_class ORDER BY contracts DESC\"}]",
+        "vgi.keywords": "[\"instruments\", \"contract size\", \"multiplier\", \"tick size\", \"funding interval\", \"funding cap\", \"leverage\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol; pass it to the single-venue functions.\"}, {\"name\": \"canonical_id\", \"type\": \"VARCHAR\", \"description\": \"'<UNDERLYING>-<QUOTE>-PERP': the economic exposure, shared across venues.\"}, {\"name\": \"underlying\", \"type\": \"VARCHAR\", \"description\": \"Canonical underlying (BTC, ETH, AAPL, XAU, US500, ...); join venues on this.\"}, {\"name\": \"asset_class\", \"type\": \"VARCHAR\", \"description\": \"'crypto', 'equity', 'index' or 'commodity'; 'unknown' for Hyperliquid HIP-3 markets (builders publish none).\"}, {\"name\": \"quote_ccy\", \"type\": \"VARCHAR\", \"description\": \"Quote and settlement currency: USD (US venues), USDT or USDC (offshore).\"}, {\"name\": \"instrument_type\", \"type\": \"VARCHAR\", \"description\": \"'perpetual', or 'perp_style_future' for long-dated futures with funding.\"}, {\"name\": \"status\", \"type\": \"VARCHAR\", \"description\": \"Venue status, normalized to 'active' where trading.\"}, {\"name\": \"contract_size\", \"type\": \"DOUBLE\", \"description\": \"Underlying units per contract (0.0001 = one contract is 0.0001 BTC).\"}, {\"name\": \"native_price_unit\", \"type\": \"VARCHAR\", \"description\": \"How the venue quotes prices before normalization.\"}, {\"name\": \"tick_size\", \"type\": \"DOUBLE\", \"description\": \"Minimum price increment, in quote currency per underlying unit.\"}, {\"name\": \"funding_interval_hours\", \"type\": \"DOUBLE\", \"description\": \"Hours between funding settlements (1, 8, 24).\"}, {\"name\": \"funding_cap\", \"type\": \"DOUBLE\", \"description\": \"Absolute cap on the funding rate per interval (decimal); NULL if none published.\"}, {\"name\": \"max_leverage\", \"type\": \"DOUBLE\", \"description\": \"Maximum leverage the venue publishes (1 / initial margin rate).\"}, {\"name\": \"initial_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"Initial margin as a fraction of notional, where published.\"}, {\"name\": \"maintenance_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"Maintenance margin fraction, only where the venue documents it.\"}, {\"name\": \"margin_source\", \"type\": \"VARCHAR\", \"description\": \"Where the margin figures come from, and their caveats.\"}, {\"name\": \"listed_at\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Listing date where the venue publishes it.\"}, {\"name\": \"dex\", \"type\": \"VARCHAR\", \"description\": \"Hyperliquid HIP-3 builder dex the contract trades on ('xyz', 'para', ...); NULL for Hyperliquid's main dex and every other venue.\"}]",
+        "vgi.title": "Perpetual Contract Specifications"
+      },
+      null,
+      [
+        "venue",
+        "underlying",
+        "include_inactive"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "BOOLEAN"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22604,
+      [
+        "SELECT venue, symbol, contract_size, funding_interval_hours, funding_cap FROM perps.main.instruments(underlying := 'BTC') ORDER BY venue, contract_size",
+        "SELECT asset_class, count(*) AS contracts FROM perps.main.instruments(venue := 'kalshi') GROUP BY asset_class ORDER BY contracts DESC"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "liquidation_estimate",
+      null,
+      "table",
+      "ESTIMATE of liquidation price bands from open interest, an assumed leverage mix and the venue's maintenance margin",
+      null,
+      {
+        "vgi.category": "analytics",
+        "vgi.doc_llm": "An ESTIMATE, not venue data: splits a contract's open interest (both sides hold all of it) across an assumed leverage distribution and computes each bucket's liquidation price for an isolated linear position entered at the mark: X = entry * (side - 1/L) / (side - mm). `liquidation_estimate('hyperliquid', 'BTC')`; venue and symbol are positional. Parameters: `leverages` (default '2,3,5,10,20'), `weights` (default '0.30,0.25,0.20,0.15,0.10'), `mm_rate` (maintenance fraction), `entry_price`. With `mm_rate` NULL it uses the venue's documented maintenance margin and REFUSES venues that publish none (Kalshi, Coinbase, Bitnomial, Binance, Bybit): pass `mm_rate` to estimate them under your own assumption. Every row carries `estimate_method`, `mm_source` and `feasible`; `cum_notional_usd` accumulates per side nearest-first.",
+        "vgi.doc_md": "## liquidation_estimate(venue, symbol, leverages, weights, mm_rate := NULL, entry_price := NULL)\n\n**Estimate.** Liquidation bands from open interest and an assumed leverage mix; refuses venues without a published maintenance schedule unless `mm_rate` is given.",
+        "vgi.example_queries": "[{\"description\": \"Estimated ETH liquidation bands on Hyperliquid with the default leverage mix\", \"sql\": \"SELECT side, leverage, liquidation_price, cum_notional_usd FROM perps.main.liquidation_estimate('hyperliquid', 'ETH') WHERE feasible ORDER BY side, distance_pct\"}, {\"description\": \"Kalshi BTC bands under an assumed 5% maintenance margin\", \"sql\": \"SELECT side, leverage, distance_pct FROM perps.main.liquidation_estimate('kalshi', 'KXBTCPERP', mm_rate := 0.05, leverages := '3,5,10', weights := '0.5,0.3,0.2') ORDER BY side, leverage\"}]",
+        "vgi.keywords": "[\"liquidation\", \"liquidation price\", \"leverage\", \"maintenance margin\", \"liquidation heatmap\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"side\", \"type\": \"VARCHAR\", \"description\": \"'long' or 'short' holders.\"}, {\"name\": \"leverage\", \"type\": \"DOUBLE\", \"description\": \"Assumed leverage bucket.\"}, {\"name\": \"weight\", \"type\": \"DOUBLE\", \"description\": \"Share of open interest assumed at this leverage (weights sum to 1 per side).\"}, {\"name\": \"entry_price\", \"type\": \"DOUBLE\", \"description\": \"Assumed entry price per underlying unit (default: current mark).\"}, {\"name\": \"liquidation_price\", \"type\": \"DOUBLE\", \"description\": \"Estimated liquidation price; NULL when the leverage is not reachable.\"}, {\"name\": \"distance_pct\", \"type\": \"DOUBLE\", \"description\": \"(liquidation_price / entry_price - 1) * 100.\"}, {\"name\": \"contracts\", \"type\": \"DOUBLE\", \"description\": \"Open interest assumed in this bucket, contracts.\"}, {\"name\": \"notional_usd\", \"type\": \"DOUBLE\", \"description\": \"contracts * contract_size * entry_price.\"}, {\"name\": \"cum_notional_usd\", \"type\": \"DOUBLE\", \"description\": \"Feasible notional liquidated by the time price reaches this level, per side.\"}, {\"name\": \"feasible\", \"type\": \"BOOLEAN\", \"description\": \"False when leverage exceeds the venue max or maintenance >= 1/leverage.\"}, {\"name\": \"maintenance_margin_rate\", \"type\": \"DOUBLE\", \"description\": \"Maintenance margin fraction used.\"}, {\"name\": \"mm_source\", \"type\": \"VARCHAR\", \"description\": \"Where the maintenance rate came from (venue documentation or the mm_rate argument).\"}, {\"name\": \"open_interest_contracts\", \"type\": \"DOUBLE\", \"description\": \"Total open interest the buckets split, contracts.\"}, {\"name\": \"estimate_method\", \"type\": \"VARCHAR\", \"description\": \"Model version: isolated linear margin, entry at mark, no fees or funding accrual.\"}]",
+        "vgi.title": "Liquidation Band Estimate"
+      },
+      null,
+      [
+        "venue",
+        "symbol",
+        "mm_rate",
+        "leverages",
+        "weights",
+        "entry_price"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "DOUBLE",
+        "VARCHAR",
+        "VARCHAR",
+        "DOUBLE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22606,
+      [
+        "SELECT side, leverage, liquidation_price, cum_notional_usd FROM perps.main.liquidation_estimate('hyperliquid', 'ETH') WHERE feasible ORDER BY side, distance_pct",
+        "SELECT side, leverage, distance_pct FROM perps.main.liquidation_estimate('kalshi', 'KXBTCPERP', mm_rate := 0.05, leverages := '3,5,10', weights := '0.5,0.3,0.2') ORDER BY side, leverage"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "kalshi_funding_nowcast",
+      null,
+      "table",
+      "Kalshi funding for one window, computed from the per-second premium with Kalshi's linear time weights: accrued so far, projected to settlement, or reconstructed for a past window",
+      null,
+      {
+        "vgi.category": "analytics",
+        "vgi.doc_llm": "Forecast or reconstruct a Kalshi perp funding settlement: `kalshi_funding_nowcast('KXBTCPERP')` for the current window, `funding_time := TIMESTAMPTZ '...'` for a past one. Kalshi funding is the linear time-weighted mean of the per-second premium (second i of the window weighs i), set to 0 when its absolute value is below `funding_deadband` and clamped to `funding_cap`. `accrued_rate` is the weighted mean so far and equals Kalshi's own estimate; `weight_accrued` says how much of the final weight it represents (about 1.6% after the first hour of an 8-hour window). `projected_rate` fills the rest of the window with `assume_premium` (default: the mean of the last `recent_minutes`). For a past window `settled_rate` shows the published settlement next to the reconstruction. Rates are per interval; positive = longs pay.",
+        "vgi.doc_md": "## kalshi_funding_nowcast(symbol, funding_time := NULL, assume_premium := NULL, recent_minutes := 15)\n\nKalshi funding is `sum(i * p_i) / sum(i)` over the seconds `i` of the window, zeroed inside the deadband and capped. This returns the accrued value, a projection to settlement, and for a past window the settled rate.",
+        "vgi.example_queries": "[{\"description\": \"Where the next BTC funding settlement is heading\", \"sql\": \"SELECT weight_accrued, accrued_rate * 1e4 AS accrued_bps, projected_rate_annualized FROM perps.main.kalshi_funding_nowcast('KXBTCPERP')\"}, {\"description\": \"Settlement if the BTC premium holds at 2 bps for the rest of the window\", \"sql\": \"SELECT projected_rate_annualized FROM perps.main.kalshi_funding_nowcast('KXBTCPERP', assume_premium := 0.0002)\"}, {\"description\": \"The next Kalshi BTC settlement's projected annualized rate against the past week's settled average\", \"sql\": \"SELECT n.funding_time, n.weight_accrued, n.projected_rate_annualized, h.week_mean_apr, n.projected_rate_annualized - h.week_mean_apr AS vs_week FROM perps.main.kalshi_funding_nowcast('KXBTCPERP') AS n CROSS JOIN (SELECT avg(rate_annualized) AS week_mean_apr FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC')) AS h\"}]",
+        "vgi.keywords": "[\"funding forecast\", \"funding estimate\", \"premium index\", \"twap\", \"deadband\", \"carry timing\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Kalshi perps ticker.\"}, {\"name\": \"funding_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"The funding time this window settles at, UTC.\"}, {\"name\": \"window_start\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Start of the window (the previous funding time), UTC.\"}, {\"name\": \"as_of\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"End of the observed part of the window: now, or funding_time for a finished window.\"}, {\"name\": \"interval_hours\", \"type\": \"DOUBLE\", \"description\": \"Window length in hours.\"}, {\"name\": \"elapsed_seconds\", \"type\": \"BIGINT\", \"description\": \"Seconds of the window observed.\"}, {\"name\": \"weight_accrued\", \"type\": \"DOUBLE\", \"description\": \"Share of the window's total weight already elapsed (second i weighs i, so the last hour of an 8-hour window carries about 23%).\"}, {\"name\": \"accrued_rate\", \"type\": \"DOUBLE\", \"description\": \"Linear-weighted mean premium over the elapsed seconds, per interval, before the deadband. Equals Kalshi's own estimate before rounding.\"}, {\"name\": \"assumed_premium\", \"type\": \"DOUBLE\", \"description\": \"Premium assumed for the rest of the window (assume_premium, else the mean of the last recent_minutes).\"}, {\"name\": \"projected_rate_raw\", \"type\": \"DOUBLE\", \"description\": \"Projected window average before the deadband and cap.\"}, {\"name\": \"projected_rate\", \"type\": \"DOUBLE\", \"description\": \"Projected settlement per interval: 0 inside the deadband, clamped to the cap. Positive = longs pay.\"}, {\"name\": \"projected_rate_annualized\", \"type\": \"DOUBLE\", \"description\": \"projected_rate * 8760 / interval_hours.\"}, {\"name\": \"kalshi_estimate_rate\", \"type\": \"DOUBLE\", \"description\": \"Kalshi's published estimate (current window only).\"}, {\"name\": \"settled_rate\", \"type\": \"DOUBLE\", \"description\": \"The settled rate (finished windows only), to check the reconstruction.\"}, {\"name\": \"funding_deadband\", \"type\": \"DOUBLE\", \"description\": \"Zero threshold per interval.\"}, {\"name\": \"funding_cap\", \"type\": \"DOUBLE\", \"description\": \"Absolute cap per interval.\"}, {\"name\": \"invalid_premium_handling\", \"type\": \"VARCHAR\", \"description\": \"'dampen' (no-premium seconds count as 0) or 'exclude'.\"}, {\"name\": \"method\", \"type\": \"VARCHAR\", \"description\": \"Formula version: linear time weights over per-second premiums.\"}]",
+        "vgi.title": "Kalshi Funding Nowcast"
+      },
+      null,
+      [
+        "symbol",
+        "recent_minutes",
+        "funding_time",
+        "assume_premium"
+      ],
+      [
+        "VARCHAR",
+        "BIGINT",
+        "TIMESTAMP WITH TIME ZONE",
+        "DOUBLE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22605,
+      [
+        "SELECT weight_accrued, accrued_rate * 1e4 AS accrued_bps, projected_rate_annualized FROM perps.main.kalshi_funding_nowcast('KXBTCPERP')",
+        "SELECT projected_rate_annualized FROM perps.main.kalshi_funding_nowcast('KXBTCPERP', assume_premium := 0.0002)",
+        "SELECT n.funding_time, n.weight_accrued, n.projected_rate_annualized, h.week_mean_apr, n.projected_rate_annualized - h.week_mean_apr AS vs_week FROM perps.main.kalshi_funding_nowcast('KXBTCPERP') AS n CROSS JOIN (SELECT avg(rate_annualized) AS week_mean_apr FROM perps.main.funding(venue := 'kalshi', underlying := 'BTC')) AS h"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "raw_kalshi_premium_index",
+      null,
+      "table",
+      "Kalshi's per-second premium index (impact book vs index) for one market, windows up to one hour",
+      null,
+      {
+        "vgi.category": "venue_raw",
+        "vgi.doc_llm": "Kalshi's informational per-second premium index for one market: `raw_kalshi_premium_index('KXBTCPERP', start_date := now() - INTERVAL 5 MINUTE)`. The window must be at most one hour (default: the last 10 minutes). `premium_index` is a signed fraction (also as `premium_bps`); 0 means no measurable premium that second. Kalshi says it may not exactly match the values used for funding.",
+        "vgi.doc_md": "## raw_kalshi_premium_index(symbol, start_date := NULL, end_date := NULL)\n\nPer-second premium index, at most one hour per call.",
+        "vgi.example_queries": "[{\"description\": \"Mean and worst BTC premium over the last half hour\", \"sql\": \"SELECT avg(premium_bps) AS mean_bps, max(abs(premium_bps)) AS worst_bps FROM perps.main.raw_kalshi_premium_index('KXBTCPERP', start_date := now() - INTERVAL 30 MINUTE)\"}, {\"description\": \"Minute-averaged ETH premium over the last ten minutes\", \"sql\": \"SELECT date_trunc('minute', ts) AS minute, avg(premium_bps) AS bps FROM perps.main.raw_kalshi_premium_index('KXETHPERP') GROUP BY minute ORDER BY minute\"}]",
+        "vgi.keywords": "[\"kalshi\", \"premium index\", \"impact price\", \"funding input\", \"per second\", \"basis\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Kalshi market ticker.\"}, {\"name\": \"ts\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"The one-second bucket, UTC.\"}, {\"name\": \"premium_index\", \"type\": \"DOUBLE\", \"description\": \"Signed fraction of the index (not bps); 0 when no premium was measurable.\"}, {\"name\": \"premium_bps\", \"type\": \"DOUBLE\", \"description\": \"premium_index * 10000.\"}]",
+        "vgi.title": "Kalshi Per-Second Premium Index"
+      },
+      null,
+      [
+        "symbol",
+        "start_date",
+        "end_date"
+      ],
+      [
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE",
+        "TIMESTAMP WITH TIME ZONE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22613,
+      [
+        "SELECT avg(premium_bps) AS mean_bps, max(abs(premium_bps)) AS worst_bps FROM perps.main.raw_kalshi_premium_index('KXBTCPERP', start_date := now() - INTERVAL 30 MINUTE)",
+        "SELECT date_trunc('minute', ts) AS minute, avg(premium_bps) AS bps FROM perps.main.raw_kalshi_premium_index('KXETHPERP') GROUP BY minute ORDER BY minute"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "capabilities",
+      null,
+      "table",
+      "Capability matrix: which data each venue serves publicly, with auth, depth and caveats",
+      null,
+      {
+        "vgi.category": "reference",
+        "vgi.doc_llm": "Static capability matrix, one row per (venue, capability). Capabilities: instruments, funding_history, funding_estimate, marks, premium_index, open_interest, order_book, trades, candles, maintenance_margin. `support` is 'supported', 'partial' or 'unsupported' via public endpoints; `auth_required`, `history_depth` and `notes` say why. Use it to know in advance why, say, Coinbase funding history has only the latest rate or why Bitnomial has no order book. `venue := 'kalshi'` narrows to one venue. No network calls.",
+        "vgi.doc_md": "## capabilities(venue := NULL)\n\nWhat each venue serves publicly, whether it needs credentials, how far history goes, and the caveats.",
+        "vgi.example_queries": "[{\"description\": \"What Coinbase Derivatives does not serve publicly, and why\", \"sql\": \"SELECT capability, support, notes FROM perps.main.capabilities(venue := 'coinbase') WHERE support <> 'supported' ORDER BY capability\"}, {\"description\": \"How many venues fully support each capability\", \"sql\": \"SELECT capability, count(*) FILTER (WHERE support = 'supported') AS venues_supported FROM perps.main.capabilities() GROUP BY capability ORDER BY capability\"}]",
+        "vgi.executable_examples": "[{\"description\": \"Venues with a public order book\", \"sql\": \"SELECT venue FROM perps.main.capabilities() WHERE capability = 'order_book' AND support = 'supported' ORDER BY venue\", \"expected_result\": [[\"binance\"], [\"bybit\"], [\"coinbase\"], [\"hyperliquid\"], [\"kalshi\"]]}, {\"description\": \"Kalshi's funding-history support\", \"sql\": \"SELECT support, auth_required FROM perps.main.capabilities(venue := 'kalshi') WHERE capability = 'funding_history'\", \"expected_result\": [[\"supported\", false]]}]",
+        "vgi.keywords": "[\"capabilities\", \"support matrix\", \"auth\", \"history depth\", \"funding history\", \"order book\", \"coverage\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"capability\", \"type\": \"VARCHAR\", \"description\": \"Capability name, e.g. 'funding_history', 'order_book'.\"}, {\"name\": \"support\", \"type\": \"VARCHAR\", \"description\": \"'supported', 'partial' or 'unsupported' through public endpoints.\"}, {\"name\": \"auth_required\", \"type\": \"BOOLEAN\", \"description\": \"True when the venue gates this data behind API credentials.\"}, {\"name\": \"history_depth\", \"type\": \"VARCHAR\", \"description\": \"How far back the public source reaches.\"}, {\"name\": \"notes\", \"type\": \"VARCHAR\", \"description\": \"Endpoint used, or why the capability is missing or partial.\"}]",
+        "vgi.title": "Venue Capability Matrix"
+      },
+      null,
+      [
+        "venue"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22600,
+      [
+        "SELECT capability, support, notes FROM perps.main.capabilities(venue := 'coinbase') WHERE support <> 'supported' ORDER BY capability",
+        "SELECT capability, count(*) FILTER (WHERE support = 'supported') AS venues_supported FROM perps.main.capabilities() GROUP BY capability ORDER BY capability"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "marks",
+      null,
+      "table",
+      "Live snapshot per contract: mark, index, bid/ask, premium, current funding, open interest in contracts and USD",
+      null,
+      {
+        "vgi.category": "market_data",
+        "vgi.doc_llm": "One row per active contract with a live snapshot, all prices per underlying unit: `mark_price` (`mark_source` says whether it is the venue's mark, the mid because the venue publishes none, or the mark at the last funding), `index_price`, `last_price`, `bid`, `ask`, `premium_bps` = mark vs index, `funding_rate` (estimate or latest settled; `funding_rate_is_estimate`), `funding_rate_annualized`, `next_funding_time`, `open_interest_contracts`, `open_interest_usd`, `volume_24h_usd`. Kalshi and Bitnomial funding estimates are fetched only when `underlying` narrows the set (one request per contract). Offshore venues need `underlying`. Values change every call.",
+        "vgi.doc_md": "## marks(venue := NULL, underlying := NULL)\n\nLive mark, index, quotes, premium, current funding and open interest, normalized per underlying unit.",
+        "vgi.example_queries": "[{\"description\": \"ETH perps side by side: price, premium, carry and size\", \"sql\": \"SELECT venue, symbol, mark_price, premium_bps, funding_rate_annualized, open_interest_usd FROM perps.main.marks(underlying := 'ETH') ORDER BY open_interest_usd DESC NULLS LAST\"}, {\"description\": \"Kalshi's ten largest perps by open-interest notional\", \"sql\": \"SELECT underlying, open_interest_usd FROM perps.main.marks(venue := 'kalshi') ORDER BY open_interest_usd DESC NULLS LAST LIMIT 10\"}, {\"description\": \"How much of its per-interval funding cap each BTC perp's current rate uses (marks joined to instruments; venues that publish no cap drop out)\", \"sql\": \"SELECT m.venue, m.symbol, m.funding_rate, i.funding_cap, abs(m.funding_rate) / i.funding_cap AS cap_used FROM perps.main.marks(underlying := 'BTC') AS m JOIN perps.main.instruments(underlying := 'BTC') AS i USING (venue, symbol) WHERE i.funding_cap IS NOT NULL ORDER BY cap_used DESC, m.venue, m.symbol\"}]",
+        "vgi.keywords": "[\"mark price\", \"index price\", \"premium\", \"basis\", \"open interest\", \"next funding\", \"bid ask\", \"snapshot\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"canonical_id\", \"type\": \"VARCHAR\", \"description\": \"'<UNDERLYING>-<QUOTE>-PERP', shared across venues.\"}, {\"name\": \"underlying\", \"type\": \"VARCHAR\", \"description\": \"Canonical underlying; join venues on this.\"}, {\"name\": \"as_of\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Timestamp of the snapshot (for Bitnomial: the last funding calculation).\"}, {\"name\": \"mark_price\", \"type\": \"DOUBLE\", \"description\": \"Mark price, quote currency per underlying unit (see mark_source).\"}, {\"name\": \"mark_source\", \"type\": \"VARCHAR\", \"description\": \"'venue_mark', 'mid' (no public mark), 'last_funding_mark', or 'unavailable'.\"}, {\"name\": \"index_price\", \"type\": \"DOUBLE\", \"description\": \"The venue's index/reference price per underlying unit.\"}, {\"name\": \"last_price\", \"type\": \"DOUBLE\", \"description\": \"Last traded price per underlying unit.\"}, {\"name\": \"bid\", \"type\": \"DOUBLE\", \"description\": \"Best bid per underlying unit.\"}, {\"name\": \"ask\", \"type\": \"DOUBLE\", \"description\": \"Best ask per underlying unit.\"}, {\"name\": \"premium_bps\", \"type\": \"DOUBLE\", \"description\": \"(mark_price / index_price - 1) in basis points.\"}, {\"name\": \"funding_rate\", \"type\": \"DOUBLE\", \"description\": \"Current funding rate per interval (estimate or latest settled), decimal.\"}, {\"name\": \"funding_rate_is_estimate\", \"type\": \"BOOLEAN\", \"description\": \"True for an in-progress estimate, false for the latest settled rate.\"}, {\"name\": \"funding_rate_annualized\", \"type\": \"DOUBLE\", \"description\": \"funding_rate * 8760 / funding_interval_hours.\"}, {\"name\": \"funding_interval_hours\", \"type\": \"DOUBLE\", \"description\": \"Funding interval in hours.\"}, {\"name\": \"next_funding_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Next scheduled funding time, UTC.\"}, {\"name\": \"open_interest_contracts\", \"type\": \"DOUBLE\", \"description\": \"Open interest in contracts (one side).\"}, {\"name\": \"open_interest_usd\", \"type\": \"DOUBLE\", \"description\": \"Open interest notional in quote currency.\"}, {\"name\": \"volume_24h_usd\", \"type\": \"DOUBLE\", \"description\": \"Trailing 24-hour traded notional in quote currency.\"}]",
+        "vgi.title": "Live Marks and Open Interest"
+      },
+      null,
+      [
+        "venue",
+        "underlying"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22607,
+      [
+        "SELECT venue, symbol, mark_price, premium_bps, funding_rate_annualized, open_interest_usd FROM perps.main.marks(underlying := 'ETH') ORDER BY open_interest_usd DESC NULLS LAST",
+        "SELECT underlying, open_interest_usd FROM perps.main.marks(venue := 'kalshi') ORDER BY open_interest_usd DESC NULLS LAST LIMIT 10",
+        "SELECT m.venue, m.symbol, m.funding_rate, i.funding_cap, abs(m.funding_rate) / i.funding_cap AS cap_used FROM perps.main.marks(underlying := 'BTC') AS m JOIN perps.main.instruments(underlying := 'BTC') AS i USING (venue, symbol) WHERE i.funding_cap IS NOT NULL ORDER BY cap_used DESC, m.venue, m.symbol"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "funding_spread",
+      null,
+      "table",
+      "Cross-venue funding carry for one underlying: mean annualized rates per contract and the spread for every venue pair",
+      null,
+      {
+        "vgi.category": "analytics",
+        "vgi.doc_llm": "For one underlying (positional: `funding_spread('BTC')`), averages each contract's settled, annualized funding over the window (`start_date`/`end_date`, default last 7 days) and returns every pair of contracts on different venues: `annualized_a`, `annualized_b`, `spread_annualized` = a - b, `spread_bps`, observation counts and `carry_trade` ('short a / long b' collects a positive spread, because positive funding means longs pay). Includes the offshore benchmark venues. Before fees, basis moves and margin cost. Venues that fail are skipped with a warning.",
+        "vgi.doc_md": "## funding_spread(underlying, start_date := NULL, end_date := NULL)\n\nMean annualized funding per contract and the carry spread for every cross-venue pair.",
+        "vgi.example_queries": "[{\"description\": \"The widest BTC funding carry between any two venues this week\", \"sql\": \"SELECT venue_a, venue_b, spread_bps, carry_trade FROM perps.main.funding_spread('BTC') ORDER BY abs(spread_bps) DESC LIMIT 5\"}, {\"description\": \"30-day ETH carry of Bitnomial against every other venue\", \"sql\": \"SELECT symbol_a, symbol_b, spread_bps FROM perps.main.funding_spread('ETH', start_date := now() - INTERVAL 30 DAY) WHERE venue_a = 'bitnomial' OR venue_b = 'bitnomial' ORDER BY spread_bps\"}]",
+        "vgi.keywords": "[\"funding spread\", \"carry trade\", \"funding arbitrage\", \"basis trade\", \"cross-venue\", \"annualized carry\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"underlying\", \"type\": \"VARCHAR\", \"description\": \"Canonical underlying both legs reference.\"}, {\"name\": \"venue_a\", \"type\": \"VARCHAR\", \"description\": \"Venue of leg A (alphabetically first of the pair).\"}, {\"name\": \"symbol_a\", \"type\": \"VARCHAR\", \"description\": \"Contract of leg A.\"}, {\"name\": \"venue_b\", \"type\": \"VARCHAR\", \"description\": \"Venue of leg B.\"}, {\"name\": \"symbol_b\", \"type\": \"VARCHAR\", \"description\": \"Contract of leg B.\"}, {\"name\": \"annualized_a\", \"type\": \"DOUBLE\", \"description\": \"Mean annualized funding of A over the window (decimal).\"}, {\"name\": \"annualized_b\", \"type\": \"DOUBLE\", \"description\": \"Mean annualized funding of B over the window (decimal).\"}, {\"name\": \"spread_annualized\", \"type\": \"DOUBLE\", \"description\": \"annualized_a - annualized_b: carry earned per year by short A / long B.\"}, {\"name\": \"spread_bps\", \"type\": \"DOUBLE\", \"description\": \"spread_annualized in basis points per year.\"}, {\"name\": \"observations_a\", \"type\": \"BIGINT\", \"description\": \"Settled funding observations for A in the window.\"}, {\"name\": \"observations_b\", \"type\": \"BIGINT\", \"description\": \"Settled funding observations for B in the window.\"}, {\"name\": \"carry_trade\", \"type\": \"VARCHAR\", \"description\": \"Which way collects the spread: 'short A / long B', the reverse, or 'flat'.\"}, {\"name\": \"window_start\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"Start of the averaging window, UTC.\"}, {\"name\": \"window_end\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"End of the averaging window, UTC.\"}]",
+        "vgi.title": "Cross-Venue Funding Carry Spread"
+      },
+      null,
+      [
+        "underlying",
+        "start_date",
+        "end_date"
+      ],
+      [
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE",
+        "TIMESTAMP WITH TIME ZONE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22603,
+      [
+        "SELECT venue_a, venue_b, spread_bps, carry_trade FROM perps.main.funding_spread('BTC') ORDER BY abs(spread_bps) DESC LIMIT 5",
+        "SELECT symbol_a, symbol_b, spread_bps FROM perps.main.funding_spread('ETH', start_date := now() - INTERVAL 30 DAY) WHERE venue_a = 'bitnomial' OR venue_b = 'bitnomial' ORDER BY spread_bps"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "funding",
+      null,
+      "table",
+      "Funding-rate history across venues, positive = longs pay shorts, with per-interval and annualized rates",
+      null,
+      {
+        "vgi.category": "market_data",
+        "vgi.doc_llm": "Settled funding rates, one row per contract per funding time. `rate_per_interval` is a decimal fraction (0.0001 = 1 bp) and positive always means longs pay shorts; `rate_annualized` = rate * 8760 / `interval_hours` (simple, not compounded); `rate_bps`; `mark_price`/`index_price`/`premium_bps` where the venue publishes them; `is_final`. Arguments: `venue := 'kalshi'`, `underlying := 'BTC'`, `start_date`/`end_date` (`TIMESTAMPTZ`, default the last 7 days), `include_estimates := true` to add each venue's in-progress estimate as is_final = false. Coinbase publishes only its latest hourly rate publicly. Offshore venues are included only when `underlying` is given.",
+        "vgi.doc_md": "## funding(venue := NULL, underlying := NULL, start_date := NULL, end_date := NULL, include_estimates := false)\n\nFunding history in one sign convention (positive = longs pay shorts) with simple annualization.",
+        "vgi.example_queries": "[{\"description\": \"Average annualized BTC funding per venue over the last week\", \"sql\": \"SELECT venue, avg(rate_annualized) AS mean_apr, count(*) AS settlements FROM perps.main.funding(underlying := 'BTC', start_date := now() - INTERVAL 7 DAY) GROUP BY venue ORDER BY mean_apr DESC\"}, {\"description\": \"Bitnomial's last nine ETH funding settlements with the mark-vs-index premium\", \"sql\": \"SELECT funding_time, rate_bps, premium_bps FROM perps.main.funding(venue := 'bitnomial', underlying := 'ETH') ORDER BY funding_time DESC LIMIT 9\"}]",
+        "vgi.keywords": "[\"funding rate\", \"funding history\", \"perpetual funding\", \"annualized funding\", \"carry\", \"premium\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"canonical_id\", \"type\": \"VARCHAR\", \"description\": \"'<UNDERLYING>-<QUOTE>-PERP', shared across venues.\"}, {\"name\": \"underlying\", \"type\": \"VARCHAR\", \"description\": \"Canonical underlying; join venues on this.\"}, {\"name\": \"funding_time\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"When the rate settled (or, for an estimate, will settle), UTC.\"}, {\"name\": \"rate_per_interval\", \"type\": \"DOUBLE\", \"description\": \"Funding rate for the interval, decimal; positive = longs pay shorts.\"}, {\"name\": \"interval_hours\", \"type\": \"DOUBLE\", \"description\": \"Length of the funding interval in hours.\"}, {\"name\": \"rate_annualized\", \"type\": \"DOUBLE\", \"description\": \"Simple annualization: rate_per_interval * 8760 / interval_hours.\"}, {\"name\": \"rate_bps\", \"type\": \"DOUBLE\", \"description\": \"rate_per_interval in basis points.\"}, {\"name\": \"mark_price\", \"type\": \"DOUBLE\", \"description\": \"Mark price at funding, quote currency per underlying unit, where published.\"}, {\"name\": \"index_price\", \"type\": \"DOUBLE\", \"description\": \"Index price at funding, quote currency per underlying unit, where published.\"}, {\"name\": \"premium_bps\", \"type\": \"DOUBLE\", \"description\": \"(mark_price / index_price - 1) in basis points, when both are present.\"}, {\"name\": \"is_final\", \"type\": \"BOOLEAN\", \"description\": \"True for a settled rate; false for the venue's in-progress estimate.\"}]",
+        "vgi.title": "Funding Rate History"
+      },
+      null,
+      [
+        "underlying",
+        "start_date",
+        "include_estimates",
+        "venue",
+        "end_date"
+      ],
+      [
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE",
+        "BOOLEAN",
+        "VARCHAR",
+        "TIMESTAMP WITH TIME ZONE"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22602,
+      [
+        "SELECT venue, avg(rate_annualized) AS mean_apr, count(*) AS settlements FROM perps.main.funding(underlying := 'BTC', start_date := now() - INTERVAL 7 DAY) GROUP BY venue ORDER BY mean_apr DESC",
+        "SELECT funding_time, rate_bps, premium_bps FROM perps.main.funding(venue := 'bitnomial', underlying := 'ETH') ORDER BY funding_time DESC LIMIT 9"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "depth_metrics",
+      null,
+      "table",
+      "Liquidity summary for one contract: spread, bps cost to fill a USD notional on each side, depth and imbalance",
+      null,
+      {
+        "vgi.category": "analytics",
+        "vgi.doc_llm": "One row summarizing a contract's book: `depth_metrics('kalshi', 'KXBTCPERP', notional_usd := 250000)`. Venue and symbol are positional. `spread_bps`; `buy_cost_bps` / `sell_cost_bps` = distance of the fill VWAP from mid when walking the asks / bids for `notional_usd` (default 100,000); `buy_filled_usd` / `sell_filled_usd` and `fully_filled` say whether the fetched `depth` (default 200 levels) was enough; `bid_depth_usd`, `ask_depth_usd`, `imbalance` in [-1, 1]. Excludes fees.",
+        "vgi.doc_md": "## depth_metrics(venue, symbol, notional_usd := 100000, depth := 200)\n\nSpread, cost to fill a notional on each side, and book imbalance.",
+        "vgi.example_queries": "[{\"description\": \"What a $50k ETH clip costs on Kalshi\", \"sql\": \"SELECT spread_bps, buy_cost_bps, sell_cost_bps, imbalance FROM perps.main.depth_metrics('kalshi', 'KXETHPERP', notional_usd := 50000)\"}, {\"description\": \"Can Coinbase's BTC perp absorb a $1m market buy\", \"sql\": \"SELECT venue, buy_cost_bps, fully_filled FROM perps.main.depth_metrics('coinbase', 'BIP-20DEC30-CDE', notional_usd := 1000000)\"}]",
+        "vgi.keywords": "[\"slippage\", \"market impact\", \"fill cost\", \"spread\", \"liquidity\", \"depth\", \"imbalance\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name.\"}, {\"name\": \"symbol\", \"type\": \"VARCHAR\", \"description\": \"Venue-native contract symbol.\"}, {\"name\": \"best_bid\", \"type\": \"DOUBLE\", \"description\": \"Best bid per underlying unit.\"}, {\"name\": \"best_ask\", \"type\": \"DOUBLE\", \"description\": \"Best ask per underlying unit.\"}, {\"name\": \"mid\", \"type\": \"DOUBLE\", \"description\": \"(best_bid + best_ask) / 2.\"}, {\"name\": \"spread_bps\", \"type\": \"DOUBLE\", \"description\": \"(best_ask - best_bid) / mid in basis points.\"}, {\"name\": \"notional_usd\", \"type\": \"DOUBLE\", \"description\": \"The notional each side was asked to fill.\"}, {\"name\": \"buy_cost_bps\", \"type\": \"DOUBLE\", \"description\": \"Distance of the VWAP to buy notional_usd (walking asks) from mid, bps.\"}, {\"name\": \"sell_cost_bps\", \"type\": \"DOUBLE\", \"description\": \"Distance of the VWAP to sell notional_usd (walking bids) from mid, bps.\"}, {\"name\": \"buy_filled_usd\", \"type\": \"DOUBLE\", \"description\": \"Notional the fetched asks could absorb (< notional_usd if the book ran out).\"}, {\"name\": \"sell_filled_usd\", \"type\": \"DOUBLE\", \"description\": \"Notional the fetched bids could absorb.\"}, {\"name\": \"fully_filled\", \"type\": \"BOOLEAN\", \"description\": \"True when both sides could fill the whole notional.\"}, {\"name\": \"bid_depth_usd\", \"type\": \"DOUBLE\", \"description\": \"Total bid notional in the fetched levels.\"}, {\"name\": \"ask_depth_usd\", \"type\": \"DOUBLE\", \"description\": \"Total ask notional in the fetched levels.\"}, {\"name\": \"imbalance\", \"type\": \"DOUBLE\", \"description\": \"(bid_depth_usd - ask_depth_usd) / (bid + ask): +1 all bids, -1 all asks.\"}, {\"name\": \"bid_levels\", \"type\": \"INTEGER\", \"description\": \"Bid levels fetched.\"}, {\"name\": \"ask_levels\", \"type\": \"INTEGER\", \"description\": \"Ask levels fetched.\"}]",
+        "vgi.title": "Book Depth and Fill Cost"
+      },
+      null,
+      [
+        "venue",
+        "symbol",
+        "notional_usd",
+        "depth"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "DOUBLE",
+        "BIGINT"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22601,
+      [
+        "SELECT spread_bps, buy_cost_bps, sell_cost_bps, imbalance FROM perps.main.depth_metrics('kalshi', 'KXETHPERP', notional_usd := 50000)",
+        "SELECT venue, buy_cost_bps, fully_filled FROM perps.main.depth_metrics('coinbase', 'BIP-20DEC30-CDE', notional_usd := 1000000)"
+      ],
+      null,
+      []
+    ],
+    [
+      "perps",
+      "22595",
+      "main",
+      "venues",
+      null,
+      "table",
+      "List every venue with its regulatory type, supported capabilities and live health",
+      null,
+      {
+        "vgi.category": "reference",
+        "vgi.doc_llm": "One row per venue: `venue` (the name every other function accepts), `venue_type` ('us_regulated' or 'offshore'), `regulator`, `adapter_version`, `sign_convention`, `capabilities` (list of capability names with full or partial support), and a live health probe: `status` ('ok', 'error', 'not_probed'), `instrument_count`, `last_error`, `checked_at`. Run it first: a venue with status 'error' (for example an offshore venue geo-blocked from the worker's network) is skipped by cross-venue queries. `probe := false` skips the network.",
+        "vgi.doc_md": "## venues(probe := true)\n\nEvery venue, its regulatory type and capabilities, and a live health check. Cross-venue functions skip venues whose probe fails.",
+        "vgi.example_queries": "[{\"description\": \"Which venues are reachable right now\", \"sql\": \"SELECT venue, status, instrument_count, last_error FROM perps.main.venues() ORDER BY venue\"}, {\"description\": \"US-regulated venues and how many capabilities each supports, without network calls\", \"sql\": \"SELECT venue, venue_type, len(capabilities) AS n_capabilities FROM perps.main.venues(probe := false) WHERE venue_type = 'us_regulated' ORDER BY venue\"}, {\"description\": \"Venues that answer right now and serve a public order book, with the endpoint each uses\", \"sql\": \"SELECT v.venue, v.status, c.notes FROM perps.main.venues() AS v JOIN perps.main.capabilities() AS c USING (venue) WHERE c.capability = 'order_book' AND c.support = 'supported' AND v.status = 'ok' ORDER BY v.venue\"}]",
+        "vgi.keywords": "[\"venues\", \"exchanges\", \"health\", \"status\", \"kalshi\", \"coinbase\", \"bitnomial\", \"og.com\", \"hyperliquid\", \"binance\", \"bybit\"]",
+        "vgi.result_columns_schema": "[{\"name\": \"venue\", \"type\": \"VARCHAR\", \"description\": \"Venue name used by every other function's venue argument.\"}, {\"name\": \"display_name\", \"type\": \"VARCHAR\", \"description\": \"Human-readable venue and product name.\"}, {\"name\": \"venue_type\", \"type\": \"VARCHAR\", \"description\": \"'us_regulated' (CFTC-registered exchange) or 'offshore' (benchmark only).\"}, {\"name\": \"regulator\", \"type\": \"VARCHAR\", \"description\": \"Regulatory status as documented by the venue.\"}, {\"name\": \"adapter_version\", \"type\": \"VARCHAR\", \"description\": \"Version of this worker's adapter for the venue.\"}, {\"name\": \"sign_convention\", \"type\": \"VARCHAR\", \"description\": \"How the venue's funding sign maps to positive = longs pay shorts.\"}, {\"name\": \"capabilities\", \"type\": \"VARCHAR[]\", \"description\": \"Capabilities with full or partial public support.\"}, {\"name\": \"status\", \"type\": \"VARCHAR\", \"description\": \"'ok' if the probe succeeded, 'error' if it failed, 'not_probed' when probe := false.\"}, {\"name\": \"instrument_count\", \"type\": \"BIGINT\", \"description\": \"Active and inactive contracts the probe found; NULL unless status = 'ok'.\"}, {\"name\": \"last_error\", \"type\": \"VARCHAR\", \"description\": \"Error from the probe, NULL when it succeeded.\"}, {\"name\": \"checked_at\", \"type\": \"TIMESTAMP WITH TIME ZONE\", \"description\": \"When the probe ran (UTC).\"}]",
+        "vgi.title": "Venues and Health"
+      },
+      null,
+      [
+        "probe"
+      ],
+      [
+        "BOOLEAN"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22615,
+      [
+        "SELECT venue, status, instrument_count, last_error FROM perps.main.venues() ORDER BY venue",
+        "SELECT venue, venue_type, len(capabilities) AS n_capabilities FROM perps.main.venues(probe := false) WHERE venue_type = 'us_regulated' ORDER BY venue",
+        "SELECT v.venue, v.status, c.notes FROM perps.main.venues() AS v JOIN perps.main.capabilities() AS c USING (venue) WHERE c.capability = 'order_book' AND c.support = 'supported' AND v.status = 'ok' ORDER BY v.venue"
+      ],
+      null,
+      []
+    ]
+  ]
+}

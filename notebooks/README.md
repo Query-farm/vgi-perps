@@ -1,52 +1,27 @@
-# vgi-perps notebooks
+# Perpetual Futures Across Venues — SQL notebooks
 
-<a href="https://query.farm/"><img src="assets/query-farm-strata-sun.svg" alt="Query.Farm — Strata Sun" width="252"></a>
+[Worker repository](https://github.com/Query-farm/vgi-perps) · [Shared notebook standard](https://github.com/Query-farm/vgi-example-notebooks/blob/main/docs/standard.md)
 
-<a href="https://query.farm/vgi/"><img src="assets/vgi-logo.png" alt="VGI — Vector Gateway Interface" width="280"></a>
+Read the executed notebooks directly on GitHub or use each **Open in Colab** button. Their original analytical narratives and SQL remain: venue coverage before funding comparisons, normalized quantity before fill costs, and accrued weight before a funding nowcast. Saved SVGs retain units and recorded/synthetic provenance; no account positions or orders are read or written.
 
-[Query.Farm](https://query.farm/) · [VGI](https://query.farm/vgi/) · [Haybarn](https://query.farm/products/haybarn/)
+| Notebook | Question | Focused experiment |
+|---|---|---|
+| [01 · Funding across venues](01_funding_across_venues.ipynb) | Which contracts have comparable settled funding, and what do marks and source coverage add? | Restrict the three-day window to 12 November. |
+| [02 · Liquidity and market activity](02_liquidity_and_market_activity.ipynb) | How does a hypothetical order fit the recorded book, beside candles, trades and assumed liquidation bands? | Reduce `ORDER_USD` from 100,000 to 50,000. |
+| [03 · Kalshi funding nowcast](03_kalshi_funding_nowcast.ipynb) | How much funding weight is undecided, and where do the deadband and cap change the answer? | Reduce assumed remaining premium from 2 to 1 basis point. |
 
-These independent Python notebooks use Haybarn, the real VGI extension and the
-released `vgi-perps` worker. Queries and calculations use JupySQL `%%sql` cells;
-Python handles connection setup and Seaborn/Matplotlib visualizations. Executed outputs
-are saved in the notebooks, including embedded PNG charts.
+## Setup and execution
 
-Each notebook follows an analytical question through the evidence, with
-interpretation after the tables and charts. A visible parameters cell controls each
-run; numerical explanations are generated from the returned results. Python imports, chart styling, cleanup
-and plotting sources carry Jupyter collapse metadata. The VGI connection cells
-(`INSTALL`, `LOAD`, `ATTACH`), their diagnostic output, analytical SQL and chart
-outputs remain visible.
-The opening setup guide has moved out of the reading path into this README.
-Jupyter-compatible readers can use the saved collapse metadata. VS Code may keep
-folding separately as editor state; if a fresh window expands everything, use
-**Collapse Cell Input** on the Python setup and plotting cells. Keep VGI connection
-SQL and chart outputs expanded.
+Each notebook installs only the base shared package, pinned to **v0.3.47**, checks imported dependencies, and retrieves the immutable `perps` companion set with SHA256 checks. Colab needs no manual clone. The companion is the domain-only helper plus the original 93 JSON fixtures; the common theme, runner, branding and SQL isolation live in the shared package. Initial setup needs network access, Git and uv. The helper cannot silently download a missing venue recording.
 
-| Notebook | What it demonstrates |
-|---|---|
-| [01 · Funding across venues](01_funding_across_venues.ipynb) | Venue health, capability matrix, contract units, funding history, pairwise funding spreads, marks and open interest. |
-| [02 · Liquidity and market activity](02_liquidity_and_market_activity.ipynb) | Normalized order books, fill costs, candles, public trades, and an explicitly assumed liquidation scenario. |
-| [03 · Kalshi funding nowcast](03_kalshi_funding_nowcast.ipynb) | Raw premiums, accrued versus remaining weight, worker scenarios, deadband and cap sensitivity. |
-
-## Run in VS Code
-
-Prerequisites: [uv](https://docs.astral.sh/uv/), Python 3.13 or 3.14, and the VS Code
-Python and Jupyter extensions. `uv` can provision Python when needed.
-
-From the downloaded **notebooks directory** (the worker source checkout is not required):
+For local publication, download `notebooks/` and run from that directory:
 
 ```sh
-uv sync --locked
-code 01_funding_across_venues.ipynb
+uv sync --locked --extra runner
+uv run --locked --extra runner vgi-notebooks
 ```
 
-Choose **Select Kernel → Python Environments → .venv/bin/python**.
-If it is not listed, use the interpreter path picker. Then **Run All**. The collapsed Python setup
-finds the notebook companions whether the kernel starts in the repository root or in `notebooks/`.
-Each notebook has its own connection and can run without running another notebook.
-
-The visible connection cell launches the published `v0.1.5` Git release directly:
+Use the environment's Python kernel for interactive Run All. The base package supports Python 3.11–3.14; the independently launched worker requires Python 3.13 or newer, which uv can provision. The notebook lock does not alter the worker environment or root lockfile. The visible release launch is:
 
 ```sql
 INSTALL vgi FROM community;
@@ -55,34 +30,7 @@ ATTACH 'perps' (TYPE vgi,
   LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.5 vgi-perps-worker');
 ```
 
-`uvx` downloads and caches the released Python worker; `uv`, Git and a supported Python are prerequisites. No root `.venv`, source build or worker-path parameter is needed. This worker publishes Python packages rather than the native platform archives required by `github-auto://`. The release tag keeps the saved walkthrough tied to a tested worker; upgrade the tag and rerun all cells when adopting another release. `DATA_MODE` only configures inherited fixture/clock environment variables, before the visible ATTACH. It never changes the launcher or silently changes data modes.
-
-The notebook environment has its own `pyproject.toml` and `uv.lock`. Its Haybarn
-version (`2.0.0rc11`) matches the repository's SQL test runner. This does not change
-the worker's runtime, SDK constraints or root lockfile. The native Haybarn connection
-is passed directly to JupySQL; no `duckdb-engine` connection is used.
-
-## Execute and save all outputs
-
-From the notebooks directory:
-
-```sh
-uv sync --locked
-uv run --locked python execute.py
-```
-
-To execute just one:
-
-```sh
-uv run --locked python execute.py 03_kalshi_funding_nowcast.ipynb
-```
-
-The runner creates a temporary kernel specification pointing to the notebook
-environment, uses a fresh kernel per notebook, fails on cell errors, and saves
-each notebook only after it completes. It does not install a global kernel.
-Notebook assertions check unit conversions, pagination identifiers, fill bounds and
-agreement between the applicable nowcast formula and worker outputs. They do not
-require a fixed ranking or trade direction. Worker checks remain `make check`.
+This release publishes Python packages rather than native `github-auto` archives. No worker checkout, build or transitive dependency overrides are required. `connect(globals())` creates empty temporary SQL-secret storage, disables persistent secrets, establishes UTC on the connection and prevents JupySQL from loading a saved default connection. The notebooks verify the empty inventory and close the session; the helper restores its prior fixture/clock environment on cleanup.
 
 ## Data provenance
 
@@ -141,60 +89,22 @@ Replay fetches a known recorded request and filters to the selected subwindow in
 SQL. Unsupported replay dates/assets fail explicitly. Changing raw-premium dates
 in notebook 03 does not change the full-window synthetic nowcast inputs.
 
-Run live copies without replacing the default outputs:
+Run each experiment into its own directory; the runner preserves the last successful default and rejects unknown parameters:
 
 ```sh
-uv run --locked python execute.py --mode live --output-dir /tmp/perps-live --timeout 600
+uv run --locked --extra runner vgi-notebooks 01_funding_across_venues.ipynb --parameters '{"START_DATE":"2026-11-12"}' --output-dir validation/last-day
+uv run --locked --extra runner vgi-notebooks 02_liquidity_and_market_activity.ipynb --parameters '{"ORDER_USD":50000}' --output-dir validation/smaller-order
+uv run --locked --extra runner vgi-notebooks 03_kalshi_funding_nowcast.ipynb --parameters '{"ASSUMED_PREMIUM_BPS":1.0}' --output-dir validation/one-basis-point
 ```
 
-Or execute an experiment in a separate output directory:
+To request public live data explicitly, use `--parameters '{"DATA_MODE":"live"}' --output-dir validation/live` for a chosen notebook. There is no replay fallback. Live availability depends on venue access and supported contracts. Funding reports returned venue health; liquidity requires Kalshi, Coinbase and Hyperliquid BTC contracts. A required failure stops the run. Empty optional trade/premium results remain explicit; missing USD turnover stays NULL. The local nowcast curve applies only to the returned `dampen` rule; other rules retain worker scenarios without that curve or its check.
 
-```sh
-uv run --locked python execute.py 02_liquidity_and_market_activity.ipynb --parameters '{"ORDER_USD": 50000}' --output-dir /tmp/perps-experiment
-```
+## SQL and coverage evidence
 
-The runner rejects unknown parameter names and requires `--output-dir` for
-parameter overrides. Copies execute with the notebook directory as the kernel's working directory. The runner copies branding, recorded fixtures and the helper beside each experiment, with a link to this guide. Reuse the notebook environment to rerun them; no worker checkout is needed.
+API retrieval is materialized once in visible `CREATE OR REPLACE TABLE ... AS SELECT ...` cells. Captured displays select from these local tables, avoiding JupySQL's repeated remote SELECT during result discovery. Ordinary in-memory tables deliberately survive its separate cursors. Financial transformations, comparison populations and checks remain visible in SQL. Python plots or interprets returned rows.
 
-Live availability depends on venue access and supported contracts. The funding
-notebook shows venue health and whatever supported cross-venue data is returned.
-The liquidity walkthrough requires Kalshi, Coinbase and Hyperliquid BTC contracts;
-a required API failure stops the run with its diagnostic. Empty optional trade or
-premium plots are labelled explicitly. Missing USD turnover is never filled with
-zero. The nowcast's local curve applies only to the returned `dampen` rule; other
-rules retain the worker scenarios but omit that curve and its check.
+[coverage.json](coverage.json) and [coverage/](coverage/) record complete native function/table/view exports, source comparisons, successful cell receipts and reviewed findings. Release v0.1.5 and the captured public main both expose **17 logical functions**. These three stories meaningfully cover **12/17 (70.6%)**, exceeding the nine-name requirement. All 12 execute the exact release. Current-interface credit is reconciled from matching signatures and source evidence, not a claim that the notebooks ran current main. The five explicit gaps are `premium`, `funding_spread`, `raw_coinbase_products`, `raw_bitnomial_products`, and `raw_kalshi_markets`; the SQL pairwise spread in notebook 01 does not claim a call to `funding_spread`.
 
-## Editing and interpretation
+Validation includes all three defaults and separate experiments, one fresh Python 3.12 notebook-only bootstrap with already imported libraries, output/presentation checks, runner preservation guards and chart review. Hosted Colab execution is not claimed. This migration reuses successful source CI for unchanged worker code; it does not rebuild the worker or repeat transport suites. Replay analytics are independently checked. A separate anonymous live Kalshi BTC instrument lookup succeeded on 15 November 2026; this does not establish complete live coverage of all three stories.
 
-`%%sql result <<` stores the query result in a pandas DataFrame named `result`.
-Plain `%%sql` displays the final query result. `CREATE OR REPLACE TABLE`
-materializes worker data in the in-memory database, so plotting and regrouping do
-not repeat remote requests. Ordinary tables are intentional: JupySQL uses separate
-Haybarn cursors, and cursor-local temporary tables would disappear between statements.
-The closing cell releases the connection; restart and run from the top to reset.
-
-The shared `notebook_support.py` centralizes presentation, parameter validation and
-explicit data-mode setup. Domain queries stay in the notebooks. The
-[reusable notebook standard](STANDARD.md) documents the structure, visibility,
-provenance, charts and validation to use for subsequent VGI workers.
-
-These examples need only `vgi-perps`. Complementary workers can be added when they
-answer a specific question; this first set keeps setup limited to Python and Haybarn.
-
-The Strata Sun + Query.Farm wordmark in `assets/query-farm-strata-sun.svg` is copied
-unchanged from `query-farm-astro/public/media-kit/logo/wordmark-adaptive.svg`. It
-appears at the top and bottom of every notebook, links to Query.Farm, and adapts
-to light/dark color schemes. The VGI product logo remains near the top.
-
-The logo in `assets/vgi-logo.png` is copied unchanged from the Query.Farm website's
-`public/media-kit/products/vgi/vgi-logo.png` in `query-farm-astro`.
-It links to the [VGI product](https://query.farm/vgi/) in every notebook header.
-
-References: [Haybarn installation](https://query.farm/products/haybarn/install/),
-[JupySQL connections](https://jupysql.ploomber.io/en/latest/connecting.html),
-[worker SQL reference](https://github.com/Query-farm/vgi-perps#sql-surface), and
-[venue mappings and sources](https://github.com/Query-farm/vgi-perps/blob/main/docs/VENUES.md).
-
----
-
-<a href="https://query.farm/"><img src="assets/query-farm-strata-sun.svg" alt="Query.Farm — Strata Sun" width="210"></a>
+The original [fixture provenance](https://github.com/Query-farm/vgi-perps#testing), [venue mappings](https://github.com/Query-farm/vgi-perps/blob/main/docs/VENUES.md), official local branding assets and historical references remain. [STANDARD.md](STANDARD.md) now points to the maintained central standard. No duplicated runner or theme is required.

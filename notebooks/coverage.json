@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "catalogs": {
+    "released": {
+      "path": "coverage/catalog-released.json",
+      "sha256": "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "catalog_sha256": "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+        "notes": "All 17 public logical names retained, including five undemonstrated functions. Release and captured public main expose the same 17 names and input signatures. The complete source/dependency diff changes metadata, composed examples and agent tasks, not financial transformations or runtime dependency pins. All analytical execution uses v0.1.5; current-interface credit is reviewed against this comparison and is not exact current-runtime evidence."
+      }
+    },
+    "current": {
+      "path": "coverage/catalog-current.json",
+      "sha256": "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88",
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "catalog_sha256": "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88",
+        "notes": "All 17 public logical names retained, including five undemonstrated functions. Release and captured public main expose the same 17 names and input signatures. The complete source/dependency diff changes metadata, composed examples and agent tasks, not financial transformations or runtime dependency pins. All analytical execution uses v0.1.5; current-interface credit is reviewed against this comparison and is not exact current-runtime evidence."
+      }
+    }
+  },
+  "notebooks": [
+    {
+      "path": "01_funding_across_venues.ipynb",
+      "sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+      "execution": {
+        "path": "coverage/run-01.json",
+        "sha256": "6e401f34bb9d844b2fc2e1fbd61fd02a12d044d39032d332abe3a0782d6c9a9e"
+      }
+    },
+    {
+      "path": "02_liquidity_and_market_activity.ipynb",
+      "sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+      "execution": {
+        "path": "coverage/run-02.json",
+        "sha256": "8264564ddf0f37ff6794ed49227a085c09dd12a1244e483663024761b1bda90e"
+      }
+    },
+    {
+      "path": "03_kalshi_funding_nowcast.ipynb",
+      "sha256": "4594fb1faa31ddbc16318f1e9b2fd3d08788e9ac18dae87a5c059654d421f6bf",
+      "execution": {
+        "path": "coverage/run-03.json",
+        "sha256": "d868bb8e4ee14c4bd48ec1d73b0e74818cc152bf60b60a7f25ef520e5dea8084"
+      }
+    }
+  ],
+  "examples": [
+    {
+      "object": {
+        "schema": "main",
+        "name": "venues"
+      },
+      "notebook": "01_funding_across_venues.ipynb",
+      "sql": [
+        {
+          "cell": "fe16be94-materialize",
+          "reference": "perps.main.venues"
+        }
+      ],
+      "narrative_cells": [
+        "c3271703"
+      ],
+      "result_cells": [
+        "08f3272d"
+      ],
+      "interpretation_cells": [
+        "08f3272d"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Establish venue health before interpreting missing cross-venue rates.",
+        "finding": "Seven venue records retain recorded Binance/Bybit failures. Omitted data are not zero funding; probe status and supported capabilities answer different questions."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "capabilities"
+      },
+      "notebook": "01_funding_across_venues.ipynb",
+      "sql": [
+        {
+          "cell": "b9677394-materialize",
+          "reference": "perps.main.capabilities"
+        }
+      ],
+      "narrative_cells": [
+        "c3271703"
+      ],
+      "result_cells": [
+        "4f3b75de"
+      ],
+      "interpretation_cells": [
+        "08f3272d"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Compare funding, order-book, mark, candle and trade support across the seven venue identities.",
+        "finding": "The 35-row matrix separates five requested capabilities per venue, establishing which downstream comparisons are structurally supported; capabilities do not prove remote availability."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "instruments"
+      },
+      "notebook": "01_funding_across_venues.ipynb",
+      "sql": [
+        {
+          "cell": "ec3dd47a",
+          "reference": "perps.main.instruments"
+        }
+      ],
+      "narrative_cells": [
+        "083d2a50"
+      ],
+      "result_cells": [
+        "ec3dd47a"
+      ],
+      "interpretation_cells": [
+        "083d2a50"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Keep contract sizes and units beside the comparisons.",
+        "finding": "BTC contract identities and multiplier/notional units remain explicit. Normalized quantity cannot be treated as interchangeable raw venue quantity; independently recorded snapshots remain distinct."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "funding"
+      },
+      "notebook": "01_funding_across_venues.ipynb",
+      "sql": [
+        {
+          "cell": "2152513e-materialize",
+          "reference": "perps.main.funding"
+        }
+      ],
+      "narrative_cells": [
+        "46de239a"
+      ],
+      "result_cells": [
+        "f5a67a76",
+        "85ac3b6c",
+        "331db120"
+      ],
+      "interpretation_cells": [
+        "c26d2602"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Annualize settled rates with their own intervals and compare sample averages and temporal variability.",
+        "finding": "108 settlements across five contracts produce Kalshi 14.71% and Hyperliquid 8.64% simple annualized sample means; selecting the final day yields 36 observations and 18.81% versus 6.82%. This is a unit conversion and historical sample, not a forecast or trading recommendation."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "marks"
+      },
+      "notebook": "01_funding_across_venues.ipynb",
+      "sql": [
+        {
+          "cell": "dd2942f0-materialize",
+          "reference": "perps.main.marks"
+        }
+      ],
+      "narrative_cells": [
+        "db8229a8"
+      ],
+      "result_cells": [
+        "db55bf29"
+      ],
+      "interpretation_cells": [
+        "32609d06"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "959fe6cb1d2da20011aec7284afae18333833fafa7e328284ee1b8e33ab5457b",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Compare marks against each contract’s own index and identify open-interest units/source times.",
+        "finding": "Six mark records expose differently sourced mark premiums and USD-labelled open interest. The Bitnomial contract premium near 86 bps is interpreted beside its reference provenance, not assumed to be a synchronized arbitrage spread."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "order_book"
+      },
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "sql": [
+        {
+          "cell": "2fb7e7fb",
+          "reference": "perps.main.order_book"
+        }
+      ],
+      "narrative_cells": [
+        "b5e44129"
+      ],
+      "result_cells": [
+        "37e8072d"
+      ],
+      "interpretation_cells": [
+        "060afd1d"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Reconstruct cumulative bid/ask notional and inspect what five levels can support.",
+        "finding": "Thirty rows cover two sides and five levels for three venues. Shared notional axes and separate distance scales show shallow depth cannot establish full-order execution; the snapshots are independent recordings."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "depth_metrics"
+      },
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "sql": [
+        {
+          "cell": "2585f642-materialize",
+          "reference": "perps.main.depth_metrics"
+        }
+      ],
+      "narrative_cells": [
+        "690575fe"
+      ],
+      "result_cells": [
+        "b064305a"
+      ],
+      "interpretation_cells": [
+        "1edd5c5f"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Compare VWAP cost of the filled portion with the separate fraction filled across order sizes.",
+        "finding": "The 100,000 USD scenario fills fully, while the 100 million scenario fills only 10.89% buy / 14.51% sell. Halving every scenario doubles the largest fraction with the same exhausted-book VWAP; fees and synchronized execution are not inferred."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "candles"
+      },
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "sql": [
+        {
+          "cell": "dd7013e4-materialize",
+          "reference": "perps.main.candles"
+        }
+      ],
+      "narrative_cells": [
+        "0c667e50"
+      ],
+      "result_cells": [
+        "2d971916"
+      ],
+      "interpretation_cells": [
+        "4c95cb71"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Compare hourly prices while retaining missing USD turnover.",
+        "finding": "Twelve hourly bars cover Kalshi and Coinbase over six hours. Coinbase close prices are available but USD turnover is missing; its absent volume stays NULL and is labeled, not drawn as zero."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "trades"
+      },
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "sql": [
+        {
+          "cell": "98660a39-materialize",
+          "reference": "perps.main.trades"
+        }
+      ],
+      "narrative_cells": [
+        "345796e1"
+      ],
+      "result_cells": [
+        "b0b9ba3f"
+      ],
+      "interpretation_cells": [
+        "7c5c35b1"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Bucket public trades by reported initiating side with a separately computed VWAP.",
+        "finding": "139 unique prints in the recorded minute sum to about 184,237 USD reported notional. Side, not order-size or future direction, defines the signed flow; trade IDs, interval boundaries and population are checked."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "liquidation_estimate"
+      },
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "sql": [
+        {
+          "cell": "15cee625",
+          "reference": "perps.main.liquidation_estimate"
+        }
+      ],
+      "narrative_cells": [
+        "6eb83b15"
+      ],
+      "result_cells": [
+        "7fa127f0"
+      ],
+      "interpretation_cells": [
+        "95b6f4e9"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "5fd2643496112017c69e25f5ff95d7b25b07e1e9d54f2d615a16e827e29d63c3",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Show how explicitly assumed leverage changes modeled thresholds without claiming observed account positions.",
+        "finding": "Ten Hyperliquid long/short bands approach entry as leverage rises from 2x to 20x. Bubble areas represent the assumed notional distribution; maintenance/quote conventions and model provenance constrain the interpretation."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "raw_kalshi_premium_index"
+      },
+      "notebook": "03_kalshi_funding_nowcast.ipynb",
+      "sql": [
+        {
+          "cell": "0dea1956-materialize",
+          "reference": "perps.main.raw_kalshi_premium_index"
+        }
+      ],
+      "narrative_cells": [
+        "a422e800"
+      ],
+      "result_cells": [
+        "74508b79"
+      ],
+      "interpretation_cells": [
+        "24a861e5"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "4594fb1faa31ddbc16318f1e9b2fd3d08788e9ac18dae87a5c059654d421f6bf",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Inspect recorded high-frequency premiums before interpreting a funding estimate.",
+        "finding": "Sixty recorded observations range from about -1.98 to +2.32 bps. This observed minute is separate from synthetic full-window inputs and is not treated as a validation of a recorded published estimate."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "kalshi_funding_nowcast"
+      },
+      "notebook": "03_kalshi_funding_nowcast.ipynb",
+      "sql": [
+        {
+          "cell": "a66d1a59-materialize",
+          "reference": "perps.main.kalshi_funding_nowcast"
+        }
+      ],
+      "narrative_cells": [
+        "ea581cb4"
+      ],
+      "result_cells": [
+        "4dc691bc",
+        "fc3153b9",
+        "b306091d"
+      ],
+      "interpretation_cells": [
+        "a2705f28"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "Codex /root/notebooks_ortools",
+        "reviewed_at": "2026-11-15T00:57:56.444021+00:00",
+        "notebook_sha256": "4594fb1faa31ddbc16318f1e9b2fd3d08788e9ac18dae87a5c059654d421f6bf",
+        "catalog_sha256": [
+          "639e8553f8e94bc473b0b0c9796a64e18f6445b23dbd913745ca4d94c92a4023",
+          "c1462b0738181ca8d36a32b0c0b7e5b18932dd21665c38703e505543ea1b0d88"
+        ],
+        "purpose": "Separate clock time, accrued funding weight and hypothetical remaining premiums, then check the returned rule.",
+        "finding": "At the frozen synthetic checkpoint 54.2% of time but only 29.3% of weight has elapsed. Changing assumed remaining premium 2→1 bps crosses the dampen deadband: settlement 1.4133→0 bps. Local curve agrees with worker scenarios; it is not a live funding forecast."
+      }
+    }
+  ]
+}

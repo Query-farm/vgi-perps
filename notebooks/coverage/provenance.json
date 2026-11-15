@@ -1,0 +1,13 @@
+{
+  "repository": "Query-farm/vgi-perps",
+  "release_tag": "v0.1.5",
+  "release_revision": "e289d2ce4e0a53158fb0ca78ba26491cfef4c32c",
+  "current_public_revision": "bb284bc728106716a575f755552277f5439455e9",
+  "engine": "Haybarn 2.0.0rc11 / VGI e75482339d",
+  "captured_at": "2026-11-15T00:57:56.444021+00:00",
+  "released_launch": "uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.5 vgi-perps-worker",
+  "current_catalog_probe": "Original installed checkout entrypoint, read-only, no build/install/source edits. Only its local absolute prefix is replaced by <original-checkout> in database metadata; all function/table/view rows remain complete. This is catalog evidence, not reader startup.",
+  "data_boundary": "Original 93 JSON fixtures unchanged: recorded public venue responses plus explicit synthetic full-window nowcast/pagination cases. Replay clock 2026-11-13T01:20Z; no record-missing or live fallback. Empty temporary SQL-secret storage, persistent secrets disabled, UTC connection, no SQL credentials created. A separate explicit anonymous live Kalshi BTC instrument lookup succeeded; it does not establish all live analyses.",
+  "counting": "One logical surface per (schema,name), including every public function, table and view; overloads share identity. All 17 are read-only public-data functions.",
+  "comparison": "Release and captured public main expose the same 17 names and input signatures. The complete source/dependency diff changes metadata, composed examples and agent tasks, not financial transformations or runtime dependency pins. All analytical execution uses v0.1.5; current-interface credit is reviewed against this comparison and is not exact current-runtime evidence."
+}

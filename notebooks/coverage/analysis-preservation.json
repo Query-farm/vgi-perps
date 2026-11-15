@@ -1,0 +1,544 @@
+{
+  "baseline": "bb284bc728106716a575f755552277f5439455e9",
+  "meaning": "Every original SQL statement remains verbatim after whitespace normalization; additions materialize remote captures once, with local SELECT capture. All original substantive Markdown is unchanged except heading levels. Saved HTML result tables compared by retained cell ID. Original fixture bytes unchanged.",
+  "notebooks": [
+    {
+      "notebook": "01_funding_across_venues.ipynb",
+      "original_sql_cells_preserved": [
+        "476eb25e",
+        "fe16be94",
+        "b9677394",
+        "ec3dd47a",
+        "2152513e",
+        "8db0d21e",
+        "82a4ffe2",
+        "dd2942f0"
+      ],
+      "markdown_narrative_cells_preserved": [
+        "3e4a16eb",
+        "c3271703",
+        "083d2a50",
+        "46de239a",
+        "8cfc2c93",
+        "db8229a8",
+        "464b16a3",
+        "710e3434"
+      ],
+      "saved_html_tables": [
+        {
+          "cell": "476eb25e",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "08f3272d",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "ec3dd47a",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "f5a67a76",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "dac5e1f8",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "db55bf29",
+          "tables": 1,
+          "identical": true
+        }
+      ]
+    },
+    {
+      "notebook": "02_liquidity_and_market_activity.ipynb",
+      "original_sql_cells_preserved": [
+        "2907319a",
+        "849d710d",
+        "4ea29dca",
+        "2fb7e7fb",
+        "99a3db08",
+        "2585f642",
+        "dd7013e4",
+        "98660a39",
+        "4fe6630c",
+        "15cee625",
+        "b1ba3747"
+      ],
+      "markdown_narrative_cells_preserved": [
+        "89fb02f7",
+        "9249a700",
+        "b5e44129",
+        "690575fe",
+        "0c667e50",
+        "345796e1",
+        "6eb83b15",
+        "7691a9bd",
+        "b12e153f"
+      ],
+      "saved_html_tables": [
+        {
+          "cell": "2907319a",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "849d710d",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "4d4c502d",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "2fb7e7fb",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "b064305a",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "b0b9ba3f",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "15cee625",
+          "tables": 1,
+          "identical": true
+        }
+      ]
+    },
+    {
+      "notebook": "03_kalshi_funding_nowcast.ipynb",
+      "original_sql_cells_preserved": [
+        "76dcedbc",
+        "0dea1956",
+        "a66d1a59",
+        "9a1f6513",
+        "2bee6665",
+        "c097e7ba",
+        "969839c4"
+      ],
+      "markdown_narrative_cells_preserved": [
+        "51eededd",
+        "a422e800",
+        "ea581cb4",
+        "780048b4",
+        "2d45e93a",
+        "0f950cfb",
+        "cd34575e",
+        "ab0ece14",
+        "c6afc25d"
+      ],
+      "saved_html_tables": [
+        {
+          "cell": "76dcedbc",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "4dc691bc",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "09b4b052",
+          "tables": 1,
+          "identical": true
+        },
+        {
+          "cell": "a2705f28",
+          "tables": 1,
+          "identical": true
+        }
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_product_book_dee5d2780b.json",
+      "sha256": "d05d5c7f7cdc5f1c243f79afdd7c9335fc3457165fb3bf770db95899fe9c7d21"
+    },
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_product_book_ee96cfb71c.json",
+      "sha256": "c55e39af1c095e105d0b8acbec0c70d371a16ae91e6695aeca6fde9d59feabf1"
+    },
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_products_933df52655.json",
+      "sha256": "a0043e725834aa22582b4461f979a19c151593781720d4088b90f74991d20076"
+    },
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_products_BIP_20DEC30_CDE_candles_1d045ea1c4.json",
+      "sha256": "12933a912c7eb55ae1a5cf538cdfea7fb5e62eccb1174e78e093f4f7e999b231"
+    },
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_products_BIP_20DEC30_CDE_ticker_c56487e94a.json",
+      "sha256": "5a720fd8873efc66e5561328455d6399839da3cbb3c967c704742c9e34bca261"
+    },
+    {
+      "path": "notebooks/fixtures/venues/api_v3_brokerage_market_products_b3de0d3751.json",
+      "sha256": "5a4d2ddd6cacc3edf653825f4717b048b774728a443e2130d9958d243372a435"
+    },
+    {
+      "path": "notebooks/fixtures/venues/binanceusdm_fetch_markets_bf4806e896.json",
+      "sha256": "5661dd9812134a16e111a740323380afd7a9b73325849ca0fc3ccae0c73ba020"
+    },
+    {
+      "path": "notebooks/fixtures/venues/bybit_fetch_markets_2b93052516.json",
+      "sha256": "17d95c74bd28d37e3ca96e07045af7df292cdaa89d92732e176e84f09a34be5a"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_024fbc7edf.json",
+      "sha256": "5a474abf8afda835b78458424accf48be6a10a453bee72cbaf2cfbe33716fc89"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_0485c7d50d.json",
+      "sha256": "85bc32697fc7de8455c942efb05248857fe44ba9e13f2f03ab9ba6bf1aab9799"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_08c9383279.json",
+      "sha256": "d4e4fbdb0300238322d806132634b7505cbfef2a07787ccee87632c772614fec"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_6019158a55.json",
+      "sha256": "7aaacc23d99bb0aa915f3b6b8d4abd9428176086179625a8afbb01658f9971ed"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_8a117abd39.json",
+      "sha256": "e13c45e95d228a12e27cc360cb48df698192212d2ecc4546170d731b4e69a4f5"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_981fda36bf.json",
+      "sha256": "86e92205d8aba654c205f9e997eabb384a893f8d6a74f2c7333bf00d6cf239de"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_a74cbdd45f.json",
+      "sha256": "92c433a8c6b42257898a05cdaf7cef489e96d52679c2e36daa227dacc7cd55eb"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_afa150b307.json",
+      "sha256": "6547295efb8adbc65da41ea62b9c43f3a0ed72a650df2d7d1ffb19b07b11c23a"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_cd31cac779.json",
+      "sha256": "bda007f714c6ca9a8ce181ed70abd112ca1cf028d839fee60c42bc1ff2bd59e6"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_BTCUC_06eec23a5e.json",
+      "sha256": "a7d9184a73ac4faf852a40753e600bb240fb612649755a5cbb593a0f97cb0703"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_BTCUR_15ce2e02da.json",
+      "sha256": "ab03597139a4d2ad0420b24a77321378669c608b631c0f98b5a208f87a62c977"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_ETHUI_e18b3023d0.json",
+      "sha256": "7260cb3d5d8b07961b77e7c79e192059bf6f440be6f35a460fd76cfe9b6afb59"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_ETHUL_8b20f63ad9.json",
+      "sha256": "8021506f8d340f69d7b29c9355074529973e277abcfa9de3091612c47b1dbef9"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_SHBUK_039bbf2dbf.json",
+      "sha256": "9c6fbb352e635f7f2b348cb6b337f2eb6c4a2ae8be6027565e2e5de9228aad9f"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_funding_rates_estimated_SOLUS_75a17edf14.json",
+      "sha256": "a17173d060b3875b6a7ff7bab700d84f13fecf59e77b0df2d115f209a825b9b5"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_prod_product_data_01f58397c9.json",
+      "sha256": "b1ffb212327ecd9484a52bf783ec3fd41dd6bf9f630e53e3e47b296b77eec500"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_v1_prod_product_specs_64705c2b4e.json",
+      "sha256": "52d7529569ceb15aeb72061b1bb0d8abf0d52ef9617a9754526b2df75625b465"
+    },
+    {
+      "path": "notebooks/fixtures/venues/exchange_api_web_charts_price_6687_b704319bc0.json",
+      "sha256": "62f19f08c1e28a06cea878a5af54f0d52b82bcedc8017d8134c61473ad8cc76a"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_book_869f41fed3.json",
+      "sha256": "7f67eacb5afb0a4be30ab02233553eb896352191c7929ee78b70634fb01a151d"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_candlestick_bc6036f8b4.json",
+      "sha256": "5fefcc9a2338fb5782ce08ddce97c83ff56de34af1b9006e322da39bec7425a1"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_instruments_3168a518c9.json",
+      "sha256": "670b2cbf6ebae96b39ef0b91aeb2daae6f30e3e2495e1763db9139cfefdd1eed"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_tickers_100ce5bb2d.json",
+      "sha256": "30dd3215ee5dad71895a30515a6baf653d74d2d70053c54250747a8f33f127bf"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_tickers_85bbfb9963.json",
+      "sha256": "fa7ce89289a6c198a82f9273b3f6af1c9b088548f2360c57a11c5f820e16a9a3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_tickers_eebb6ceb36.json",
+      "sha256": "cbd926744ff696e968ad02cb6d7a70707fa2e878a3018dd438ce343789829006"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_trades_3cd7a0367b.json",
+      "sha256": "65228af72a294f2ce18bc732a4694ebded03828b98301e1657af5f9b1f8771c3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_trades_8c34d50bf5.json",
+      "sha256": "ebf53ea36bf849367bfcfb60dc32d147433e64bcaf46f1e6a2ef8084e5efff32"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_2246d94343.json",
+      "sha256": "bb73ce0cabe9d49534040bbe0f2ebcee7bcfad23d3a062088852def2dabcd160"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_31c97cd17d.json",
+      "sha256": "41a51e682cccfcc5c934c6c6b9df83fe8b2ad44d35bad00c8d932145763e1509"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_4317bfc7b7.json",
+      "sha256": "f88ac97638ac91ebd5b5e4138e2013ed7e75894128041a05ce116887198a7499"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_4dd40995a3.json",
+      "sha256": "b3e45ebb435b5799002b7cf49199cc807f373a20dd691e3d7a632d54f04df1dc"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_57a0a5d950.json",
+      "sha256": "b60fcf4af1cd59cc70ca667838aa816332df23ab8c9684e66e493844b7226aca"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_5c8d19fe23.json",
+      "sha256": "70e997ced4cec95ca1cf16f8ec15294dc9b7a54e61d986979a25344107b10d84"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_5e43774480.json",
+      "sha256": "f698ea78605b95bdf6b051e164b4cd530e682cf63ea470f7c5d6f0957eea358e"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_75702714aa.json",
+      "sha256": "24f7b1d0a9691dfbb6f81c0505c55bf7beafbf982d7beeabda7882be3e57fe31"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_a4c7d2ac0f.json",
+      "sha256": "a317ef50b593aa780b213232323f47919598210a95ec558f5b468e3e2cdd44f0"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_b96ce3a950.json",
+      "sha256": "8c60233311efd755334a093be076ee73dd19440343f2f57932e200a499f3bd80"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_c93b280ab0.json",
+      "sha256": "18c96f482d9e09f86c7783d799d63c7ba7c12ca831348f0c936bdc07bab780bb"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_d3bb713eac.json",
+      "sha256": "cd12d82d42d8dd1a93737eb40ad6ef543b46f03e8882f453887f0b6bdbb0b4d1"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_d9dd30d3d6.json",
+      "sha256": "899d5b46c453be7ca4623833f358449845f127453d74cf50720f4c4362e16618"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_dcfe41dbfd.json",
+      "sha256": "d7ae257d714261301aca230561ab3fd06e1459d51c9c9afc01d63f20e014817a"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_e63c22cec4.json",
+      "sha256": "51adb380efc7da3fb26956a1a424f522db939c3920cb1f0c752ecb5c0408c833"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_e8a0133e52.json",
+      "sha256": "f400f8b05cac3a0175a21494716f97cfdf4f90c88926196a89ae324b157df07f"
+    },
+    {
+      "path": "notebooks/fixtures/venues/fcm_v1_public_get_valuations_ec20cbcfad.json",
+      "sha256": "dd9723a2b8533094591d5aa16cd44e78a669fb8dadf602dcabfe3bcf9d4fa615"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_BTC_USDC_USDC_1794268800000_500_9f0a7d1a52.json",
+      "sha256": "c03d011712efff14da133e7be281c0a3171ad00f34415ae6c8d23a988dfca1fc"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_ETH_USDC_USDC_1794268800000_500_46ef281772.json",
+      "sha256": "7e4897af6016e282570890d482e12e58216d3ea0437b09ffeba6bb5011b3edeb"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_IO_NVDA_USDC_USDC_1794268800000_f5e8de38a5.json",
+      "sha256": "b60e63ecde0a43d2b53650b8619a2629ba1eef2c27e45945c47063d77d92610c"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_IO_NVDA_USDC_USDC_1794441600000_f32fdbf407.json",
+      "sha256": "372ecc67389fe2188b450c140219a11cfcfbcb1f1608156091f0d1dd226340ad"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_XYZ_NVDA_USDC_USDC_179426880000_4331ac8fe1.json",
+      "sha256": "5a781a6c4864989389f5d731413dd55bdba5dfca3c9f8baeb788a38ea251e0d4"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rate_history_XYZ_NVDA_USDC_USDC_179444160000_df68b0299f.json",
+      "sha256": "f048b06a5b8277b25e3820a88c6ef10e1b2f4f1af7f8378fb5aff79570dbac5b"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rates_BTC_USDC_USDC_7926078cf8.json",
+      "sha256": "75a69ba670d9bfae3ef380a5d78c16889a8b2e82091a522c07adea500034f490"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rates_ETH_USDC_USDC_78651fc293.json",
+      "sha256": "c96a35dfb3456e8e4b8c31466511719a75f29578f614646683f3696bac151c8d"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rates_PARA_STX_USDC_USDC_77d4eccbf0.json",
+      "sha256": "84f0a64c1492dfa3077b67f3d804b8610d31998624992b462c8b9aa28e43a7ea"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rates_STX_USDC_USDC_ebe3cbf42e.json",
+      "sha256": "fa98a0bf247751e6fbc759a77427a17f5fe0bd518c26d4ff5ebc7c6d34c0e8fb"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_funding_rates_XYZ_GOLD_USDC_USDC_83255a601d.json",
+      "sha256": "7aa624662c350fbc2eee51a001dac802e260bbfdd5b1d19161e7dcd788d48077"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_markets_f099d3b402.json",
+      "sha256": "0eed8bd89eafa3498e11a9ec3514cd3d6c1eaf9598b621370c68a56215225e1e"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_ohlcv_BTC_USDC_USDC_1h_1794506400000_500_ba5057ce40.json",
+      "sha256": "7e468a8c2466d9629489b835ac36bfef510107aa79516624c5635b85835f4508"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_ohlcv_XYZ_NVDA_USDC_USDC_1h_1794441600000_500_451d02f990.json",
+      "sha256": "e0450a4fd81fd51b937885244d5e2261322a32a9128db53e745e58d7f872f633"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_order_book_BTC_USDC_USDC_5_f2c275b075.json",
+      "sha256": "147808790824703d02630f8c3b2f456cbeafed1ae24fb24cf0ba4c921def7e70"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_order_book_XYZ_GOLD_USDC_USDC_2_e32a14921b.json",
+      "sha256": "5db0c7e6578ffd37611a4c6f1a29fc9a6f17d947e1536ad74e585a9baab66489"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_tickers_BTC_USDC_USDC_1ca9e5ca9a.json",
+      "sha256": "59a003ac3979b45134e17fcdca7cb4a60711f0757939584867495f42e1c1c66a"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_tickers_ETH_USDC_USDC_e76ea355c3.json",
+      "sha256": "1610ff69e81d22b9bc9d04c5cea1ab6c27e588ed1c2d39fbee7b60ddfc4c6db3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_tickers_PARA_STX_USDC_USDC_c1fb29405e.json",
+      "sha256": "6d15d853acb006e5d18cf79279cb99c5587f31fe84068829d8c6476e73a3d659"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_tickers_STX_USDC_USDC_3c5b79d963.json",
+      "sha256": "818fe5c4f36f2eeb4e90e5adf5dbc143347efa3ad10bb32717e619a395cd9a81"
+    },
+    {
+      "path": "notebooks/fixtures/venues/hyperliquid_fetch_tickers_XYZ_GOLD_USDC_USDC_bbe9dddd22.json",
+      "sha256": "9461f6b4686d1b1616650e2b97f0942ef99d6c8eb1d66fd2d1c36e3d25082533"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/kalshi_trades_paging_page1.json",
+      "sha256": "f669834ebccd0eaba880c39342d6a89ad831a5982160c4d91067258fa2d73a56"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/kalshi_trades_paging_page2.json",
+      "sha256": "2f3bff9765feb3aebf458d58c7b341d5347081036656060ecd2d61d611eb6f30"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/kalshi_trades_paging_page3.json",
+      "sha256": "7bc9840439f0b0cd86baceebc1e5e2328441e4513edb07bd26ddbd8a0e0c8885"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/trade_api_v2_margin_funding_rates_premium_index_03f43539e8_nowcast.json",
+      "sha256": "c157dda0178bb45011d59682a79441112b83c25bfee61ba52598b8f31d546445"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/trade_api_v2_margin_funding_rates_premium_index_1e2280e0ee_nowcast.json",
+      "sha256": "713c46571f28b0ee9d96d46d75710966eea6ba83ce654bc22a960313dcd9dc61"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/trade_api_v2_margin_funding_rates_premium_index_3294f4bb25_nowcast.json",
+      "sha256": "04c89ff561f8ad906e47b08f2630587720bec43baf3e51878b01a950351a8c99"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/trade_api_v2_margin_funding_rates_premium_index_a94f1aafb0_nowcast.json",
+      "sha256": "d327dffba30f5b73a0830810dbd0dc9218fd14ad33d01fcd3cb44b49eefa7a4c"
+    },
+    {
+      "path": "notebooks/fixtures/venues/synthetic/trade_api_v2_margin_funding_rates_premium_index_c605de177a_nowcast.json",
+      "sha256": "2ef9c7029ab2be5ef22ac454acaf694ae4235e5f7c67eb8c0c3029c4f3afd816"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_estimate_d80acc7964.json",
+      "sha256": "0d0ce7f176553ccb05d3cfbd2fc8e7c57f2c637fbf233a2f0690ff9e4a382f74"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_estimate_fcc5f195dc.json",
+      "sha256": "8d9c8df56fa00b800df309433e63b9b64571b151a35bfa3e4dc4a2f72ceee5f3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_historical_0c76643f53.json",
+      "sha256": "5996bae3edb930cd7f487b6f675bce2ba1440e2b14fa24a2ee6cdf5b003a89c3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_historical_3c1cbf61f7.json",
+      "sha256": "e6c28fb6616a8ade6f46230b62e67e869f2766c7dabb0d546de4facb553222e3"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_historical_7e6c2cb84e.json",
+      "sha256": "aa77cb4727b2817cbf7a08913319845a493911357118a31142af2925aea0a92e"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_historical_8c9c847b97.json",
+      "sha256": "88f410da530d7380e03d86188b1457d4223d18331b234443f003393166ce63a5"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_historical_a089fc3fe7.json",
+      "sha256": "fb37dce651f9c204be7449cd203aa4af6187966deeb0407c9e2ecad72e792bec"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_funding_rates_premium_index_076f32e76f.json",
+      "sha256": "79f6fc6c94590282996d16c185c21525f19914aa7e540b93f77fd19756c0744c"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_markets_6df5c0220c.json",
+      "sha256": "92a0ddaae141628b4ed2dac9b46ce882d46f9b917b33486b34fca85ef4709651"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_markets_KXBTCPERP_candlesticks_25344ad252.json",
+      "sha256": "98085c7078a680ce784f4c7f240699d7f0ca0e863fd80f5874ab056c539ccb64"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_markets_KXBTCPERP_orderbook_4430e750ad.json",
+      "sha256": "a0f1da58adc5d0a4154f4cf1a655dc14a653418ca0973ec487e94e24ea0616b5"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_markets_KXBTCPERP_orderbook_ae9c27d31f.json",
+      "sha256": "d9d37e024fd0a2c2b9bedb2349e2d3e6c8811d53921bf2a55e56bfe25aadd480"
+    },
+    {
+      "path": "notebooks/fixtures/venues/trade_api_v2_margin_trades_336d7273ed.json",
+      "sha256": "1205f9e2f0e89c5fbc7d6b91c7d1431e8483c4a707d0aab79b09de4e374dbbd2"
+    }
+  ]
+}

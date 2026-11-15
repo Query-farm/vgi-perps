@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "repository": "Query-farm/vgi-perps",
+  "revision": "bb284bc728106716a575f755552277f5439455e9",
+  "captured_at": "2026-11-15T00:57:56.444021+00:00",
+  "default_schema": "main",
+  "scope": "all_public_functions_and_tables",
+  "complete": true,
+  "evidence": [
+    {
+      "path": "coverage/provenance.json",
+      "sha256": "920a0fe0193d5fc0724cdc043b97535504632b96918be1b57da4cc76622d31d1",
+      "description": "Actual release/current collection and input provenance."
+    },
+    {
+      "path": "coverage/source-comparison.json",
+      "sha256": "1e65a04053e92512422f2327f6f594396efe4af431656561e6fd99cc0dd8b220",
+      "description": "Complete financial source/dependency comparison."
+    },
+    {
+      "path": "coverage/analysis-preservation.json",
+      "sha256": "6b3936e9d6fd5bbb12bf055280e74b48c42f2b6439fefda9b25f823f2acf29a1",
+      "description": "Original SQL, narrative, 17 displayed tables and 93 fixtures preserved."
+    },
+    {
+      "path": "coverage/current-functions.json",
+      "sha256": "737db0ba835edaeb358a599f7798a2fc32422eab64f529591b117a8ed0b757c9",
+      "description": "Complete native duckdb_functions() export filtered by perps; no names omitted."
+    },
+    {
+      "path": "coverage/current-tables.json",
+      "sha256": "98b6f2d0801aaad969ae03174319b9f547a6164de651e3b87d1b2144a7af6581",
+      "description": "Complete native duckdb_tables() export filtered by perps; no names omitted."
+    },
+    {
+      "path": "coverage/current-views.json",
+      "sha256": "ca37b48fe2a4dc684408257e2c4eb2b541548235f7b281ac568fffdf9b264efd",
+      "description": "Complete native duckdb_views() export filtered by perps; no names omitted."
+    },
+    {
+      "path": "coverage/current-databases.json",
+      "sha256": "cb3b056b5efde3800ccfe8504c985a39d602584137e2644fc7b0648858cfab31",
+      "description": "Actual catalog title/subtitle and metadata; local prefix redacted where stated."
+    }
+  ],
+  "objects": [
+    {
+      "schema": "main",
+      "name": "candles",
+      "kind": "function",
+      "signatures": [
+        "candles(VARCHAR, VARCHAR, TIMESTAMP WITH TIME ZONE, TIMESTAMP WITH TIME ZONE, VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "capabilities",
+      "kind": "function",
+      "signatures": [
+        "capabilities(VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "depth_metrics",
+      "kind": "function",
+      "signatures": [
+        "depth_metrics(VARCHAR, VARCHAR, DOUBLE, BIGINT) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "funding",
+      "kind": "function",
+      "signatures": [
+        "funding(VARCHAR, TIMESTAMP WITH TIME ZONE, BOOLEAN, VARCHAR, TIMESTAMP WITH TIME ZONE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "funding_spread",
+      "kind": "function",
+      "signatures": [
+        "funding_spread(VARCHAR, TIMESTAMP WITH TIME ZONE, TIMESTAMP WITH TIME ZONE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "instruments",
+      "kind": "function",
+      "signatures": [
+        "instruments(VARCHAR, VARCHAR, BOOLEAN) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "kalshi_funding_nowcast",
+      "kind": "function",
+      "signatures": [
+        "kalshi_funding_nowcast(VARCHAR, BIGINT, TIMESTAMP WITH TIME ZONE, DOUBLE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "liquidation_estimate",
+      "kind": "function",
+      "signatures": [
+        "liquidation_estimate(VARCHAR, VARCHAR, DOUBLE, VARCHAR, VARCHAR, DOUBLE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "marks",
+      "kind": "function",
+      "signatures": [
+        "marks(VARCHAR, VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "order_book",
+      "kind": "function",
+      "signatures": [
+        "order_book(VARCHAR, VARCHAR, BIGINT) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "premium",
+      "kind": "function",
+      "signatures": [
+        "premium(VARCHAR, VARCHAR, VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "raw_bitnomial_products",
+      "kind": "function",
+      "signatures": [
+        "raw_bitnomial_products(VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "raw_coinbase_products",
+      "kind": "function",
+      "signatures": [
+        "raw_coinbase_products(VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "raw_kalshi_markets",
+      "kind": "function",
+      "signatures": [
+        "raw_kalshi_markets(VARCHAR) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "raw_kalshi_premium_index",
+      "kind": "function",
+      "signatures": [
+        "raw_kalshi_premium_index(VARCHAR, TIMESTAMP WITH TIME ZONE, TIMESTAMP WITH TIME ZONE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "trades",
+      "kind": "function",
+      "signatures": [
+        "trades(VARCHAR, VARCHAR, TIMESTAMP WITH TIME ZONE, BIGINT, TIMESTAMP WITH TIME ZONE) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "venues",
+      "kind": "function",
+      "signatures": [
+        "venues(BOOLEAN) -> TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    }
+  ]
+}

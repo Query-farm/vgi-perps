@@ -1,0 +1,47 @@
+{
+  "query": "SELECT * FROM duckdb_databases() WHERE database_name='perps'",
+  "columns": [
+    "database_name",
+    "database_oid",
+    "path",
+    "comment",
+    "tags",
+    "internal",
+    "type",
+    "readonly",
+    "encrypted",
+    "cipher",
+    "options"
+  ],
+  "rows": [
+    [
+      "perps",
+      22595,
+      null,
+      "# Perpetual futures, normalized across venues\n\nFunding, marks, books, trades and bars for **US-regulated perpetual futures** (Kalshi, Coinbase Derivatives, Bitnomial) next to an **offshore benchmark** (Hyperliquid, Binance USD-M, Bybit), in one schema.\n\n**Conventions.** Prices are quote currency per one unit of the underlying (USD per BTC, per share, per troy ounce), whatever the venue's own quoting. Sizes are contracts, and `contract_size` is underlying units per contract. Funding rates are decimal fractions per interval with one sign convention: **positive means longs pay shorts**. Annualized rates are simple: `rate * 8760 / interval_hours`. Times are UTC `TIMESTAMPTZ`.\n\nEach venue sits behind its own adapter; the venue documentation in the repository records how each venue's units and signs were mapped, with sources. Read-only public market data, no account or order endpoints. Market data belongs to the venues and is subject to their terms of use.",
+      {
+        "vgi.agent_test_tasks": "[{\"name\": \"us_venue_count\", \"prompt\": \"Using the perps worker, how many distinct venues in the catalog are US-regulated?\"}, {\"name\": \"btc_contract_size_kalshi\", \"prompt\": \"On Kalshi, how much bitcoin does one contract of the BTC perpetual represent?\"}, {\"name\": \"funding_sign_convention\", \"prompt\": \"In the perps worker, if Kalshi's BTC perp shows a positive funding rate, which side pays?\"}, {\"name\": \"kalshi_single_stock_perps\", \"prompt\": \"Does Kalshi list single-stock perpetual futures? Name one underlying stock if so.\"}, {\"name\": \"kalshi_funding_forecast\", \"prompt\": \"Where is the next funding settlement of Kalshi's BTC perpetual heading, annualized, and how much of that window's weight has already accrued?\"}, {\"name\": \"btc_funding_history\", \"prompt\": \"How many funding settlements did Kalshi's BTC perpetual have over the last three days?\"}, {\"name\": \"eth_marks\", \"prompt\": \"What is the current mark price of the ETH perpetual on Coinbase Derivatives, in USD per ETH?\"}, {\"name\": \"kalshi_book_levels\", \"prompt\": \"Show the five best bid levels of Kalshi's BTC perpetual order book with their USD size.\"}, {\"name\": \"coinbase_recent_trades\", \"prompt\": \"How much USD notional traded on Coinbase's nano BTC perp in the last 10 minutes?\"}, {\"name\": \"kalshi_daily_bars\", \"prompt\": \"Give the daily closing prices of Kalshi's ETH perpetual for the last week.\"}, {\"name\": \"btc_premium\", \"prompt\": \"Which BTC perpetual trades at the highest premium to its own venue index right now?\"}, {\"name\": \"btc_carry_spread\", \"prompt\": \"Across venues, which pair of BTC perpetuals had the widest annualized funding spread this week?\"}, {\"name\": \"kalshi_fill_cost\", \"prompt\": \"How many basis points would it cost to market-buy $50,000 of Kalshi's BTC perpetual?\"}, {\"name\": \"hyperliquid_liquidation_bands\", \"prompt\": \"Estimate where 10x long ETH positions on Hyperliquid would be liquidated.\"}, {\"name\": \"kalshi_premium_index\", \"prompt\": \"Average per-second premium index of Kalshi's BTC perp over the last five minutes, in bps?\"}, {\"name\": \"kalshi_funding_deadband\", \"prompt\": \"What funding deadband does Kalshi apply to its gold perpetual?\"}, {\"name\": \"coinbase_overnight_margin\", \"prompt\": \"What is Coinbase's overnight long margin rate on the nano BTC perp?\"}, {\"name\": \"bitnomial_margin_rate\", \"prompt\": \"What product-group margin rate does Bitnomial publish for its centi-bitcoin perpetual?\"}, {\"name\": \"og_funding_schedule\", \"prompt\": \"On OG.com, at what UTC times does the BTC perpetual settle funding, and what was the last settled rate?\"}, {\"name\": \"hip3_vs_kalshi_stock_funding\", \"prompt\": \"Over the last week, how did funding on Hyperliquid's builder-dex NVDA perps compare with Kalshi's NVDA perp?\"}, {\"name\": \"kalshi_crypto_funding_week\", \"prompt\": \"For every Kalshi perpetual whose asset class is crypto, total the funding rates (in bps) that settled from 2026-11-06 00:00 UTC through 2026-11-13 00:00 UTC. Save the unrounded result as a temp table named kalshi_crypto_funding with columns symbol (VARCHAR, the Kalshi ticker) and total_funding_bps (DOUBLE), one row per contract.\"}, {\"name\": \"liquidation_refusal\", \"prompt\": \"Can the perps worker estimate liquidation bands for Kalshi's BTC perp with the venue's own maintenance-margin schedule? Explain what it reports.\"}]",
+        "vgi.author": "Query.Farm",
+        "vgi.copyright": "Copyright 2026 Query Farm LLC - https://query.farm",
+        "vgi.doc_llm": "Normalized, cross-venue market data for US-regulated perpetual futures: Kalshi perps (crypto, single stocks, indices, metals, energy), Coinbase Derivatives perpetual-style futures and Bitnomial perpetuals, plus Hyperliquid, Binance USD-M and Bybit as an offshore benchmark. Every result has a `venue` column. Prices are quote currency per one unit of the underlying regardless of how the venue quotes; sizes are contracts with `contract_size` underlying units each; funding rates are decimal fractions per interval where positive means longs pay shorts, with simple annualization `rate * 8760 / interval_hours`. Join across venues on `underlying` (not on `symbol`, which is venue-native). Cross-venue queries skip a venue that fails and log a warning; check venue health and per-venue capability support before relying on a venue. Offshore venues need an `underlying` filter for per-contract data. Read-only public market data: no accounts, no orders.",
+        "vgi.doc_md": "# Perpetual futures, normalized across venues\n\nFunding, marks, books, trades and bars for **US-regulated perpetual futures** (Kalshi, Coinbase Derivatives, Bitnomial) next to an **offshore benchmark** (Hyperliquid, Binance USD-M, Bybit), in one schema.\n\n**Conventions.** Prices are quote currency per one unit of the underlying (USD per BTC, per share, per troy ounce), whatever the venue's own quoting. Sizes are contracts, and `contract_size` is underlying units per contract. Funding rates are decimal fractions per interval with one sign convention: **positive means longs pay shorts**. Annualized rates are simple: `rate * 8760 / interval_hours`. Times are UTC `TIMESTAMPTZ`.\n\nEach venue sits behind its own adapter; the venue documentation in the repository records how each venue's units and signs were mapped, with sources. Read-only public market data, no account or order endpoints. Market data belongs to the venues and is subject to their terms of use.",
+        "vgi.icon_url": "https://query.farm/media-kit/logo/mark-512.png",
+        "vgi.keywords": "[\"perpetual futures\", \"perps\", \"funding rate\", \"kalshi\", \"coinbase derivatives\", \"bitnomial\", \"og.com\", \"crypto.com\", \"hyperliquid\", \"basis\", \"carry\", \"cftc\", \"crypto derivatives\", \"market data\"]",
+        "vgi.license": "MIT",
+        "vgi.source_url": "https://github.com/Query-farm/vgi-perps",
+        "vgi.subtitle": "Funding, marks, books and carry for US-regulated perps, benchmarked against offshore venues.",
+        "vgi.support_contact": "https://github.com/Query-farm/vgi-perps/issues",
+        "vgi.support_policy_url": "https://github.com/Query-farm/vgi-perps#support",
+        "vgi.title": "Perpetual Futures Across Venues"
+      },
+      false,
+      "vgi",
+      false,
+      false,
+      null,
+      {
+        "location": "<original-checkout>/.venv/bin/vgi-perps-worker"
+      }
+    ]
+  ]
+}
