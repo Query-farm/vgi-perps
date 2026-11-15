@@ -96,7 +96,24 @@ CATALOG_DOC_MD = (
     "Each venue sits behind its own adapter; the venue documentation in the repository records "
     "how each venue's units and signs were mapped, with sources. Read-only public market data, "
     "no account or order endpoints. Market data belongs to the venues and is subject to their "
-    "terms of use."
+    "terms of use.\n\n"
+    "## Sources and references\n\n"
+    "- [Kalshi API](https://docs.kalshi.com/) — Kalshi perpetuals: markets, funding, books\n"
+    "- [Coinbase Advanced Trade API](https://docs.cdp.coinbase.com/coinbase-app/advanced-trade-apis/overview) "
+    "— Coinbase Derivatives perpetual-style futures\n"
+    "- [Bitnomial REST API](https://bitnomial.com/exchange/docs/api/rest/overview) and the "
+    "[OG.com public API](https://exchange-developer.crypto.com/fcm-b2c/v1/docs/api/rest-introduction) "
+    "— the other US-regulated venues\n"
+    "- [Hyperliquid docs](https://hyperliquid.gitbook.io/hyperliquid-docs) — funding, liquidations "
+    "and HIP-3 builder perps on the offshore benchmark\n"
+    "- [CCXT](https://github.com/ccxt/ccxt) — the library used for the Hyperliquid, Binance and Bybit "
+    "public endpoints"
+)
+
+#: The schema COMMENT: one plain line; SCHEMA_DOC_MD carries the detail (VGI102).
+SCHEMA_COMMENT = (
+    "Perpetual-futures table functions: venue reference, normalized market data, carry "
+    "analytics and venue-only raw fields"
 )
 
 SCHEMA_DOC_LLM = (

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.7 (2026-11-14)
+
+- Docs link to upstream: the catalog documentation now links the Kalshi, Coinbase Advanced
+  Trade, Bitnomial and OG.com APIs, the Hyperliquid docs and CCXT (vgi-lint VGI183).
+- The `main` schema comment is now one plain line; the Markdown overview stays in its
+  `vgi.doc_md` tag instead of being repeated as the comment (VGI102).
+
 ## 0.1.6 (2026-11-14)
 
 - The catalog comment is now one plain-text sentence saying what the worker covers (rule
