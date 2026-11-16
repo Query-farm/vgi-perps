@@ -10,7 +10,7 @@ requires-python = ">=3.13"
 dependencies = [
     # [http] adds the HTTP transport (`--http`) used by Docker deploys.
     # SDK bumps go through the template (minor bumps can raise the protocol).
-    "vgi-python[http]>=0.51.0,<0.52",
+    "vgi-python[http]>=0.52.0,<0.53",
     # The one HTTP client for the US venues (perps_worker/http.py is the chokepoint).
     "httpx>=0.27",
     # Offshore benchmark only, through perps_worker/offshore_client.py (public fetch* allowlist).
@@ -24,7 +24,7 @@ vgi-perps-worker = "perps_worker.worker:main"
 dev = [
     # The pushdown recipe evaluates predicates locally; a worker that uses filter
     # pushdown must add the `haybarn` extra to its own dependencies.
-    "vgi-python[haybarn]>=0.51.0,<0.52",
+    "vgi-python[haybarn]>=0.52.0,<0.53",
     "pytest>=8.4",
     "mypy>=1.18",
     "ruff>=0.14",
