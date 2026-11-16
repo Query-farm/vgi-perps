@@ -160,7 +160,7 @@ def _iter_files() -> list[Path]:
             check=True,
         ).stdout
         files = [ROOT / f for f in out.split("\0") if f and (ROOT / f).is_file()]
-    except (OSError, subprocess.CalledProcessError):
+    except OSError, subprocess.CalledProcessError:
         pass
     if files is None:
         files = []
@@ -180,7 +180,7 @@ def _git_remote_slug() -> str | None:
         url = subprocess.run(
             ["git", "remote", "get-url", "origin"], cwd=ROOT, capture_output=True, text=True, check=True
         ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
+    except OSError, subprocess.CalledProcessError:
         return None
     m = re.search(r"[:/]([^/:]+/[^/]+?)(?:\.git)?$", url)
     if not m or m.group(1).lower().startswith("query-farm/vgi-starter"):
@@ -221,7 +221,7 @@ def cmd_init(args: argparse.Namespace) -> int:
             continue
         try:
             text = path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, OSError):
+        except UnicodeDecodeError, OSError:
             continue  # binary file
         new = _rename_text(_strip_template_only(text), reps)
         if new != text:

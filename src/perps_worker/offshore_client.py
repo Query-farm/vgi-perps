@@ -125,7 +125,7 @@ def _cached_markets(exchange_id: str) -> Any:
         if time.time() - path.stat().st_mtime > MARKETS_CACHE_SECONDS:
             return None
         return json.loads(path.read_text())
-    except (OSError, ValueError):
+    except OSError, ValueError:
         return None
 
 
