@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.8 (2026-11-16)
+
+- Bump vgi-python to 0.52.2.
+- Requires Python 3.14 (CI, Docker image and tooling moved to 3.14).
+
 ## 0.1.7 (2026-11-14)
 
 - Docs link to upstream: the catalog documentation now links the Kalshi, Coinbase Advanced

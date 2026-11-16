@@ -50,7 +50,7 @@ INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
 ATTACH 'perps' (TYPE vgi,
-  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.7 vgi-perps-worker');
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.8 vgi-perps-worker');
 
 -- Which venues are reachable from here (Binance and Bybit geo-block US networks)
 SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
@@ -70,7 +70,7 @@ JOIN perps.main.instruments(underlying := 'BTC') AS i USING (venue, symbol)
 WHERE i.funding_cap IS NOT NULL ORDER BY cap_used DESC, m.venue, m.symbol;
 ```
 
-`uvx` fetches and caches the worker on first use; change `@v0.1.7` to move to a newer release.
+`uvx` fetches and caches the worker on first use; change `@v0.1.8` to move to a newer release.
 
 Other ways to run it: `vgi-perps-worker --http --port 8000` serves HTTP (attach with
 `LOCATION 'http://127.0.0.1:8000'`), and `scripts/fixture-worker` serves the recorded
