@@ -42,6 +42,8 @@ by `tests/test_readonly_guard.py`. Symbols that reach a URL path are percent-enc
 
 ## Quick start
 
+vgi-perps 0.2.0 speaks VGI protocol 3.4, so it needs Haybarn 2.0.1 or newer (Haybarn 2.0.0 loads a 3.3 `vgi` extension that cannot attach it).
+
 ```sql
 -- DuckDB 2.0
 SET allow_extension_repositories = 'allowed';
@@ -50,7 +52,7 @@ INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
 ATTACH 'perps' (TYPE vgi,
-  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.1.8 vgi-perps-worker');
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-perps@v0.2.0 vgi-perps-worker');
 
 -- Which venues are reachable from here (Binance and Bybit geo-block US networks)
 SELECT venue, status, instrument_count FROM perps.main.venues() ORDER BY venue;
@@ -70,7 +72,7 @@ JOIN perps.main.instruments(underlying := 'BTC') AS i USING (venue, symbol)
 WHERE i.funding_cap IS NOT NULL ORDER BY cap_used DESC, m.venue, m.symbol;
 ```
 
-`uvx` fetches and caches the worker on first use; change `@v0.1.8` to move to a newer release.
+`uvx` fetches and caches the worker on first use; change `@v0.2.0` to move to a newer release.
 
 Other ways to run it: `vgi-perps-worker --http --port 8000` serves HTTP (attach with
 `LOCATION 'http://127.0.0.1:8000'`), and `scripts/fixture-worker` serves the recorded
